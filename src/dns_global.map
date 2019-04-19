@@ -1,0 +1,11 @@
+{
+global:  
+	build_dns_payload;
+	DNS_INIT;
+	DNS_DESTROY;
+	UDP_ENTRY;
+	PROT_FUNSTAT;
+	FLAG_CHANGE;
+	GET_PLUGID;  
+local:*;  
+};  
