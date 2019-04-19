@@ -56,6 +56,7 @@
 #define DNS_TYPE_MINFO		14
 #define DNS_TYPE_MX			15
 #define DNS_TYPE_TXT		16
+#define DNS_TYPE_RP			17
 #define	DNS_TYPE_ISDN		20
 #define DNS_TYPE_AAAA		28	//dns_ipv6
 #define	DNS_TYPE_SRV		33
@@ -72,6 +73,7 @@
 #define DNS_QTYPE_MAILA		254
 #define DNS_QTYPE_ANY		255
 #define DNS_TYPE_DLV		32769	/* DSNSEC Lokkaside Validation */
+#define DNS_TYPE_UNKNOWN	65534
 
 #define DNS_CLASS_UNKNOWN	0
 #define DNS_CLASS_IN		1
@@ -139,7 +141,13 @@ typedef struct _soa
 	u_int32_t minimum;
 }soa_t;
 
-typedef struct txt_t
+typedef struct _rp_t
+{
+	u_char mailbox[DNS_MAX_NAME+1];
+	u_char txt_rr[DNS_MAX_NAME+1];
+}rp_t;
+
+typedef struct _txt_t
 {
 	u_char txt[DNS_MAX_NAME+1];
 	u_char size;
@@ -255,7 +263,9 @@ typedef struct _dns_rr
 		u_char *aaaa;	/* aaaa[16]; */
 		u_char *dname;
 		u_char *isdn;
+		u_char *unknown_data;
 		txt_t *txt;
+		rp_t *rp;
 		null_t *null;
 		wks_t *wks;
 		srv_t *srv;

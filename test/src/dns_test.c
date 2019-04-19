@@ -6,7 +6,7 @@
 #include <assert.h>
 
 #include <MESA/stream.h>
-#include <MESA/dns_analyse.h>
+#include <MESA/dns.h>
 
 #define	LOG_PATH	"./log/dns/"
 //#define	DEBUG	1
@@ -167,6 +167,10 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 				used_len += snprintf(buf+used_len, buflen-used_len, "[TXT size: %u, txt: %s]\n",
 								dns_rr->rdata.txt->size, dns_rr->rdata.txt->txt);
 				break;
+			case DNS_TYPE_RP:
+				used_len += snprintf(buf+used_len, buflen-used_len, "[mailbox: %s, txt_rr: %s]\n",
+								dns_rr->rdata.rp->mailbox, dns_rr->rdata.rp->txt_rr);
+				break;
 			case DNS_TYPE_AAAA:
 				inet_ntop(AF_INET6, dns_rr->rdata.aaaa, ip_str, sizeof(ip_str));
 				used_len += snprintf(buf+used_len, buflen-used_len, "[AAAA: %s]\n", ip_str);
@@ -261,6 +265,9 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 										dns_rr->rdata.nsec3param->hash_algo, dns_rr->rdata.nsec3param->flags,
 										dns_rr->rdata.nsec3param->iteration, dns_rr->rdata.nsec3param->salt_len,
 										tmp_buf);
+				break;
+			case DNS_TYPE_UNKNOWN:
+				used_len += snprintf(buf+used_len, buflen-used_len, "[data: %s]\n", dns_rr->rdata.unknown_data);
 				break;
 			case DNS_QTYPE_AXFR:
 				continue;

@@ -30,7 +30,7 @@
 #include "dns.h"
 #include "dns_internal.h"
 
-int DNS_PROTOCOL_VERSION_20190417;
+int DNS_PROTOCOL_VERSION_20190419;
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
@@ -71,6 +71,7 @@ static dns_str_contrast_id_t DNS_STATIS_INFO[] =
 	{"Q_A",				Q_A},
 	{"Q_AAAA",			Q_AAAA},
 	{"Q_CNAME",			Q_CNAME},
+	{"Q_QUESTION0",		Q_QUESTION},
 	{"Q_UNKNOWN",		Q_UNKNOWN}
 };
 
@@ -1012,35 +1013,36 @@ int get_rr_common_field(char *msg, char **ptr, dns_rr_t *rr,  char *end)
 		return -1;
 	}
 #endif
-	if(* ptr + 2 > end) 
+	if(*ptr==NULL || *ptr+2>end) 
 	{
 		return -1;
 	}
-	NS_GET16(rr->type, * ptr);
-	if(* ptr + 2 > end)
+	NS_GET16(rr->type, *ptr);
+	
+	if(*ptr==NULL || *ptr+2>end)
 	{
 		return -1;
 	}
 
-	NS_GET16(rr->rr_class, * ptr);
+	NS_GET16(rr->rr_class, *ptr);
 
 	if(DNS_CLASS_UNKNOWN == rr->rr_class) 
 	{
 		return -1;
 	}
 
-	if(* ptr + 4 > end) 
+	if(*ptr==NULL || *ptr+4>end) 
 	{
 		return -1;
 	}
 	NS_GET32(rr->ttl, * ptr);
-	if(* ptr + 2 > end) 
+	if(*ptr==NULL || *ptr+2>end) 
 	{
 		return -1;
 	}
 	NS_GET16(rr->rdlength, * ptr);
-	p = * ptr + rr->rdlength;
-	if(p > end) 
+	p = *ptr + rr->rdlength;
+	if(*ptr==NULL || p>end) 
 	{
 		return -1;
 	}
@@ -1219,6 +1221,13 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			rr->rdata.txt->size = len;	
 			*ptr += rr->rdlength;
 			break;
+		case DNS_TYPE_RP:
+			rr->rdata.rp = (rp_t *)calloc(1, sizeof(rp_t));
+			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rp->mailbox, DNS_MAX_NAME+1, end))
+				return 0;
+			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rp->txt_rr, DNS_MAX_NAME+1, end))
+				return 0;
+			break;
 		case DNS_TYPE_NULL:
 			rr->rdata.null = (null_t *)calloc(1, sizeof(null_t));
 			len = MIN(DNS_MAX_NAME-1, rr->rdlength-1);	/*size=1byte*/
@@ -1353,6 +1362,11 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			rr->rdata.nsec3param->salt_value = *(u_char**)ptr;
 			*ptr +=  rr->rdlength-5;
 			break;
+		case DNS_TYPE_UNKNOWN:
+			rr->rdata.unknown_data = (u_char *)calloc(1, rr->rdlength+1);
+			memcpy(rr->rdata.unknown_data, *ptr, rr->rdlength);
+			(*ptr)+=rr->rdlength;
+			break;
 		default:
 			*ptr +=  rr->rdlength;
 			MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_INFO, "get_one_rr", "No support respone type, type: %d", rr->type);
@@ -1366,10 +1380,9 @@ int parse_query_question(struct streaminfo *a_stream, dns_info_t *dns_info, char
 {
 	int ret = 0;
 
-	if(1 != dns_info->hdr_info.qdcount)
+	if(0 == dns_info->hdr_info.qdcount || dns_info->hdr_info.qdcount > 1)
 	{
-		/*	存在一次查询多个域名的情况，大多是(S<==>S)的请求，暂未处理(刘学利，刘俊朋) */
-		return APP_STATE_DROPME;
+		return APP_STATE_GIVEME;
 	}
 	
 	dns_info->query_question = (dns_query_question_t *)calloc(dns_info->hdr_info.qdcount, sizeof(dns_query_question_t));
@@ -1485,15 +1498,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 
 	memset(&dns_info, 0, sizeof(dns_info_t));
 	get_dns_hdr_info(&dns_info.hdr_info, payload);
-#if 0
-	if(dns_info.hdr_info.tc == 1 || (dns_info.hdr_info.rcode != 0 && 1 == dns_info.hdr_info.qr))
-	{	
-		FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);		
-		MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_FATAL, "parse_dns_protocol",
-									"TC: %u, RCODE: %u, tuple4: %s", dns_info.hdr_info.tc, dns_info.hdr_info.rcode, printaddr(&a_stream->addr, thread_seq));
-		return APP_STATE_DROPME;	/* 被截断的DNS的UDP包，暂不处理 */
-	}
-#endif	
+
 	cur_pos = payload + sizeof(dns_hdr_t);
 
 	for(i = 0; i < dns_register_flag_num; i++)
@@ -1521,22 +1526,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 				session_state = SESSION_STATE_PENDING|SESSION_STATE_DATA|SESSION_STATE_CLOSE;
 			}
 		}
-	#if 0
-		switch(opstate)
-		{
-			case OP_STATE_PENDING:
-				session_state = SESSION_STATE_PENDING|SESSION_STATE_DATA;
-				break;
-			case OP_STATE_DATA:
-				session_state = SESSION_STATE_DATA;
-				break;
-			case OP_STATE_CLOSE:
-				session_state = SESSION_STATE_CLOSE;
-				break;
-			default:
-				return APP_STATE_DROPME;
-		}
-	#endif
+
 		if(register_flag&DNS_ALL)
 		{
 			register_flag = SET_BIT(register_flag, DNS_ALL);
@@ -1549,16 +1539,14 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 				free_dns_info(&dns_info);
 				return APP_STATE_DROPME;
 			}
-			if(1 == dns_info.hdr_info.qr)	/* process response packet */
-			{			
-				ret = parse_resource_record(a_stream, &dns_info, payload, payload_len, &cur_pos, DNS_RR_TYPE_ALL);	
-				if(ret == APP_STATE_DROPME)
-				{					
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
-					MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "parse_resource_record return APP_STATE_DROPME, tuple4: %s", printaddr(&a_stream->addr, thread_seq));
-					free_dns_info(&dns_info);
-					return APP_STATE_DROPME;
-				}
+			
+			ret = parse_resource_record(a_stream, &dns_info, payload, payload_len, &cur_pos, DNS_RR_TYPE_ALL);	
+			if(ret == APP_STATE_DROPME)
+			{					
+				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
+				MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "parse_resource_record return APP_STATE_DROPME, tuple4: %s", printaddr(&a_stream->addr, thread_seq));
+				free_dns_info(&dns_info);
+				return APP_STATE_DROPME;
 			}
 
 			callback_dns_business_plug(a_stream, pme, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
@@ -1615,20 +1603,27 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 		}
 		else
 		{
-			switch(dns_info.query_question->qtype)
+			if(dns_info.query_question==NULL)
 			{
-				case DNS_TYPE_A:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_A], 0, FS_OP_ADD, 1);		
-					break;
-				case DNS_TYPE_AAAA:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_AAAA], 0, FS_OP_ADD, 1);		
-					break;
-				case DNS_TYPE_CNAME:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_CNAME], 0, FS_OP_ADD, 1);		
-					break;
-				default:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_UNKNOWN], 0, FS_OP_ADD, 1); 	
-					break;
+				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_QUESTION], 0, FS_OP_ADD, 1); 
+			}
+			else
+			{
+				switch(dns_info.query_question->qtype)
+				{
+					case DNS_TYPE_A:
+						FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_A], 0, FS_OP_ADD, 1);		
+						break;
+					case DNS_TYPE_AAAA:
+						FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_AAAA], 0, FS_OP_ADD, 1);		
+						break;
+					case DNS_TYPE_CNAME:
+						FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_CNAME], 0, FS_OP_ADD, 1);		
+						break;
+					default:
+						FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_UNKNOWN], 0, FS_OP_ADD, 1); 	
+						break;
+				}
 			}
 			
 			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_PKT], 0, FS_OP_ADD, 1); 	
@@ -1709,8 +1704,8 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 	payload_len = tcp_detail->datalen;
 	payload = (char *)tcp_detail->pdata;
 
-	payload_len -= 2; /* 2015-09-29 lijia add, TCP协议头部前有2个字节长度信息 */
-	payload += 2; /* 2015-09-29 lijia add, TCP协议头部前有2个字节长度信息 */
+	payload_len -= 2; 	/* 2015-09-29 lijia add, TCP协议头部前有2个字节长度信息 */
+	payload += 2; 		/* 2015-09-29 lijia add, TCP协议头部前有2个字节长度信息 */
 
 	switch(a_tcp->opstate)
 	{

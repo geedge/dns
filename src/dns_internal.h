@@ -140,6 +140,7 @@ enum dns_statis_info_t
 	Q_A,
 	Q_AAAA,
 	Q_CNAME,
+	Q_QUESTION,
 	Q_UNKNOWN
 };
 
