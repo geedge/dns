@@ -58,7 +58,7 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 
 	fwrite(dns_header, used_len, 1, fp);
 	
-	for(i = 0; i < dns_info->hdr_info.qdcount; i++)
+	for(i = 0; i < dns_info->hdr_info.qdcount && dns_info->query_question[i]!=NULL; i++)
 	{
 		used_len = snprintf(question, sizeof(question), "question: <qtype: %d, qclass: %d, qname: %s>\n",
 											 dns_info->query_question[i].qtype,

@@ -110,7 +110,7 @@ typedef struct _save_dns_business_info
 {
 	void *business_pme;
 	int session_state;
-	
+	int skip_len;/* 2 bytes */
 }save_dns_business_info_t;
 
 typedef struct _pcap_hdr

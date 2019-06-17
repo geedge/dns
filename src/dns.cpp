@@ -30,7 +30,7 @@
 #include "dns.h"
 #include "dns_internal.h"
 
-int DNS_PROTOCOL_VERSION_20190419;
+int DNS_PROTOCOL_VERSION_20190617;
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
@@ -1694,7 +1694,8 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 	int payload_len = 0;
 	char *payload = NULL;
 	struct tcpdetail* tcp_detail = (struct tcpdetail*)a_tcp->pdetail;
-
+	save_dns_business_info_t *dns_pme=(save_dns_business_info_t*)*pme;
+		
 	if(!check_port(a_tcp->addr, DNS_PORT))
 	{
 		return APP_STATE_DROPME;
@@ -1703,9 +1704,6 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 	tcp_detail = (struct tcpdetail *)a_tcp->ptcpdetail;
 	payload_len = tcp_detail->datalen;
 	payload = (char *)tcp_detail->pdata;
-
-	payload_len -= 2; 	/* 2015-09-29 lijia add, TCP协议头部前有2个字节长度信息 */
-	payload += 2; 		/* 2015-09-29 lijia add, TCP协议头部前有2个字节长度信息 */
 
 	switch(a_tcp->opstate)
 	{
@@ -1719,7 +1717,10 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 			{
 				*pme = dictator_malloc(thread_seq, sizeof(save_dns_business_info_t));
 				memset(*pme, 0, sizeof(save_dns_business_info_t));
+				dns_pme = (save_dns_business_info_t *)*pme;
+				dns_pme->skip_len=2;
 			}
+			
 		/*   no break here!!!!  */
 		case OP_STATE_DATA:
 			
@@ -1738,15 +1739,31 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 					return APP_STATE_DROPME;
 					break;
 			}
-#if 0			
-            if((tcp_detail->serverbytes < 2) ||(tcp_detail->clientbytes >= 1500))
+
+			if(tcp_detail->serverbytes <= 2)
+			{
+				dns_pme->skip_len -= payload_len;
+				break;
+			}
+			else
+			{
+				if(dns_pme->skip_len!=0)
+				{
+					payload_len -= dns_pme->skip_len;
+					payload += dns_pme->skip_len;
+					
+					dns_pme->skip_len=0;
+				}
+			}
+			
+            if(tcp_detail->clientbytes >= 1500)
 			{
 				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
 				MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "TCP_ENTRY",
-									"tuple4: %s PKT size(S: %d/C: %d) is too litter or bigger", printaddr(&a_tcp->addr, thread_seq), tcp_detail->serverbytes, tcp_detail->clientbytes);
+									"tuple4: %s PKT size(S: %d/C: %d) is too bigger", printaddr(&a_tcp->addr, thread_seq), tcp_detail->serverbytes, tcp_detail->clientbytes);
             	return APP_STATE_GIVEME;
 			}
-#endif		
+		
 			parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
