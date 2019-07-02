@@ -85,8 +85,8 @@ release:
   only:
     - tags
   variables:
-    - ARTIFACTS_JOB: "dns-package"
-    - PROJECT_NAME: "dns"
-    - USER_DEFINE: "release"
+    ARTIFACTS_JOB: "dns-package"
+    PROJECT_NAME: "dns"
+    USER_DEFINE: "release"
   script:
     - /bin/bash -x ./autorelease.sh $CI_API_V4_URL $CI_PROJECT_URL $CI_PROJECT_ID $CI_TOKEN $CI_COMMIT_TAG $ARTIFACTS_JOB $CI_PROJECT_NAME $USER_DEFINE
