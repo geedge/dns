@@ -8,13 +8,11 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  ARTIFACTS_JOB: "dns-debug-package"
-
 
 stages:
   - build
   - package
-  #- release
+  - release
 
 .build_before_script:
   before_script:
@@ -32,7 +30,6 @@ stages:
     - cd build
     - cmake ..  -DCMAKE_BUILD_TYPE=$BUILD_TYPE
     - make
-    
 
 .package_dns:
     extends: .build_before_script
@@ -45,13 +42,13 @@ stages:
       - cmake ..  -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       - make package
 
-build-debug:
+build:
   stage: build
   extends:   .build_dns
   tags:
     - share
   variables:
-    BUILD_TYPE: "Debug"
+    BUILD_TYPE: "Release"
   except:
     - tags
 
@@ -66,26 +63,30 @@ build-debug:
 #  only:
 #    - tags
 
-dns-debug-package:
+dns-package:
     stage: package
     extends: .package_dns
     tags:
       - share
     variables:
-        BUILD_TYPE: "Debug"
+        BUILD_TYPE: "Release"
     artifacts:
-        name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-debug"
+        name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
         paths:
           -  ./build/*.rpm
     only:
     - tags
 
-#release:
-#  stage: release
-#  image: git.mesalab.cn:7443/mesa_framework/framework:master
-#  tags:
-#    - share
-#  only:
-#    - tags
-#  script:
-#    - /bin/bash -x ./autorelease.sh $CI_API_V4_URL $CI_PROJECT_URL $CI_PROJECT_ID $CI_TOKEN $CI_COMMIT_TAG $ARTIFACTS_JOB $CI_PROJECT_NAME
+release:
+  stage: release
+  image: git.mesalab.cn:7443/mesa_framework/framework:master
+  tags:
+    - share
+  only:
+    - tags
+  variables:
+    - ARTIFACTS_JOB: "dns-package"
+    - PROJECT_NAME: "dns"
+    - USER_DEFINE: "release"
+  script:
+    - /bin/bash -x ./autorelease.sh $CI_API_V4_URL $CI_PROJECT_URL $CI_PROJECT_ID $CI_TOKEN $CI_COMMIT_TAG $ARTIFACTS_JOB $CI_PROJECT_NAME $USER_DEFINE
