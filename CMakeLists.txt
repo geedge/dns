@@ -46,9 +46,6 @@ else()
 	set_target_properties(dns PROPERTIES OUTPUT_NAME ${lib_name})
 endif()
 
-
-set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp)
-
 install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns)
 install(FILES bin/dns.inf DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns)
 install(FILES bin/dns.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/conf/dns)
