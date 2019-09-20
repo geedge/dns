@@ -30,7 +30,7 @@
 #include "dns.h"
 #include "dns_internal.h"
 
-int DNS_PROTOCOL_VERSION_20190617;
+int DNS_PROTOCOL_VERSION_20190920;
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
@@ -93,7 +93,7 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 	FILE *fp = NULL;
 	dns_rr_t *dns_rr = NULL;
 
-	buf = (char *)calloc(1, buflen+1024);
+	buf = (char *)malloc(buflen+1024);
 	
 	for(i = 0; i < rr_count; i++)
 	{
@@ -788,14 +788,16 @@ int get_rr_type_nsec3(char **ptr, nsec3_t *nsec3, char *end)
 	NS_GET16(nsec3->iteration, *ptr);
 	nsec3->salt_len = *(unsigned char *)*ptr;
 	*ptr += 1;
-	nsec3->salt_value = (unsigned char *)calloc(1, nsec3->salt_len+1);	/* jump nsec3_t */
+	nsec3->salt_value = (unsigned char *)malloc(nsec3->salt_len+1);	/* jump nsec3_t */
 	memcpy(nsec3->salt_value, *ptr, nsec3->salt_len);
+	nsec3->salt_value[nsec3->salt_len]='\0';
 	*ptr += nsec3->salt_len;	/* jump salt_value */
 	
 	nsec3->hash_len = *(unsigned char *)*ptr;
 	*ptr += 1;
-	nsec3->next_hash_owner = (unsigned char *)calloc(1, nsec3->hash_len+1);	
+	nsec3->next_hash_owner = (unsigned char *)malloc(nsec3->hash_len+1);	
 	memcpy(nsec3->next_hash_owner, *ptr, nsec3->hash_len);
+	nsec3->next_hash_owner[nsec3->hash_len]='\0';
 	*ptr += nsec3->hash_len;/* jump next_hash_owner */
 		
 	return 0;
@@ -900,6 +902,7 @@ int get_rr_type_info(char **ptr, hinfo_t *hinfo, char *end)
 	*ptr += 1;
 	len = MIN(hinfo->cpu_len, sizeof(DNS_HINFO_MAX_CPU-1));
 	memcpy((char *)hinfo->cpu, *ptr, len);
+	hinfo->cpu[len]='\0';
 	*ptr += hinfo->cpu_len;
 	hinfo->cpu_len = len;
 	
@@ -907,6 +910,7 @@ int get_rr_type_info(char **ptr, hinfo_t *hinfo, char *end)
 	*ptr += 1;
 	len = MIN(hinfo->os_len, sizeof(DNS_HINFO_MAX_OS-1));
 	memcpy((char *)hinfo->os, *ptr, len);
+	hinfo->os[len]='\0';
 	*ptr += hinfo->os_len;
 	hinfo->os_len = len;
 	
@@ -1105,7 +1109,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 	{
 		case DNS_TYPE_CNAME:
 			original_ptr = (unsigned char*)*ptr;
-			rr->rdata.cname = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.cname = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.cname, DNS_MAX_NAME+1, end))
 			{
 				return 0;
@@ -1113,47 +1117,47 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			
 			break;
 		case DNS_TYPE_HINFO:
-			rr->rdata.hinfo = (hinfo_t *)calloc(1, sizeof(hinfo_t));
+			rr->rdata.hinfo = (hinfo_t *)malloc(sizeof(hinfo_t));
 			if(0 != get_rr_type_info(ptr, rr->rdata.hinfo, end))
 			{
 				return 0;
 			}
 			break;
 		case DNS_TYPE_MB:
-			rr->rdata.mb = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.mb = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.mb, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_MD:
-			rr->rdata.md = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.md = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg, (unsigned char**) ptr, rr->rdata.md, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_MF:
-			rr->rdata.mf = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.mf = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.mf, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_MG:
-			rr->rdata.mg = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.mg = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.mg, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_MINFO:
-			rr->rdata.minfo = (minfo_t *)calloc(1, sizeof(minfo_t));
+			rr->rdata.minfo = (minfo_t *)malloc(sizeof(minfo_t));
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.minfo->rmailbx, DNS_MAX_NAME+1, end))
 				return 0;
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.minfo->emailbx, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_MR:
-			rr->rdata.mr = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.mr = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg,(unsigned char**) ptr, rr->rdata.mr, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_MX:
 			if(*ptr + 2 > end) return 0;
-			rr->rdata.mx = (mx_t *)calloc(1, sizeof(mx_t));
+			rr->rdata.mx = (mx_t *)malloc(sizeof(mx_t));
 			NS_GET16(rr->rdata.mx->preference, *ptr);
 			if(rr->rdlength - 2 < ((unsigned char *)*ptr)[0])
 			{
@@ -1164,6 +1168,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 				}
 				len = MIN(DNS_MAX_NAME-1, rr->rdlength-2);/*size=1byte*/
 				memcpy(rr->rdata.mx->exchange, *ptr, len);	/* error labels */
+				rr->rdata.mx->exchange[len]='\0';
 				*ptr += rr->rdlength-2;
 			}
 			else
@@ -1173,18 +1178,18 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			}
 			break;
 		case DNS_TYPE_NS:
-			rr->rdata.ns = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.ns = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg,(unsigned char**) ptr, rr->rdata.ns, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_PTR:
-			rr->rdata.ptr = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.ptr = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.ptr, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_SOA:
 			original_ptr = (unsigned char*)*ptr;
-			rr->rdata.soa = (soa_t *)calloc(1, sizeof(soa_t));
+			rr->rdata.soa = (soa_t *)malloc(sizeof(soa_t));
 			if(0 != get_rr_type_soa(msg, ptr, rr->rdata.soa, end))
 				return 0;
 			if((char *)original_ptr+rr->rdlength!=*ptr)
@@ -1194,55 +1199,59 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			break;
 		case DNS_TYPE_A:
 			if(* ptr + 4 > end) return 0;
-			rr->rdata.a = (u_char *)calloc(1, NS_INT32SZ+1);
+			rr->rdata.a = (u_char *)malloc(NS_INT32SZ+1);
 			memcpy(rr->rdata.a, *ptr, NS_INT32SZ);
+			rr->rdata.a[NS_INT32SZ]='\0';
 			(*ptr) += NS_INT32SZ;
 			break;
 		case DNS_TYPE_AAAA:
 			if(* ptr + 16 > end) return -1;
 			rr->rdata.aaaa = (u_char *)calloc(1, 17);
 			memcpy(rr->rdata.aaaa, *ptr, 16);
+			rr->rdata.aaaa[16]='\0';
 			(*ptr)+=16;
 			break;
 		case DNS_TYPE_DNAME:
-			rr->rdata.dname = (u_char *)calloc(1, DNS_MAX_NAME+1);
+			rr->rdata.dname = (u_char *)malloc(DNS_MAX_NAME+1);
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.dname, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_ISDN:
-			rr->rdata.isdn = (u_char *)calloc(1, 1);
+			rr->rdata.isdn = (u_char *)malloc(sizeof(u_char));
 			memcpy(rr->rdata.isdn, *ptr, sizeof(u_char));
 			(*ptr)+=1;
 			break;
 		case DNS_TYPE_TXT:
-			rr->rdata.txt = (txt_t *)calloc(1, sizeof(txt_t));
+			rr->rdata.txt = (txt_t *)malloc(sizeof(txt_t));
 			len = MIN(DNS_MAX_NAME-1, rr->rdlength-1);/*size=1byte*/
 			memcpy(rr->rdata.txt->txt, *ptr+1, len);
+			rr->rdata.txt->txt[len]='\0';
 			rr->rdata.txt->size = len;	
 			*ptr += rr->rdlength;
 			break;
 		case DNS_TYPE_RP:
-			rr->rdata.rp = (rp_t *)calloc(1, sizeof(rp_t));
+			rr->rdata.rp = (rp_t *)malloc(sizeof(rp_t));
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rp->mailbox, DNS_MAX_NAME+1, end))
 				return 0;
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rp->txt_rr, DNS_MAX_NAME+1, end))
 				return 0;
 			break;
 		case DNS_TYPE_NULL:
-			rr->rdata.null = (null_t *)calloc(1, sizeof(null_t));
+			rr->rdata.null = (null_t *)malloc(sizeof(null_t));
 			len = MIN(DNS_MAX_NAME-1, rr->rdlength-1);	/*size=1byte*/
 			memcpy(rr->rdata.null->null, *ptr+1, len);
+			rr->rdata.null->null[len]='\0';
 			rr->rdata.null->size = len;
 			*ptr += rr->rdlength;
 			break;
 		case DNS_TYPE_WKS:
-			rr->rdata.wks = (wks_t *)calloc(1, sizeof(wks_t));
+			rr->rdata.wks = (wks_t *)malloc(sizeof(wks_t));
 			if(0 != get_rr_type_wks(ptr, rr->rdata.wks, end))
 				return 0;
 			rr->rdata.wks->size = rr->rdlength - 5;
 			*ptr += rr->rdlength - 5;
 		case DNS_TYPE_SRV:
-			rr->rdata.srv = (srv_t *)calloc(1, sizeof(srv_t));
+			rr->rdata.srv = (srv_t *)malloc(sizeof(srv_t));
 			NS_GET16(rr->rdata.srv->priority, *ptr);
 			NS_GET16(rr->rdata.srv->weight, *ptr);
 			NS_GET16(rr->rdata.srv->port, *ptr);
@@ -1254,7 +1263,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 		case DNS_TYPE_DS:
 		case DNS_TYPE_DLV:
 			if(* ptr + 4 > end) return 0;
-			rr->rdata.ds = (ds_t *)calloc(1, sizeof(ds_t));
+			rr->rdata.ds = (ds_t *)malloc(sizeof(ds_t));
 			NS_GET16(rr->rdata.ds->key_tag, *ptr);
 			rr->rdata.ds->algo = *(unsigned char *)ptr;
 			*ptr += 1;
@@ -1266,7 +1275,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			break;
 		case DNS_TYPE_RRSIG:
 			if(* ptr + 18 > end) return 0;
-			rr->rdata.rrsig = (rrsig_t *)calloc(1, sizeof(rrsig_t));
+			rr->rdata.rrsig = (rrsig_t *)malloc(sizeof(rrsig_t));
 			get_rr_type_rrsig(ptr, rr->rdata.rrsig, end);
 			len = get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rrsig->signer_name, DNS_MAX_SIGNER_NAME, end);
 			if(len <= 0)
@@ -1279,7 +1288,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			break;
 		case DNS_TYPE_NSEC:
 			original_ptr = (unsigned char*)*ptr;
-			rr->rdata.nsec = (nsec_t *)calloc(1, sizeof(nsec_t));
+			rr->rdata.nsec = (nsec_t *)malloc(sizeof(nsec_t));
 			len = get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.nsec->next_domain, DNS_MAX_OWNER, end);
 			if(len <= 0)
 			{
@@ -1291,6 +1300,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 				NS_GET16(len, *ptr);
 				byte = MIN(DNS_MAX_MAPS-1, len);
 				memcpy(rr->rdata.nsec->type_bit_maps, *ptr, byte);
+				rr->rdata.nsec->type_bit_maps[byte]='\0';
 				*ptr += len;
 				rr->rdata.nsec->maps_len = len;
 				len = byte;
@@ -1303,6 +1313,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 					*ptr += 1;	/* jump 1 byte of len */
 					len = MIN(DNS_MAX_MAPS-1-len, byte);
 					memcpy(rr->rdata.nsec->type_bit_maps+rr->rdata.nsec->maps_len, *ptr, len);
+					(rr->rdata.nsec->type_bit_maps+rr->rdata.nsec->maps_len)[len]='\0';
 					*ptr += byte;	/* jump  byte */
 					rr->rdata.nsec->maps_len += len;
 				}
@@ -1310,7 +1321,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			break;
 		case DNS_TYPE_DNSKEY:
 			if(* ptr + 4 > end) return 0;			
-			rr->rdata.dnskey = (dnskey_t *)calloc(1, sizeof(dnskey_t));			
+			rr->rdata.dnskey = (dnskey_t *)malloc(sizeof(dnskey_t));			
 			NS_GET16(rr->rdata.dnskey->flags, *ptr);
 			rr->rdata.dnskey->protocol = *(unsigned char *)ptr;
 			*ptr += 1;
@@ -1325,7 +1336,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			original_ptr = (unsigned char*)*ptr;
 			//salt_len = *(unsigned char *)(*ptr+4);	/* salt length */
 			//hash_len = *(salt_len + (unsigned char *)(*ptr+5));	/* hash length */
-			rr->rdata.nsec3 = (nsec3_t *)calloc(1, sizeof(nsec3_t));
+			rr->rdata.nsec3 = (nsec3_t *)malloc(sizeof(nsec3_t));
 			get_rr_type_nsec3(ptr, rr->rdata.nsec3, end);
 
 			if((original_ptr+rr->rdlength != (unsigned char*)*ptr) && (*ptr != NULL))
@@ -1333,6 +1344,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 				NS_GET16(len, *ptr);
 				byte = MIN(DNS_MAX_MAPS-1, len);
 				memcpy( rr->rdata.nsec3->type_bit_maps, *ptr, byte);
+				rr->rdata.nsec3->type_bit_maps[byte]='\0';
 				*ptr += len;
 				rr->rdata.nsec3->maps_len = byte;
 				len = byte;
@@ -1345,13 +1357,14 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 					*ptr += 1;	/* jump 1 byte of len */
 					len = MIN(DNS_MAX_MAPS-1-len, byte);
 					memcpy(rr->rdata.nsec3->type_bit_maps+rr->rdata.nsec3->maps_len, *ptr, len);
+					(rr->rdata.nsec3->type_bit_maps+rr->rdata.nsec3->maps_len)[len]='\0';
 					*ptr += byte;	/* jump  byte */
 					rr->rdata.nsec3->maps_len += len;
 				}
 			}
 			break;
 		case DNS_TYPE_NSEC3PARAM:
-			rr->rdata.nsec3param = (nsec3param_t *)calloc(1, sizeof(nsec3param_t));	
+			rr->rdata.nsec3param = (nsec3param_t *)malloc(sizeof(nsec3param_t));	
 			rr->rdata.nsec3param->hash_algo = *(unsigned char *)ptr;
 			*ptr += 1;
 			rr->rdata.nsec3param->flags = *(unsigned char *)ptr;
@@ -1363,8 +1376,9 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			*ptr +=  rr->rdlength-5;
 			break;
 		case DNS_TYPE_UNKNOWN:
-			rr->rdata.unknown_data = (u_char *)calloc(1, rr->rdlength+1);
+			rr->rdata.unknown_data = (u_char *)malloc(rr->rdlength+1);
 			memcpy(rr->rdata.unknown_data, *ptr, rr->rdlength);
+			rr->rdata.unknown_data[rr->rdlength]='\0';
 			(*ptr)+=rr->rdlength;
 			break;
 		default:
@@ -1385,7 +1399,7 @@ int parse_query_question(struct streaminfo *a_stream, dns_info_t *dns_info, char
 		return APP_STATE_GIVEME;
 	}
 	
-	dns_info->query_question = (dns_query_question_t *)calloc(dns_info->hdr_info.qdcount, sizeof(dns_query_question_t));
+	dns_info->query_question = (dns_query_question_t *)malloc(dns_info->hdr_info.qdcount*sizeof(dns_query_question_t));
 
 	if(0 != (ret = get_dns_query_question(payload, cur_pos, dns_info->query_question, payload+payload_len)))
 	{
@@ -1430,7 +1444,7 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 	{
 		return APP_STATE_GIVEME;
 	}
-	dns_info->rr = (dns_rr_t *)calloc(dns_info->rr_count, sizeof(dns_rr_t));
+	dns_info->rr = (dns_rr_t *)malloc(dns_info->rr_count*sizeof(dns_rr_t));
 
 	for(i = 0; i < dns_info->rr_count; i++)
 	{
