@@ -1382,7 +1382,7 @@ int parse_query_question(struct streaminfo *a_stream, dns_info_t *dns_info, char
 
 	if(0 == dns_info->hdr_info.qdcount || dns_info->hdr_info.qdcount > 1)
 	{
-		return APP_STATE_GIVEME;
+		return APP_STATE_DROPME;
 	}
 	
 	dns_info->query_question = (dns_query_question_t *)calloc(dns_info->hdr_info.qdcount, sizeof(dns_query_question_t));
