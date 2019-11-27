@@ -247,34 +247,34 @@ typedef struct _dns_rr
 	u_int16_t rdlength;
 	union
 	{
-		u_char *cname;	/* cname[DNS_MAX_NAME + 1]; */
-		hinfo_t *hinfo;
-		u_char *mb;		/* mb[DNS_MAX_NAME + 1]; */
-		u_char *md;		/* md[DNS_MAX_NAME + 1]; */
-		u_char *mf;		/* mf[DNS_MAX_NAME + 1]; */
-		u_char *mg;		/* mg[DNS_MAX_NAME + 1]; */
-		minfo_t *minfo;
-		u_char *mr;		/* mr[DNS_MAX_NAME + 1]; */
-		mx_t *mx;
-		u_char *ns;		/* ns[DNS_MAX_NAME + 1]; */
-		u_char *ptr;	/* ptr[DNS_MAX_NAME + 1]; */
-		soa_t *soa;
-		u_char *a;
-		u_char *aaaa;	/* aaaa[16]; */
-		u_char *dname;
-		u_char *isdn;
-		u_char *unknown_data;
-		txt_t *txt;
-		rp_t *rp;
-		null_t *null;
-		wks_t *wks;
-		srv_t *srv;
-		ds_t *ds;
-		rrsig_t *rrsig;
-		nsec_t *nsec;
-		dnskey_t *dnskey;
-		nsec3_t *nsec3;
-		nsec3param_t *nsec3param;
+		u_char cname[DNS_MAX_NAME + 1];	/* cname[DNS_MAX_NAME + 1]; */
+		hinfo_t hinfo;
+		u_char mb[DNS_MAX_NAME + 1];		/* mb[DNS_MAX_NAME + 1]; */
+		u_char md[DNS_MAX_NAME + 1];		/* md[DNS_MAX_NAME + 1]; */
+		u_char mf[DNS_MAX_NAME + 1];		/* mf[DNS_MAX_NAME + 1]; */
+		u_char mg[DNS_MAX_NAME + 1];		/* mg[DNS_MAX_NAME + 1]; */
+		minfo_t minfo;
+		u_char mr[DNS_MAX_NAME + 1];		/* mr[DNS_MAX_NAME + 1]; */
+		mx_t mx;
+		u_char ns[DNS_MAX_NAME + 1];		/* ns[DNS_MAX_NAME + 1]; */
+		u_char ptr[DNS_MAX_NAME + 1];	/* ptr[DNS_MAX_NAME + 1]; */
+		soa_t soa;
+		u_char a[DNS_MAX_NAME + 1];
+		u_char aaaa[DNS_MAX_NAME + 1];	/* aaaa[16]; */
+		u_char dname[DNS_MAX_NAME + 1];
+		u_char isdn[DNS_MAX_NAME + 1];
+		u_char unknown_data[DNS_MAX_NAME + 1];
+		txt_t txt;
+		rp_t rp;
+		null_t null;
+		wks_t wks;
+		srv_t srv;
+		ds_t ds;
+		rrsig_t rrsig;
+		nsec_t nsec;
+		dnskey_t dnskey;
+		nsec3_t nsec3;
+		nsec3param_t nsec3param;
 	} rdata;
 } dns_rr_t;
 
@@ -294,12 +294,14 @@ typedef struct
 	u_char qname[DNS_MAX_NAME+1];
 } dns_query_question_t;
 
+#define	MAX_RR_NUM	256
+
 typedef struct _dns_info
 {
 	dns_hdr_t hdr_info;
 	int rr_count;
-	dns_rr_t *rr;	
-	dns_query_question_t *query_question;
+	dns_rr_t rr[MAX_RR_NUM];	
+	dns_query_question_t query_question;
 }dns_info_t;
 
 
