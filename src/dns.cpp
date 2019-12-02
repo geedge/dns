@@ -30,7 +30,7 @@
 #include "dns.h"
 #include "dns_internal.h"
 
-int DNS_PROTOCOL_VERSION_20190923;
+int DNS_PROTOCOL_VERSION_20191129;
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
@@ -83,12 +83,12 @@ const unsigned char PCAP_FILE_HEAD[24] = {0xD4, 0xC3, 0xB2, 0xA1, 0x02, 0x00, 0x
 
 int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int *dns_sec)
 {
-	int i = 0, j = 0;
+	int i=0,j=0,tmp_len=0;
 	int len = 0, used_len = 0;
-	char ip_str[128];
-	char tmp_buf[2048];
-	char maps[2048];
-	char salt_value[2048];
+	char ip_str[128]={0};
+	char tmp_buf[2048]={0};
+	char maps[2048]={0};
+	char salt_value[2048]={0};
 	char *buf = NULL;
 	FILE *fp = NULL;
 	dns_rr_t *dns_rr = NULL;
@@ -208,8 +208,9 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 			case DNS_TYPE_DS:
 				*dns_sec = 2;
 				len = 0;
-				assert(dns_rr->rdata.ds.digest_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.ds.digest_len); j++)
+				//assert(dns_rr->rdata.ds.digest_len*2<sizeof(tmp_buf));
+				tmp_len=MIN(dns_rr->rdata.ds.digest_len*2, sizeof(tmp_buf)-2)/2;
+				for(j=0; j<tmp_len; j++)
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.ds.digest[j]);
 				}
@@ -221,8 +222,9 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 			case DNS_TYPE_RRSIG:
 				*dns_sec = 2;
 				len = 0;
-				assert(dns_rr->rdata.rrsig.signature_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.rrsig.signature_len); j++)
+				//assert(dns_rr->rdata.rrsig.signature_len*2<sizeof(tmp_buf));
+				tmp_len=MIN(dns_rr->rdata.rrsig.signature_len*2, sizeof(tmp_buf)-2)/2;
+				for(j=0; j<tmp_len; j++)
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.rrsig.signature[j]);
 				}
@@ -235,8 +237,9 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				break;
 			case DNS_TYPE_NSEC:
 				*dns_sec = 2;
-				len = 0;
-				for(j = 0; j < (int)(dns_rr->rdata.nsec.maps_len); j++)
+				len = 0;				
+				tmp_len=MIN(dns_rr->rdata.nsec.maps_len*2, sizeof(tmp_buf)-2)/2;
+				for(j=0; j<tmp_len; j++)
 				{
 					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec.type_bit_maps[j]);
 				}
@@ -245,8 +248,9 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 			case DNS_TYPE_DNSKEY:
 				*dns_sec = 2;
 				len = 0;
-				assert(dns_rr->rdata.dnskey.public_key_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.dnskey.public_key_len); j++)
+				//assert(dns_rr->rdata.dnskey.public_key_len*2<sizeof(tmp_buf));
+				tmp_len=MIN(dns_rr->rdata.dnskey.public_key_len*2, sizeof(tmp_buf)-2)/2;
+				for(j=0; j<tmp_len; j++)
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.dnskey.public_key[j]);
 				}
@@ -258,8 +262,9 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				memset(tmp_buf, 0, sizeof(tmp_buf));
 				memset(maps, 0, sizeof(maps));
 				len = 0;
-				assert(dns_rr->rdata.nsec3.hash_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3.hash_len); j++)
+				//assert(dns_rr->rdata.nsec3.hash_len*2<sizeof(tmp_buf));
+				tmp_len=MIN(dns_rr->rdata.nsec3.hash_len*2, sizeof(tmp_buf)-2)/2;
+				for(j=0; j<tmp_len; j++)
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3.next_hash_owner[j]);
 				}
@@ -282,8 +287,9 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				break;
 			case DNS_TYPE_NSEC3PARAM:
 				len = 0;
-				assert(dns_rr->rdata.nsec3param.salt_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3param.salt_len); j++)
+				//assert(dns_rr->rdata.nsec3param.salt_len*2<sizeof(tmp_buf));				
+				tmp_len=MIN(dns_rr->rdata.nsec3param.salt_len*2, sizeof(tmp_buf)-2)/2;
+				for(j=0; j<tmp_len; j++)
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3param.salt_value[j]);
 				}
