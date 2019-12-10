@@ -83,20 +83,20 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 	cJSON_AddItemToObject(dns_info_object, "hdr", dns_hdr_object);
 	cJSON_AddItemToObject(dns_info_object, "flags", dns_flags_object);
 	cJSON_AddItemToObject(dns_info_object,"question", dns_question_array);
-	for(i = 0; i < dns_info->hdr_info.qdcount && (&dns_info->query_question[i])!=NULL; i++)
-	{
-		used_len = snprintf(question, sizeof(question), "question: <qtype: %d, qclass: %d, qname: %s>\n",
-											 dns_info->query_question[i].qtype,
-											 dns_info->query_question[i].qclass,
-											 dns_info->query_question[i].qname);
-			
-		cJSON *dns_question_object=cJSON_CreateObject();
-		cJSON_AddItemToArray(dns_question_array, dns_question_object);
 
-		cJSON_AddNumberToObject(dns_question_object, "qtype", dns_info->query_question[i].qtype);
-		cJSON_AddNumberToObject(dns_question_object, "qclass", dns_info->query_question[i].qclass);
-		cJSON_AddStringToObject(dns_question_object, "qname", (const char *)dns_info->query_question[i].qname);
-	}
+
+	used_len = snprintf(question, sizeof(question), "question: <qtype: %d, qclass: %d, qname: %s>\n",
+										 dns_info->query_question.qtype,
+										 dns_info->query_question.qclass,
+										 dns_info->query_question.qname);
+		
+	cJSON *dns_question_object=cJSON_CreateObject();
+	cJSON_AddItemToArray(dns_question_array, dns_question_object);
+
+	cJSON_AddNumberToObject(dns_question_object, "qtype", dns_info->query_question.qtype);
+	cJSON_AddNumberToObject(dns_question_object, "qclass", dns_info->query_question.qclass);
+	cJSON_AddStringToObject(dns_question_object, "qname", (const char *)dns_info->query_question.qname);
+
 
 	fwrite(question, used_len, 1, fp);
 
@@ -178,20 +178,21 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 			case DNS_TYPE_SOA:
 				used_len += snprintf(buf+used_len, buflen-used_len, 
 							"[SOA  mname: %s, rname: %s, serial: %u, refresh: %u, retry: %u, expire: %u, minimum: %u]\n",
-							dns_rr->rdata.soa->mname,
-							dns_rr->rdata.soa->rname,
-							dns_rr->rdata.soa->serial,
-							dns_rr->rdata.soa->refresh,
-							dns_rr->rdata.soa->retry,
-							dns_rr->rdata.soa->expire,
-							dns_rr->rdata.soa->minimum);
-				cJSON_AddStringToObject(dns_rr_object, "mname", (const char *)(dns_rr->rdata.soa->mname));
-				cJSON_AddStringToObject(dns_rr_object, "rname", (const char *)(dns_rr->rdata.soa->rname));
-				cJSON_AddNumberToObject(dns_rr_object, "serial", dns_rr->rdata.soa->serial);
-				cJSON_AddNumberToObject(dns_rr_object, "refresh", dns_rr->rdata.soa->refresh);
-				cJSON_AddNumberToObject(dns_rr_object, "retry", dns_rr->rdata.soa->retry);
-				cJSON_AddNumberToObject(dns_rr_object, "cname", dns_rr->rdata.soa->expire);
-				cJSON_AddNumberToObject(dns_rr_object, "minimum", dns_rr->rdata.soa->minimum);
+							dns_rr->rdata.soa.mname,
+							dns_rr->rdata.soa.rname,
+							dns_rr->rdata.soa.serial,
+							dns_rr->rdata.soa.refresh,
+							dns_rr->rdata.soa.retry,
+							dns_rr->rdata.soa.expire,
+							dns_rr->rdata.soa.minimum);
+				
+				cJSON_AddStringToObject(dns_rr_object, "mname", (const char *)(dns_rr->rdata.soa.mname));
+				cJSON_AddStringToObject(dns_rr_object, "rname", (const char *)(dns_rr->rdata.soa.rname));
+				cJSON_AddNumberToObject(dns_rr_object, "serial", dns_rr->rdata.soa.serial);
+				cJSON_AddNumberToObject(dns_rr_object, "refresh", dns_rr->rdata.soa.refresh);
+				cJSON_AddNumberToObject(dns_rr_object, "retry", dns_rr->rdata.soa.retry);
+				cJSON_AddNumberToObject(dns_rr_object, "cname", dns_rr->rdata.soa.expire);
+				cJSON_AddNumberToObject(dns_rr_object, "minimum", dns_rr->rdata.soa.minimum);
 				break;
 			case DNS_TYPE_MB:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[MB: %s]\n", dns_rr->rdata.mb);
@@ -207,19 +208,19 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 				break;
 			case DNS_TYPE_NULL:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[null size: %u, null: %s]\n",
-													dns_rr->rdata.null->size, dns_rr->rdata.null->null);
-				cJSON_AddNumberToObject(dns_rr_object, "size", dns_rr->rdata.null->size);
-				cJSON_AddStringToObject(dns_rr_object, "null", (const char *)(dns_rr->rdata.null->null));
+													dns_rr->rdata.null.size, dns_rr->rdata.null.null);
+				cJSON_AddNumberToObject(dns_rr_object, "size", dns_rr->rdata.null.size);
+				cJSON_AddStringToObject(dns_rr_object, "null", (const char *)(dns_rr->rdata.null.null));
 				break;
 			case DNS_TYPE_WKS:
-				inet_ntop(AF_INET, &(dns_rr->rdata.wks->addr), ip_str, sizeof(ip_str));
+				inet_ntop(AF_INET, &(dns_rr->rdata.wks.addr), ip_str, sizeof(ip_str));
 				used_len += snprintf(buf+used_len, buflen-used_len, "[WKS addr: %s, protocol: %u, bitmap: %s, size: %u]\n",
-									ip_str, dns_rr->rdata.wks->protocol, dns_rr->rdata.wks->bitmap, dns_rr->rdata.wks->size);
+									ip_str, dns_rr->rdata.wks.protocol, dns_rr->rdata.wks.bitmap, dns_rr->rdata.wks.size);
 				
 				cJSON_AddStringToObject(dns_rr_object, "addr", ip_str);
-				cJSON_AddNumberToObject(dns_rr_object, "protocol", dns_rr->rdata.wks->protocol);
-				cJSON_AddStringToObject(dns_rr_object, "bitmap", (const char *)(dns_rr->rdata.wks->bitmap));
-				cJSON_AddNumberToObject(dns_rr_object, "size", dns_rr->rdata.wks->size);
+				cJSON_AddNumberToObject(dns_rr_object, "protocol", dns_rr->rdata.wks.protocol);
+				cJSON_AddStringToObject(dns_rr_object, "bitmap", (const char *)(dns_rr->rdata.wks.bitmap));
+				cJSON_AddNumberToObject(dns_rr_object, "size", dns_rr->rdata.wks.size);
 				break;
 			case DNS_TYPE_PTR:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[PTR: %s]\n", dns_rr->rdata.ptr);
@@ -227,38 +228,38 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 				break;
 			case DNS_TYPE_HINFO:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[HINFO cpu: %s, os: %s]\n", 
-								dns_rr->rdata.hinfo->cpu, dns_rr->rdata.hinfo->os);
+								dns_rr->rdata.hinfo.cpu, dns_rr->rdata.hinfo.os);
 				
-				cJSON_AddStringToObject(dns_rr_object, "cpu", (const char *)(dns_rr->rdata.hinfo->cpu));
-				cJSON_AddStringToObject(dns_rr_object, "os", (const char *)(dns_rr->rdata.hinfo->os));
+				cJSON_AddStringToObject(dns_rr_object, "cpu", (const char *)(dns_rr->rdata.hinfo.cpu));
+				cJSON_AddStringToObject(dns_rr_object, "os", (const char *)(dns_rr->rdata.hinfo.os));
 				break;
 			case DNS_TYPE_MINFO:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[MINFO rmailbx: %s, emailbx: %s]\n",
-								dns_rr->rdata.minfo->rmailbx, dns_rr->rdata.minfo->emailbx);
+								dns_rr->rdata.minfo.rmailbx, dns_rr->rdata.minfo.emailbx);
 
-				cJSON_AddStringToObject(dns_rr_object, "rmailbx", (const char *)(dns_rr->rdata.minfo->rmailbx));
-				cJSON_AddStringToObject(dns_rr_object, "emailbx", (const char *)(dns_rr->rdata.minfo->emailbx));
+				cJSON_AddStringToObject(dns_rr_object, "rmailbx", (const char *)(dns_rr->rdata.minfo.rmailbx));
+				cJSON_AddStringToObject(dns_rr_object, "emailbx", (const char *)(dns_rr->rdata.minfo.emailbx));
 				break;
 			case DNS_TYPE_MX:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[MX preference: %u, exchange: %s]\n",
-								dns_rr->rdata.mx->preference, dns_rr->rdata.mx->exchange);
+								dns_rr->rdata.mx.preference, dns_rr->rdata.mx.exchange);
 
-				cJSON_AddStringToObject(dns_rr_object, "exchange", (const char *)(dns_rr->rdata.mx->exchange));
-				cJSON_AddNumberToObject(dns_rr_object, "preference", dns_rr->rdata.mx->preference);
+				cJSON_AddStringToObject(dns_rr_object, "exchange", (const char *)(dns_rr->rdata.mx.exchange));
+				cJSON_AddNumberToObject(dns_rr_object, "preference", dns_rr->rdata.mx.preference);
 				break;
 			case DNS_TYPE_TXT:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[TXT size: %u, txt: %s]\n",
-								dns_rr->rdata.txt->size, dns_rr->rdata.txt->txt);
+								dns_rr->rdata.txt.size, dns_rr->rdata.txt.txt);
 
-				cJSON_AddStringToObject(dns_rr_object, "txt", (const char *)(dns_rr->rdata.txt->txt));
-				cJSON_AddNumberToObject(dns_rr_object, "size", dns_rr->rdata.txt->size);
+				cJSON_AddStringToObject(dns_rr_object, "txt", (const char *)(dns_rr->rdata.txt.txt));
+				cJSON_AddNumberToObject(dns_rr_object, "size", dns_rr->rdata.txt.size);
 				break;
 			case DNS_TYPE_RP:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[mailbox: %s, txt_rr: %s]\n",
-								dns_rr->rdata.rp->mailbox, dns_rr->rdata.rp->txt_rr);
+								dns_rr->rdata.rp.mailbox, dns_rr->rdata.rp.txt_rr);
 
-				cJSON_AddStringToObject(dns_rr_object, "mailbox", (const char *)(dns_rr->rdata.rp->mailbox));
-				cJSON_AddStringToObject(dns_rr_object, "txt_rr", (const char *)(dns_rr->rdata.rp->txt_rr));
+				cJSON_AddStringToObject(dns_rr_object, "mailbox", (const char *)(dns_rr->rdata.rp.mailbox));
+				cJSON_AddStringToObject(dns_rr_object, "txt_rr", (const char *)(dns_rr->rdata.rp.txt_rr));
 				break;
 			case DNS_TYPE_AAAA:
 				inet_ntop(AF_INET6, dns_rr->rdata.aaaa, ip_str, sizeof(ip_str));
@@ -270,72 +271,72 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 			case DNS_TYPE_DS:
 				*dns_sec = 2;
 				len = 0;
-				assert(dns_rr->rdata.ds->digest_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.ds->digest_len); j++)
+				assert(dns_rr->rdata.ds.digest_len*2<sizeof(tmp_buf));
+				for(j = 0; j < (int)(dns_rr->rdata.ds.digest_len); j++)
 				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.ds->digest[j]);
+					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.ds.digest[j]);
 				}
 				used_len += snprintf(buf+used_len, buflen-used_len,
 									"[DS key_tag: %u, algo: %u, digest_type: %u, digest: %s]\n",
-										dns_rr->rdata.ds->key_tag, dns_rr->rdata.ds->algo,
-										dns_rr->rdata.ds->digest_type, tmp_buf);
+										dns_rr->rdata.ds.key_tag, dns_rr->rdata.ds.algo,
+										dns_rr->rdata.ds.digest_type, tmp_buf);
 
-				cJSON_AddNumberToObject(dns_rr_object, "key_tag", dns_rr->rdata.ds->key_tag);
-				cJSON_AddNumberToObject(dns_rr_object, "algo", dns_rr->rdata.ds->algo);
-				cJSON_AddNumberToObject(dns_rr_object, "digest_type", dns_rr->rdata.ds->digest_type);
+				cJSON_AddNumberToObject(dns_rr_object, "key_tag", dns_rr->rdata.ds.key_tag);
+				cJSON_AddNumberToObject(dns_rr_object, "algo", dns_rr->rdata.ds.algo);
+				cJSON_AddNumberToObject(dns_rr_object, "digest_type", dns_rr->rdata.ds.digest_type);
 				cJSON_AddStringToObject(dns_rr_object, "digest", tmp_buf);
 				break;
 			case DNS_TYPE_RRSIG:
 				*dns_sec = 2;
 				len = 0;
-				assert(dns_rr->rdata.rrsig->signature_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.rrsig->signature_len); j++)
+				assert(dns_rr->rdata.rrsig.signature_len*2<sizeof(tmp_buf));
+				for(j = 0; j < (int)(dns_rr->rdata.rrsig.signature_len); j++)
 				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.rrsig->signature[j]);
+					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.rrsig.signature[j]);
 				}
 				used_len += snprintf(buf+used_len, buflen-used_len,
 									"[RRSIG type_covered: %u, algo: %u, labels: %u, original_ttl: %u, sig_expiration: %u, sig_inception: %u, key_tag: %u, signer_name: %s, signature: %s]\n",
-										dns_rr->rdata.rrsig->type_covered, dns_rr->rdata.rrsig->algo,
-										dns_rr->rdata.rrsig->labels, dns_rr->rdata.rrsig->original_ttl,
-										dns_rr->rdata.rrsig->sig_expiration, dns_rr->rdata.rrsig->sig_inception,
-										dns_rr->rdata.rrsig->key_tag, dns_rr->rdata.rrsig->signer_name, tmp_buf);
+										dns_rr->rdata.rrsig.type_covered, dns_rr->rdata.rrsig.algo,
+										dns_rr->rdata.rrsig.labels, dns_rr->rdata.rrsig.original_ttl,
+										dns_rr->rdata.rrsig.sig_expiration, dns_rr->rdata.rrsig.sig_inception,
+										dns_rr->rdata.rrsig.key_tag, dns_rr->rdata.rrsig.signer_name, tmp_buf);
 
-				cJSON_AddNumberToObject(dns_rr_object, "type_covered", dns_rr->rdata.rrsig->type_covered);
-				cJSON_AddNumberToObject(dns_rr_object, "algo", dns_rr->rdata.rrsig->algo);
-				cJSON_AddNumberToObject(dns_rr_object, "labels", dns_rr->rdata.rrsig->labels);
-				cJSON_AddNumberToObject(dns_rr_object, "original_ttl", dns_rr->rdata.rrsig->original_ttl);
-				cJSON_AddNumberToObject(dns_rr_object, "sig_expiration", dns_rr->rdata.rrsig->sig_expiration);
-				cJSON_AddNumberToObject(dns_rr_object, "sig_inception", dns_rr->rdata.rrsig->sig_inception);
-				cJSON_AddNumberToObject(dns_rr_object, "key_tag", dns_rr->rdata.rrsig->key_tag);
-				cJSON_AddStringToObject(dns_rr_object, "signer_name", (const char *)(dns_rr->rdata.rrsig->signer_name));
+				cJSON_AddNumberToObject(dns_rr_object, "type_covered", dns_rr->rdata.rrsig.type_covered);
+				cJSON_AddNumberToObject(dns_rr_object, "algo", dns_rr->rdata.rrsig.algo);
+				cJSON_AddNumberToObject(dns_rr_object, "labels", dns_rr->rdata.rrsig.labels);
+				cJSON_AddNumberToObject(dns_rr_object, "original_ttl", dns_rr->rdata.rrsig.original_ttl);
+				cJSON_AddNumberToObject(dns_rr_object, "sig_expiration", dns_rr->rdata.rrsig.sig_expiration);
+				cJSON_AddNumberToObject(dns_rr_object, "sig_inception", dns_rr->rdata.rrsig.sig_inception);
+				cJSON_AddNumberToObject(dns_rr_object, "key_tag", dns_rr->rdata.rrsig.key_tag);
+				cJSON_AddStringToObject(dns_rr_object, "signer_name", (const char *)(dns_rr->rdata.rrsig.signer_name));
 				cJSON_AddStringToObject(dns_rr_object, "signature", tmp_buf);
 				break;
 			case DNS_TYPE_NSEC:
 				*dns_sec = 2;
 				len = 0;
-				for(j = 0; j < (int)(dns_rr->rdata.nsec->maps_len); j++)
+				for(j = 0; j < (int)(dns_rr->rdata.nsec.maps_len); j++)
 				{
-					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec->type_bit_maps[j]);
+					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec.type_bit_maps[j]);
 				}
-				used_len += snprintf(buf+used_len, buflen-used_len, "[NSEC next_domain: %s, type_bit_maps: %s]\n", dns_rr->rdata.nsec->next_domain, maps);
+				used_len += snprintf(buf+used_len, buflen-used_len, "[NSEC next_domain: %s, type_bit_maps: %s]\n", dns_rr->rdata.nsec.next_domain, maps);
 
-				cJSON_AddStringToObject(dns_rr_object, "next_domain", (const char *)(dns_rr->rdata.nsec->next_domain));
+				cJSON_AddStringToObject(dns_rr_object, "next_domain", (const char *)(dns_rr->rdata.nsec.next_domain));
 				cJSON_AddStringToObject(dns_rr_object, "type_bit_maps", maps);
 				break;
 			case DNS_TYPE_DNSKEY:
 				*dns_sec = 2;
 				len = 0;
-				assert(dns_rr->rdata.dnskey->public_key_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.dnskey->public_key_len); j++)
+				assert(dns_rr->rdata.dnskey.public_key_len*2<sizeof(tmp_buf));
+				for(j = 0; j < (int)(dns_rr->rdata.dnskey.public_key_len); j++)
 				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.dnskey->public_key[j]);
+					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.dnskey.public_key[j]);
 				}
 				used_len += snprintf(buf+used_len, buflen-used_len, "[DNSKEY flags: %u, protocol: %u, algo: %u, public_key: %s]\n",
-							dns_rr->rdata.dnskey->flags, dns_rr->rdata.dnskey->protocol, dns_rr->rdata.dnskey->algo, tmp_buf);
+							dns_rr->rdata.dnskey.flags, dns_rr->rdata.dnskey.protocol, dns_rr->rdata.dnskey.algo, tmp_buf);
 
-				cJSON_AddNumberToObject(dns_rr_object, "flags", dns_rr->rdata.dnskey->flags);
-				cJSON_AddNumberToObject(dns_rr_object, "protocol", dns_rr->rdata.dnskey->protocol);
-				cJSON_AddNumberToObject(dns_rr_object, "algo", dns_rr->rdata.dnskey->algo);
+				cJSON_AddNumberToObject(dns_rr_object, "flags", dns_rr->rdata.dnskey.flags);
+				cJSON_AddNumberToObject(dns_rr_object, "protocol", dns_rr->rdata.dnskey.protocol);
+				cJSON_AddNumberToObject(dns_rr_object, "algo", dns_rr->rdata.dnskey.algo);
 				cJSON_AddStringToObject(dns_rr_object, "public_key", tmp_buf);
 				break;
 			case DNS_TYPE_NSEC3:
@@ -343,55 +344,55 @@ int rr_print(dns_info_t *dns_info, struct streaminfo *a_udp, int thread_seq, voi
 				memset(tmp_buf, 0, sizeof(tmp_buf));
 				memset(maps, 0, sizeof(maps));
 				len = 0;
-				assert(dns_rr->rdata.nsec3->hash_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3->hash_len); j++)
+				assert(dns_rr->rdata.nsec3.hash_len*2<sizeof(tmp_buf));
+				for(j = 0; j < (int)(dns_rr->rdata.nsec3.hash_len); j++)
 				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3->next_hash_owner[j]);
+					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3.next_hash_owner[j]);
 				}
 				len = 0;
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3->maps_len); j++)
+				for(j = 0; j < (int)(dns_rr->rdata.nsec3.maps_len); j++)
 				{
-					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec3->type_bit_maps[j]);
+					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec3.type_bit_maps[j]);
 				}
 				len = 0;
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3->salt_len); j++)
+				for(j = 0; j < (int)(dns_rr->rdata.nsec3.salt_len); j++)
 				{
-					len += snprintf(salt_value+len, sizeof(salt_value)-len, "%02x", dns_rr->rdata.nsec3->salt_value[j]);
+					len += snprintf(salt_value+len, sizeof(salt_value)-len, "%02x", dns_rr->rdata.nsec3.salt_value[j]);
 				}
 				
 				used_len += snprintf(buf+used_len, buflen-used_len,
 								"[NSEC3 hash_algo: %u, flags: %u, iteration: %u, salt_len: %u, hash_len: %u, salt_value: %s, next_hash_owner: %s, type_bit_maps: %s]\n",
-										dns_rr->rdata.nsec3->hash_algo, dns_rr->rdata.nsec3->flags, 
-										dns_rr->rdata.nsec3->iteration, dns_rr->rdata.nsec3->salt_len, 
-										dns_rr->rdata.nsec3->hash_len, salt_value, tmp_buf, maps);
+										dns_rr->rdata.nsec3.hash_algo, dns_rr->rdata.nsec3.flags, 
+										dns_rr->rdata.nsec3.iteration, dns_rr->rdata.nsec3.salt_len, 
+										dns_rr->rdata.nsec3.hash_len, salt_value, tmp_buf, maps);
 
-				cJSON_AddNumberToObject(dns_rr_object, "hash_algo", dns_rr->rdata.nsec3->hash_algo);
-				cJSON_AddNumberToObject(dns_rr_object, "flags", dns_rr->rdata.nsec3->flags);
-				cJSON_AddNumberToObject(dns_rr_object, "iteration", dns_rr->rdata.nsec3->iteration);
-				cJSON_AddNumberToObject(dns_rr_object, "salt_len", dns_rr->rdata.nsec3->salt_len);
-				cJSON_AddNumberToObject(dns_rr_object, "hash_len", dns_rr->rdata.nsec3->hash_len);
+				cJSON_AddNumberToObject(dns_rr_object, "hash_algo", dns_rr->rdata.nsec3.hash_algo);
+				cJSON_AddNumberToObject(dns_rr_object, "flags", dns_rr->rdata.nsec3.flags);
+				cJSON_AddNumberToObject(dns_rr_object, "iteration", dns_rr->rdata.nsec3.iteration);
+				cJSON_AddNumberToObject(dns_rr_object, "salt_len", dns_rr->rdata.nsec3.salt_len);
+				cJSON_AddNumberToObject(dns_rr_object, "hash_len", dns_rr->rdata.nsec3.hash_len);
 				cJSON_AddStringToObject(dns_rr_object, "salt_value", salt_value);
 				cJSON_AddStringToObject(dns_rr_object, "next_hash_owner", tmp_buf);
 				cJSON_AddStringToObject(dns_rr_object, "type_bit_maps", maps);
 				break;
 			case DNS_TYPE_NSEC3PARAM:
 				len = 0;
-				assert(dns_rr->rdata.nsec3param->salt_len*2<sizeof(tmp_buf));
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3param->salt_len); j++)
+				assert(dns_rr->rdata.nsec3param.salt_len*2<sizeof(tmp_buf));
+				for(j = 0; j < (int)(dns_rr->rdata.nsec3param.salt_len); j++)
 				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3param->salt_value[j]);
+					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3param.salt_value[j]);
 				}
 				
 				used_len += snprintf(buf+used_len, buflen-used_len,
 								"[NSEC3PARAM hash_algo: %u, flags: %u, iteration: %u, salt_len: %u, salt_value: %s]\n",
-										dns_rr->rdata.nsec3param->hash_algo, dns_rr->rdata.nsec3param->flags,
-										dns_rr->rdata.nsec3param->iteration, dns_rr->rdata.nsec3param->salt_len,
+										dns_rr->rdata.nsec3param.hash_algo, dns_rr->rdata.nsec3param.flags,
+										dns_rr->rdata.nsec3param.iteration, dns_rr->rdata.nsec3param.salt_len,
 										tmp_buf);
 
-				cJSON_AddNumberToObject(dns_rr_object, "hash_algo", dns_rr->rdata.nsec3param->hash_algo);
-				cJSON_AddNumberToObject(dns_rr_object, "flags", dns_rr->rdata.nsec3param->flags);
-				cJSON_AddNumberToObject(dns_rr_object, "iteration", dns_rr->rdata.nsec3param->iteration);
-				cJSON_AddNumberToObject(dns_rr_object, "salt_len", dns_rr->rdata.nsec3param->salt_len);
+				cJSON_AddNumberToObject(dns_rr_object, "hash_algo", dns_rr->rdata.nsec3param.hash_algo);
+				cJSON_AddNumberToObject(dns_rr_object, "flags", dns_rr->rdata.nsec3param.flags);
+				cJSON_AddNumberToObject(dns_rr_object, "iteration", dns_rr->rdata.nsec3param.iteration);
+				cJSON_AddNumberToObject(dns_rr_object, "salt_len", dns_rr->rdata.nsec3param.salt_len);
 				cJSON_AddStringToObject(dns_rr_object, "salt_value", tmp_buf);
 				break;
 			case DNS_TYPE_UNKNOWN:
@@ -469,9 +470,9 @@ char dns_build_cheat_pkt_entry (stSessionInfo *session_info,  void **pme, int th
 	memset(payload, 0, payload_len);
 	dns_hdr = (dns_hdr_t *)payload;
 
-	if(dns_info!= NULL)
+	if(dns_info!= NULL && strlen(dns_info->query_question.qname)>0)
 	{
-		switch(dns_info->query_question->qtype)
+		switch(dns_info->query_question.qtype)
 		{
 			case DNS_TYPE_A:
 				cheat_opt.res_type = DNS_TYPE_A;
@@ -492,7 +493,7 @@ char dns_build_cheat_pkt_entry (stSessionInfo *session_info,  void **pme, int th
 				dns_hdr->qdcount = 1;
 				break;
 		}
-		payload_len = build_cheat_pkt(payload, payload_len, dns_info->query_question, &cheat_opt, cheat_opt_num);
+		payload_len = build_cheat_pkt(payload, payload_len, &dns_info->query_question, &cheat_opt, cheat_opt_num);
 		senddir = (a_udp->routedir)^1;
 		MESA_inject_pkt(a_udp, (const char *)payload, payload_len, (const char *)a_packet, senddir);
 	}
