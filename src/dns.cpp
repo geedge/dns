@@ -30,7 +30,7 @@
 #include "dns.h"
 #include "dns_internal.h"
 
-int DNS_PROTOCOL_VERSION_20191129;
+int DNS_PROTOCOL_VERSION_20191212;
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
@@ -174,8 +174,14 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				break;
 			case DNS_TYPE_WKS:
 				inet_ntop(AF_INET, &(dns_rr->rdata.wks.addr), ip_str, sizeof(ip_str));
+				len=0;
+				tmp_len=MIN(dns_rr->rdata.wks.size*2, sizeof(tmp_buf)-2)/2;
+				for(j=0; j<tmp_len; j++)
+				{
+					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.wks.bitmap[j]);
+				}
 				used_len += snprintf(buf+used_len, buflen-used_len, "[WKS addr: %s, protocol: %u, bitmap: %s, size: %u]};",
-									ip_str, dns_rr->rdata.wks.protocol, dns_rr->rdata.wks.bitmap, dns_rr->rdata.wks.size);
+									ip_str, dns_rr->rdata.wks.protocol, tmp_buf, dns_rr->rdata.wks.size);
 				break;
 			case DNS_TYPE_PTR:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[PTR: %s]};", dns_rr->rdata.ptr);
@@ -522,8 +528,14 @@ int set_cheat_pkt_question(unsigned char *payload, int payload_len, dns_query_qu
 	
 	memset(compress_name, 0, sizeof(compress_name));
 	compress_len = dns_compress_rr_str(query->qname,strlen((char *)(query->qname)), compress_name);
-	memcpy(payload, compress_name, compress_len);
-	
+	if(compress_len>0)
+	{
+		memcpy(payload, compress_name, compress_len);
+	}
+	else
+	{
+		return -1;
+	}
 	used_len += compress_len ;
 
 	tqtype = ntohs(query->qtype);
@@ -640,14 +652,19 @@ int set_cheat_pkt_header(dns_hdr_t *dns_hdr)
 
 int build_cheat_pkt(unsigned char *payload, int payload_len, dns_query_question_t *query_question, cheat_pkt_opt_t *cheat_opt, int cheat_opt_num)
 {
-	int i = 0, rr_count = 0;
-	dns_hdr_t *dns_hdr = NULL;
-	int used_len = 0;
+	int i=0,rr_count=0;
+	dns_hdr_t *dns_hdr=NULL;
+	int ret=0,used_len=0;
 
 	dns_hdr = (dns_hdr_t *)payload;
 	
 	used_len += sizeof(dns_hdr_t);
-	used_len += set_cheat_pkt_question(payload+used_len, payload_len-used_len, query_question, dns_hdr->qdcount);
+	ret= set_cheat_pkt_question(payload+used_len, payload_len-used_len, query_question, dns_hdr->qdcount);
+	if(ret<0)
+	{
+		return -1;
+	}
+	used_len +=ret;
 
 	rr_count = dns_hdr->adcount + dns_hdr->ancount + dns_hdr->aucount;
 
@@ -707,35 +724,7 @@ int check_port(struct layer_addr addr, unsigned short port)
 
 void free_dns_info(dns_info_t *dns_info)
 {
-	int i = 0;
-
-	if(dns_info->rr != NULL && dns_info->rr_count > 0)
-	{
-		for(i = 0; i < dns_info->rr_count; i++)
-		{
-			switch(dns_info->rr[i].type)
-			{
-				case DNS_TYPE_NSEC3:
-					if(dns_info->rr[i].rdata.cname != NULL)
-					{
-						if(dns_info->rr[i].rdata.nsec3.salt_value != NULL)
-						{
-							free(dns_info->rr[i].rdata.nsec3.salt_value);
-							dns_info->rr[i].rdata.nsec3.salt_value = NULL;
-						}
-
-						if(dns_info->rr[i].rdata.nsec3.next_hash_owner != NULL)
-						{
-							free(dns_info->rr[i].rdata.nsec3.next_hash_owner);
-							dns_info->rr[i].rdata.nsec3.next_hash_owner = NULL;
-						}
-					}
-					break;
-				default:
-					break;
-			}
-		}
-	}
+	return ;
 }
 int get_dns_hdr_info(dns_hdr_t *dns_hdr, char *payload)
 {
@@ -777,16 +766,12 @@ int get_rr_type_nsec3(char **ptr, nsec3_t *nsec3, char *end)
 	NS_GET16(nsec3->iteration, *ptr);
 	nsec3->salt_len = *(unsigned char *)*ptr;
 	*ptr += 1;
-	nsec3->salt_value = (unsigned char *)malloc(nsec3->salt_len+1);	/* jump nsec3_t */
-	memcpy(nsec3->salt_value, *ptr, nsec3->salt_len);
-	nsec3->salt_value[nsec3->salt_len]='\0';
+	nsec3->salt_value=*(u_char**)ptr;
 	*ptr += nsec3->salt_len;	/* jump salt_value */
 	
 	nsec3->hash_len = *(unsigned char *)*ptr;
 	*ptr += 1;
-	nsec3->next_hash_owner = (unsigned char *)malloc(nsec3->hash_len+1);	
-	memcpy(nsec3->next_hash_owner, *ptr, nsec3->hash_len);
-	nsec3->next_hash_owner[nsec3->hash_len]='\0';
+	nsec3->next_hash_owner=*(u_char**)ptr;	
 	*ptr += nsec3->hash_len;/* jump next_hash_owner */
 		
 	return 0;
