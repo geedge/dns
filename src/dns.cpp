@@ -31,7 +31,28 @@
 #include "dns.h"
 #include "dns_internal.h"
 
-int DNS_PROTOCOL_VERSION_20191204;
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#define GIT_VERSION_CATTER(v) __attribute__((__used__)) const char * GIT_VERSION_##v = NULL
+#define GIT_VERSION_EXPEND(v) GIT_VERSION_CATTER(v)
+
+/* VERSION TAG */
+#ifdef GIT_VERSION
+GIT_VERSION_EXPEND(GIT_VERSION);
+#else
+static __attribute__((__used__)) const char * GIT_VERSION_UNKNOWN = NULL;
+#endif
+#undef GIT_VERSION_CATTER
+#undef GIT_VERSION_EXPEND
+
+#ifdef __cplusplus
+}
+#endif
+
+int DNS_PROTOCOL_VERSION_20191224;
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
@@ -1230,7 +1251,8 @@ int get_rr_common_field(char *msg, char **ptr, dns_rr_t *rr,  char *end)
 
 int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *info, int prot_flag, int session_state, int thread_seq, void *a_packet)
 {
-	char state=APP_STATE_GIVEME;
+	char state=PROT_STATE_GIVEME;
+	char app_state=APP_STATE_GIVEME;
 	stSessionInfo sessionInfo;	
 	save_dns_business_info_t *apme = (save_dns_business_info_t *)*pme;
 
@@ -1244,27 +1266,27 @@ int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *in
 
 	if(state&PROT_STATE_DROPPKT)
 	{
-		state=APP_STATE_DROPPKT;
+		app_state=APP_STATE_DROPPKT;
 	}
 
 	if(state&PROT_STATE_DROPME)
 	{
-		if(state&APP_STATE_DROPPKT)
+		if(app_state&APP_STATE_DROPPKT)
 		{
-			state|=APP_STATE_DROPME;
+			app_state|=APP_STATE_DROPME;
 		}
 		else
 		{
-			state=APP_STATE_DROPME;
+			app_state=APP_STATE_DROPME;
 		}
 	}
 
 	if(state&PROT_STATE_GIVEME)
 	{
-		state=APP_STATE_GIVEME;
+		app_state=APP_STATE_GIVEME;
 	}
 	
-	return state;
+	return app_state;
 }
 
 int get_dns_query_question(char *msg, char **ptr, dns_query_question_t *q, char *end)
