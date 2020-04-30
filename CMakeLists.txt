@@ -27,6 +27,7 @@ elseif(ENABLE_SANITIZE_THREAD)
 endif()
 # end of for ASAN
 
+include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(/opt/MESA/include/MESA/)
 
 file(GLOB SRC
