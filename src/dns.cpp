@@ -24,13 +24,60 @@
 #include <assert.h>
 #include <sys/time.h>
 #include <MESA/stream.h>
+
 #include <MESA/field_stat2.h>
 #include <MESA/MESA_prof_load.h>
 #include <MESA/MESA_handle_logger.h>
 #include "dns.h"
 #include "dns_internal.h"
 
+<<<<<<< .mine
 int DNS_PROTOCOL_VERSION_20191212;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#define GIT_VERSION_CATTER(v) __attribute__((__used__)) const char * GIT_VERSION_##v = NULL
+#define GIT_VERSION_EXPEND(v) GIT_VERSION_CATTER(v)
+
+/* VERSION TAG */
+#ifdef GIT_VERSION
+GIT_VERSION_EXPEND(GIT_VERSION);
+#else
+static __attribute__((__used__)) const char * GIT_VERSION_UNKNOWN = NULL;
+#endif
+#undef GIT_VERSION_CATTER
+#undef GIT_VERSION_EXPEND
+
+#ifdef __cplusplus
+}
+#endif
+
+int DNS_PROTOCOL_VERSION_20191224;
+>>>>>>> .theirs
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
@@ -80,6 +127,196 @@ const unsigned char PCAP_FILE_HEAD[24] = {0xD4, 0xC3, 0xB2, 0xA1, 0x02, 0x00, 0x
 								 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 								 0xFF, 0xFF, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00};
 
+
+int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
+{
+	int i=0;
+	char ip_str[128];
+	dns_rr_t *dns_rr=NULL;
+	cJSON *one_rr_object=NULL;
+	cJSON *dns_rr_array=NULL;
+
+	if(object==NULL || dns_info==NULL || dns_sec==NULL)
+	{
+		return -1;
+	}
+
+	dns_rr_array=cJSON_CreateArray();
+	
+	for(i = 0; i < dns_info->rr_count; i++)
+	{
+		one_rr_object=cJSON_CreateObject();
+		dns_rr = &(dns_info->rr[i]);
+
+		if(dns_rr->type == DNS_TYPE_OPT)
+		{			
+			cJSON_AddStringToObject(one_rr_object, "name", (const char *)(dns_rr->name));
+			cJSON_AddNumberToObject(one_rr_object, "type", dns_rr->type);
+			cJSON_AddNumberToObject(one_rr_object, "udp_payload", dns_rr->rr_class);
+			cJSON_AddNumberToObject(one_rr_object, "rcode", (int)(dns_rr->ttl>>24));
+			cJSON_AddNumberToObject(one_rr_object, "version", (int)((dns_rr->ttl>>16)&0xFF));
+			cJSON_AddNumberToObject(one_rr_object, "Z", (int)(dns_rr->ttl&&0xFFFF));
+			cJSON_AddNumberToObject(one_rr_object, "rdlength", dns_rr->rdlength);
+		}
+		else
+		{
+			cJSON_AddStringToObject(one_rr_object, "name", (const char *)(dns_rr->name));
+			cJSON_AddNumberToObject(one_rr_object, "type", dns_rr->type);
+			cJSON_AddNumberToObject(one_rr_object, "class", dns_rr->rr_class);
+			cJSON_AddNumberToObject(one_rr_object, "ttl", dns_rr->ttl);
+			cJSON_AddNumberToObject(one_rr_object, "rdlength", dns_rr->rdlength);
+		}
+
+		if(dns_rr->rdata.a==NULL)
+		{
+			cJSON_AddItemToArray(dns_rr_array, one_rr_object);
+			continue;
+		}
+		
+		switch(dns_rr->type)
+		{
+			case DNS_TYPE_A:
+				inet_ntop(AF_INET, (void *)(dns_rr->rdata.a), ip_str, sizeof(ip_str));
+				cJSON_AddStringToObject(one_rr_object, "a", ip_str);
+				break;
+			case DNS_TYPE_NS:
+				cJSON_AddStringToObject(one_rr_object, "ns", (const char *)(dns_rr->rdata.ns));
+				break;
+			case DNS_TYPE_MD:
+				cJSON_AddStringToObject(one_rr_object, "md", (const char *)(dns_rr->rdata.md));
+				break;
+			case DNS_TYPE_MF:
+				cJSON_AddStringToObject(one_rr_object, "mf", (const char *)(dns_rr->rdata.mf));
+				break;
+			case DNS_TYPE_CNAME:
+				cJSON_AddStringToObject(one_rr_object, "cname", (const char *)(dns_rr->rdata.cname));
+				break;
+			case DNS_TYPE_SOA:
+				cJSON_AddStringToObject(one_rr_object, "mname", (const char *)(dns_rr->rdata.soa.mname));
+				cJSON_AddStringToObject(one_rr_object, "rname", (const char *)(dns_rr->rdata.soa.rname));
+				cJSON_AddNumberToObject(one_rr_object, "serial", dns_rr->rdata.soa.serial);
+				cJSON_AddNumberToObject(one_rr_object, "refresh", dns_rr->rdata.soa.refresh);
+				cJSON_AddNumberToObject(one_rr_object, "retry", dns_rr->rdata.soa.retry);
+				cJSON_AddNumberToObject(one_rr_object, "cname", dns_rr->rdata.soa.expire);
+				cJSON_AddNumberToObject(one_rr_object, "minimum", dns_rr->rdata.soa.minimum);
+				break;
+			case DNS_TYPE_MB:
+				cJSON_AddStringToObject(one_rr_object, "mb", (const char *)(dns_rr->rdata.mb));
+				break;
+			case DNS_TYPE_MG:
+				cJSON_AddStringToObject(one_rr_object, "mg", (const char *)(dns_rr->rdata.mg));
+				break;
+			case DNS_TYPE_MR:
+				cJSON_AddStringToObject(one_rr_object, "mr", (const char *)(dns_rr->rdata.mr));
+				break;
+			case DNS_TYPE_NULL:
+				cJSON_AddNumberToObject(one_rr_object, "size", dns_rr->rdata.null.size);
+				cJSON_AddStringToObject(one_rr_object, "null", (const char *)(dns_rr->rdata.null.null));
+				break;
+			case DNS_TYPE_WKS:
+				cJSON_AddStringToObject(one_rr_object, "addr", ip_str);
+				cJSON_AddNumberToObject(one_rr_object, "protocol", dns_rr->rdata.wks.protocol);
+				cJSON_AddStringToObject(one_rr_object, "bitmap", (const char *)(dns_rr->rdata.wks.bitmap));
+				cJSON_AddNumberToObject(one_rr_object, "size", dns_rr->rdata.wks.size);
+				break;
+			case DNS_TYPE_PTR:
+				cJSON_AddStringToObject(one_rr_object, "ptr", (const char *)(dns_rr->rdata.ptr));
+				break;
+			case DNS_TYPE_HINFO:
+				cJSON_AddStringToObject(one_rr_object, "cpu", (const char *)(dns_rr->rdata.hinfo.cpu));
+				cJSON_AddStringToObject(one_rr_object, "os", (const char *)(dns_rr->rdata.hinfo.os));
+				break;
+			case DNS_TYPE_MINFO:
+				cJSON_AddStringToObject(one_rr_object, "rmailbx", (const char *)(dns_rr->rdata.minfo.rmailbx));
+				cJSON_AddStringToObject(one_rr_object, "emailbx", (const char *)(dns_rr->rdata.minfo.emailbx));
+				break;
+			case DNS_TYPE_MX:
+				cJSON_AddStringToObject(one_rr_object, "exchange", (const char *)(dns_rr->rdata.mx.exchange));
+				cJSON_AddNumberToObject(one_rr_object, "preference", dns_rr->rdata.mx.preference);
+				break;
+			case DNS_TYPE_TXT:
+				cJSON_AddStringToObject(one_rr_object, "txt", (char *)(dns_rr->rdata.txt.txt));
+				cJSON_AddNumberToObject(one_rr_object, "size", dns_rr->rdata.txt.size);
+				break;
+			case DNS_TYPE_RP:
+				cJSON_AddStringToObject(one_rr_object, "mailbox", (char *)(dns_rr->rdata.rp.mailbox));
+				cJSON_AddStringToObject(one_rr_object, "txt_rr", (char *)(dns_rr->rdata.rp.txt_rr));
+				break;
+			case DNS_TYPE_AAAA:
+				inet_ntop(AF_INET6, dns_rr->rdata.aaaa, ip_str, sizeof(ip_str));
+				cJSON_AddStringToObject(one_rr_object, "aaaa", ip_str);
+				break;
+			case DNS_TYPE_OPT:
+				break;
+			case DNS_TYPE_DS:
+				*dns_sec = 2;
+				cJSON_AddNumberToObject(one_rr_object, "key_tag", dns_rr->rdata.ds.key_tag);
+				cJSON_AddNumberToObject(one_rr_object, "algo", dns_rr->rdata.ds.algo);
+				cJSON_AddNumberToObject(one_rr_object, "digest_type", dns_rr->rdata.ds.digest_type);
+				cJSON_AddStringToObject(one_rr_object, "digest", (char *)(dns_rr->rdata.ds.digest));
+				break;
+			case DNS_TYPE_RRSIG:
+				*dns_sec = 2;
+				cJSON_AddNumberToObject(one_rr_object, "type_covered", dns_rr->rdata.rrsig.type_covered);
+				cJSON_AddNumberToObject(one_rr_object, "algo", dns_rr->rdata.rrsig.algo);
+				cJSON_AddNumberToObject(one_rr_object, "labels", dns_rr->rdata.rrsig.labels);
+				cJSON_AddNumberToObject(one_rr_object, "original_ttl", dns_rr->rdata.rrsig.original_ttl);
+				cJSON_AddNumberToObject(one_rr_object, "sig_expiration", dns_rr->rdata.rrsig.sig_expiration);
+				cJSON_AddNumberToObject(one_rr_object, "sig_inception", dns_rr->rdata.rrsig.sig_inception);
+				cJSON_AddNumberToObject(one_rr_object, "key_tag", dns_rr->rdata.rrsig.key_tag);
+				cJSON_AddStringToObject(one_rr_object, "signer_name", (const char *)(dns_rr->rdata.rrsig.signer_name));
+				cJSON_AddStringToObject(one_rr_object, "signature", (char *)(dns_rr->rdata.rrsig.signature));
+				break;
+			case DNS_TYPE_NSEC:
+				*dns_sec = 2;
+				cJSON_AddStringToObject(one_rr_object, "next_domain", (const char *)(dns_rr->rdata.nsec.next_domain));
+				cJSON_AddStringToObject(one_rr_object, "type_bit_maps", (char *)(dns_rr->rdata.nsec.type_bit_maps));
+				break;
+			case DNS_TYPE_DNSKEY:
+				*dns_sec = 2;
+				cJSON_AddNumberToObject(one_rr_object, "flags", dns_rr->rdata.dnskey.flags);
+				cJSON_AddNumberToObject(one_rr_object, "protocol", dns_rr->rdata.dnskey.protocol);
+				cJSON_AddNumberToObject(one_rr_object, "algo", dns_rr->rdata.dnskey.algo);
+				cJSON_AddStringToObject(one_rr_object, "public_key", (char *)(dns_rr->rdata.dnskey.public_key));
+				break;
+			case DNS_TYPE_NSEC3:
+				*dns_sec = 2;
+				cJSON_AddNumberToObject(one_rr_object, "hash_algo", dns_rr->rdata.nsec3.hash_algo);
+				cJSON_AddNumberToObject(one_rr_object, "flags", dns_rr->rdata.nsec3.flags);
+				cJSON_AddNumberToObject(one_rr_object, "iteration", dns_rr->rdata.nsec3.iteration);
+				cJSON_AddNumberToObject(one_rr_object, "salt_len", dns_rr->rdata.nsec3.salt_len);
+				cJSON_AddNumberToObject(one_rr_object, "hash_len", dns_rr->rdata.nsec3.hash_len);
+				cJSON_AddStringToObject(one_rr_object, "salt_value", (char *)(dns_rr->rdata.nsec3.salt_value));
+				cJSON_AddStringToObject(one_rr_object, "next_hash_owner", (char *)(dns_rr->rdata.nsec3.next_hash_owner));
+				cJSON_AddStringToObject(one_rr_object, "type_bit_maps", (char *)(dns_rr->rdata.nsec3.type_bit_maps));
+				break;
+			case DNS_TYPE_NSEC3PARAM:
+				cJSON_AddNumberToObject(one_rr_object, "hash_algo", dns_rr->rdata.nsec3param.hash_algo);
+				cJSON_AddNumberToObject(one_rr_object, "flags", dns_rr->rdata.nsec3param.flags);
+				cJSON_AddNumberToObject(one_rr_object, "iteration", dns_rr->rdata.nsec3param.iteration);
+				cJSON_AddNumberToObject(one_rr_object, "salt_len", dns_rr->rdata.nsec3param.salt_len);
+				cJSON_AddStringToObject(one_rr_object, "salt_value", (char *)(dns_rr->rdata.nsec3param.salt_value));
+				break;
+			case DNS_QTYPE_AXFR:
+				break;
+			case DNS_QTYPE_MAILB:
+				continue;
+				break;
+			case DNS_QTYPE_MAILA:
+				break;
+			case DNS_QTYPE_ANY:
+				break;
+			default:
+				break;
+		}
+		
+		cJSON_AddItemToArray(dns_rr_array, one_rr_object);
+	}
+
+	cJSON_AddItemToObject(object, "rr", dns_rr_array);
+	
+	return 0;
+}
 
 int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int *dns_sec)
 {
@@ -1030,6 +1267,8 @@ int get_rr_common_field(char *msg, char **ptr, dns_rr_t *rr,  char *end)
 
 int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *info, int prot_flag, int session_state, int thread_seq, void *a_packet)
 {
+	char state=PROT_STATE_GIVEME;
+	char app_state=APP_STATE_GIVEME;
 	stSessionInfo sessionInfo;	
 	save_dns_business_info_t *apme = (save_dns_business_info_t *)*pme;
 
@@ -1039,9 +1278,31 @@ int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *in
 	sessionInfo.session_state = session_state;
 	sessionInfo.prot_flag = prot_flag;
 	sessionInfo.app_info = (void *)info;
-	PROT_PROCESS(&sessionInfo, &apme->business_pme, thread_seq, a_stream, a_packet);
+	state=PROT_PROCESS(&sessionInfo, &apme->business_pme, thread_seq, a_stream, a_packet);
 
-	return 0;
+	if(state&PROT_STATE_DROPPKT)
+	{
+		app_state=APP_STATE_DROPPKT;
+	}
+
+	if(state&PROT_STATE_DROPME)
+	{
+		if(app_state&APP_STATE_DROPPKT)
+		{
+			app_state|=APP_STATE_DROPME;
+		}
+		else
+		{
+			app_state=APP_STATE_DROPME;
+		}
+	}
+
+	if(state&PROT_STATE_GIVEME)
+	{
+		app_state=APP_STATE_GIVEME;
+	}
+	
+	return app_state;
 }
 
 int get_dns_query_question(char *msg, char **ptr, dns_query_question_t *q, char *end)
@@ -1431,9 +1692,9 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 
 int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char *payload, int payload_len, void **pme, int thread_seq, void *a_packet)
 {
-	int i = 0;
-	int session_state = SESSION_STATE_PENDING;
-	int ret = APP_STATE_GIVEME;
+	int i=0;
+	int session_state=SESSION_STATE_PENDING;
+	int ret=APP_STATE_GIVEME;
 	char *cur_pos = NULL;
 	dns_info_t dns_info;
 	unsigned long long register_flag = dns_register_flag;
@@ -1499,7 +1760,11 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 				return APP_STATE_DROPME;
 			}
 
-			callback_dns_business_plug(a_stream, pme, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
+			ret=callback_dns_business_plug(a_stream, pme, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
+			if(ret&APP_STATE_DROPME || ret&APP_STATE_DROPPKT)
+			{
+				return ret;
+			}
 		}
 		else if((register_flag&DNS_REQ_ALL) && (0 == dns_info.hdr_info.qr))		/* process query packet */
 		{
@@ -1580,6 +1845,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 
 char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a_packet)
 {
+	char state=APP_STATE_GIVEME;
 	int payload_len = 0;
 	char *payload = NULL;
 	struct udpdetail *udp_detail = NULL;
@@ -1619,16 +1885,16 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 					break;
 			}
 			
-			 parse_dns_protocol(a_udp, a_udp->opstate, payload, payload_len, pme, thread_seq, a_packet);
+			state=parse_dns_protocol(a_udp, a_udp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
-			callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+			state=callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
 			dictator_free(thread_seq, *pme);
 			*pme = NULL;
 			break;
 	}
 
-	return APP_STATE_GIVEME;
+	return state;
 }
 
 
@@ -1636,6 +1902,7 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 {
 	int payload_len = 0;
 	char *payload = NULL;
+	char state=APP_STATE_GIVEME;
 	struct tcpdetail* tcp_detail = (struct tcpdetail*)a_tcp->pdetail;
 	save_dns_business_info_t *dns_pme=(save_dns_business_info_t*)*pme;
 		
@@ -1707,16 +1974,16 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
             	return APP_STATE_GIVEME;
 			}
 		
-			parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
+			state=parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
-			callback_dns_business_plug(a_tcp, pme, NULL, DNS_UNKOWN, SESSION_STATE_CLOSE, thread_seq, a_packet);			
+			state=callback_dns_business_plug(a_tcp, pme, NULL, DNS_UNKOWN, SESSION_STATE_CLOSE, thread_seq, a_packet);			
 			dictator_free(thread_seq, *pme);
 			*pme = NULL;
 			break;
 	}
 
-	return APP_STATE_GIVEME;
+	return state;
 }
 
 

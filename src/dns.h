@@ -1,6 +1,8 @@
 #ifndef DNS_ANALYSE_H
 #define DNS_ANALYSE_H
 
+#include <MESA/cJSON.h>
+
 #ifndef u_char
 #define u_char unsigned char
 #endif
@@ -29,15 +31,6 @@
 #define DNS_HINFO_MAX_CPU	40
 #define DNS_HINFO_MAX_OS	40
 #define DNS_MAX_NAME		255
-
-/* support reponse cfg type */
-#define DNS_CFG_TYPE_CNAME  0
-#define DNS_CFG_TYPE_MX     1
-#define DNS_CFG_TYPE_AUTH   2
-#define DNS_CFG_TYPE_ADDI   3
-#define DNS_CFG_TYPE_A      5
-#define DNS_CFG_TYPE_NS     6
-#define DNS_CFG_TYPE_AAAA   7
 
 /* RR type */
 #define DNS_TYPE_A			1
@@ -344,6 +337,7 @@ extern "C"
 *
 * */
 
+int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec);
 int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int *dns_sec);
 int dns_save_raw_pkt(char *buf, int buflen, const struct streaminfo * a_stream);
 int build_cheat_pkt(unsigned char *payload, int payload_len, dns_query_question_t *query_question, cheat_pkt_opt_t *cheat_opt, int cheat_opt_num);

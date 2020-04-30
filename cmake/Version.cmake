@@ -1,4 +1,3 @@
-
 # Using autorevision.sh to generate version information
 
 set(__SOURCE_AUTORESIVISION ${CMAKE_SOURCE_DIR}/autorevision.sh)
@@ -40,5 +39,5 @@ message(STATUS "Version: ${VERSION}-${VERSION_BUILD}")
 
 set(GIT_VERSION
     "${VERSION}-${CMAKE_BUILD_TYPE}-${VERSION_BUILD}-${VCS_BRANCH}-${VCS_TAG}-${VCS_DATE}")
-string(REGEX REPLACE "[-:+]" "_" GIT_VERSION ${GIT_VERSION})
+string(REGEX REPLACE "[-:+/\\.]" "_" GIT_VERSION ${GIT_VERSION})
 add_definitions(-DGIT_VERSION=${GIT_VERSION})
