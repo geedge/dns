@@ -1,7 +1,7 @@
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(MY_RPM_NAME_PREFIX "lib${lib_name}-debug")
+    set(MY_RPM_NAME_PREFIX "${lib_name}-debug")
 else()
-    set(MY_RPM_NAME_PREFIX "lib${lib_name}")
+    set(MY_RPM_NAME_PREFIX "${lib_name}")
 endif()
 
 message(STATUS "Package: ${MY_RPM_NAME_PREFIX}")
@@ -13,6 +13,10 @@ set(CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}.${VERSION_BUILD}")
 set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(CPACK_PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_BUILD}")
 execute_process(COMMAND bash -c "echo -ne \"`uname -r | awk -F'.' '{print $5\".\"$6\".\"$7}'`\"" OUTPUT_VARIABLE SYSTEM_VERSION)
+
+#execute_process(COMMAND bash -c "git log --branches=x10 --no-merges --date=local --show-signature --pretty=\"* %ad %an %ae %nhash: %H%ncommit:%n%B\"  | awk -F\"-\" '{print "- "$0}' | sed 's/- \\*/\\*/g' | sed 's/- $//g' | sed 's/-/  -/g' | sed 's/[0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\}//g'" OUTPUT_FILE "changelog.txt")
+execute_process(COMMAND sh changelog.sh WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/cmake)
+SET(CPACK_RPM_CHANGELOG_FILE ${PROJECT_SOURCE_DIR}/cmake/changelog.txt)
 
 # RPM Build
 set(CPACK_GENERATOR "RPM")
