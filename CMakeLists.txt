@@ -53,7 +53,7 @@ set(CPACK_RPM_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/pro
 install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT LIBRARY)
 install(FILES bin/dns.inf DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT  PROFILE)
 install(FILES bin/dns.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/conf/dns COMPONENT  PROFILE)
-install(FILES src/${lib_name}.h DESTINATION /opt/MESA/include/MESA COMPONENT HEADER)
+install(FILES include/dns.h DESTINATION /opt/MESA/include/MESA COMPONENT HEADER)
 
 
 file(GLOB DEMO
