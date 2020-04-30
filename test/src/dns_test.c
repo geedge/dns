@@ -6,8 +6,9 @@
 #include <assert.h>
 
 #include <MESA/stream.h>
-#include <MESA/dns.h>
 #include <MESA/cJSON.h>
+
+#include "dns.h"
 
 #define	LOG_PATH	"./log/dns/"
 #define	DEBUG	1

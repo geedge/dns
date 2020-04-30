@@ -31,30 +31,9 @@
 #include "dns.h"
 #include "dns_internal.h"
 
-<<<<<<< .mine
-int DNS_PROTOCOL_VERSION_20191212;
 
+int DNS_PROTOCOL_VERSION_20200430;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 #ifdef __cplusplus
 extern "C"
 {
@@ -77,7 +56,7 @@ static __attribute__((__used__)) const char * GIT_VERSION_UNKNOWN = NULL;
 #endif
 
 int DNS_PROTOCOL_VERSION_20191224;
->>>>>>> .theirs
+
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
