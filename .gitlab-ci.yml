@@ -1,92 +1,104 @@
-image: "docker:stable"
-
-services:
-  - docker:dind
-
+image: "git.mesalab.cn:7443/mesa_platform/build-env:master"
 variables:
   GIT_STRATEGY: "clone"
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_DRIVER: overlay2
-  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  BUILD_PADDING_PREFIX: /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX/
+  INSTALL_PREFIX: "/opt/MESA/lib/"
+  INSTALL_DEPENDENCY_LIBRARY: libMESA_handle_logger-devel  libMESA_htable-devel libMESA_field_stat2-devel  sapp-devel framework_env  libMESA_prof_load-devel
 
 stages:
-  - build
-  - package
-  - release
+- build
 
-.build_before_script:
+.build_by_travis:
   before_script:
-    - mkdir -p /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX/$CI_PROJECT_NAMESPACE/
-    - ln -s $CI_PROJECT_DIR /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX/$CI_PROJECT_PATH
-    - cd /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX/$CI_PROJECT_PATH
-
-.build_dns:
-  extends: .build_before_script
-  image: git.mesalab.cn:7443/mesa_framework/framework:master
+  - mkdir -p $BUILD_PADDING_PREFIX/$CI_PROJECT_NAMESPACE/
+  - ln -s $CI_PROJECT_DIR $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
+  - cd $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
+  - chmod +x ./ci/travis.sh
   script:
-    - cp src/dns.h /opt/MESA/include/MESA/
-    - source /etc/profile.d/MESA.sh
-    - mkdir -p build
-    - cd build
-    - cmake ..  -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-    - make
+  - yum makecache
+  - ./ci/travis.sh
+  - cd build
+  tags:
+  - share
 
-.package_dns:
-    extends: .build_before_script
-    image: git.mesalab.cn:7443/mesa_framework/framework:master
-    script:
-      - cp src/dns.h /opt/MESA/include/MESA/
-      - source /etc/profile.d/MESA.sh
-      - mkdir -p build
-      - cd build
-      - cmake ..  -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      - make package
-
-build:
+branch_build_debug:
   stage: build
-  extends:   .build_dns
-  tags:
-    - share
+  extends: .build_by_travis
   variables:
-    BUILD_TYPE: "Release"
+    BUILD_TYPE: Debug
   except:
+    - /^develop.*$/i
+    - /^master.*$/i
     - tags
 
-#build-docker:
-#  stage: build
-#  script:
-#    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-#    - docker build -t $IMAGE_TAG .
-#    - docker push $IMAGE_TAG
-#  tags:
-#    - share
-#  only:
-#    - tags
-
-dns-package:
-    stage: package
-    extends: .package_dns
-    tags:
-      - share
-    variables:
-        BUILD_TYPE: "Release"
-    artifacts:
-        name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
-        paths:
-          -  ./build/*.rpm
-    only:
+branch_build_release:
+  stage: build
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+  extends: .build_by_travis
+  except:
+    - /^develop.*$/i
+    - /^master.*$/i
     - tags
 
-release:
-  stage: release
-  image: git.mesalab.cn:7443/mesa_framework/framework:master
-  tags:
-    - share
+develop_build_debug:
+  stage: build
+  extends: .build_by_travis
+  variables:
+    BUILD_TYPE: Debug
+    PACKAGE: 1
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-debug"
+    paths:
+      - build/*.rpm
+  only:
+    - /^develop.*$/i
+    - /^master.*$/i
+
+develop_build_release:
+  stage: build
+  extends: .build_by_travis
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+    PACKAGE: 1
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*.rpm
+  only:
+    - /^develop.*$/i
+    - /^master.*$/i
+
+
+release_build_release:
+  stage: build
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+    PACKAGE: 1
+    UPLOAD: 1
+    PULP3_REPO_NAME: platform-stable-x86_64.el7
+    PULP3_DIST_NAME: platform-stable-x86_64.el7
+  extends: .build_by_travis
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*.rpm
   only:
     - tags
+
+release_build_release_devel:
+  stage: build
   variables:
-    ARTIFACTS_JOB: "dns-package"
-    PROJECT_NAME: "dns"
-    USER_DEFINE: "release"
-  script:
-    - /bin/bash -x ./autorelease.sh $CI_API_V4_URL $CI_PROJECT_URL $CI_PROJECT_ID $CI_TOKEN $CI_COMMIT_TAG $ARTIFACTS_JOB $CI_PROJECT_NAME $USER_DEFINE
+    BUILD_TYPE: RelWithDebInfo
+    ENABLE_DEVEL_SWITCH: "ON"
+    PACKAGE: 1
+    UPLOAD: 1
+    PULP3_REPO_NAME: platform-stable-x86_64.el7
+    PULP3_DIST_NAME: platform-stable-x86_64.el7
+  extends: .build_by_travis
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*.rpm
+  only:
+    - tags
