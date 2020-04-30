@@ -27,6 +27,7 @@ elseif(ENABLE_SANITIZE_THREAD)
 endif()
 # end of for ASAN
 
+include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(/opt/MESA/include/MESA/)
 
 file(GLOB SRC
@@ -45,10 +46,14 @@ else()
 	set_target_properties(dns PROPERTIES OUTPUT_NAME ${lib_name})
 endif()
 
-install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns)
-install(FILES bin/dns.inf DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns)
-install(FILES bin/dns.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/conf/dns)
-install(FILES src/${lib_name}.h DESTINATION /opt/MESA/include/MESA COMPONENT devel)
+set(CPACK_RPM_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns/dns.inf"
+                            "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf")
+
+
+install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT LIBRARY)
+install(FILES bin/dns.inf DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT  PROFILE)
+install(FILES bin/dns.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/conf/dns COMPONENT  PROFILE)
+install(FILES include/dns.h DESTINATION /opt/MESA/include/MESA COMPONENT HEADER)
 
 
 file(GLOB DEMO

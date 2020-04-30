@@ -7,5 +7,8 @@ global:
 	PROT_FUNSTAT;
 	FLAG_CHANGE;
 	GET_PLUGID;  
+	get_rr_content2buf;
+	get_rr_str2json;
+	dns_save_raw_pkt;
 local:*;  
 };  
