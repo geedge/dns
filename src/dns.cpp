@@ -32,7 +32,7 @@
 #include "dns_internal.h"
 
 
-int DNS_PROTOCOL_VERSION_20200430;
+int DNS_PROTOCOL_VERSION_20200512;
 
 #ifdef __cplusplus
 extern "C"
@@ -1040,9 +1040,9 @@ int get_rr_signer(unsigned char ** ptr, unsigned char *buf, int buflen, char* en
 int get_rr_type_rrsig(char **ptr, rrsig_t *rrsig, char *end)
 {
 	NS_GET16(rrsig->type_covered, *ptr);
-	rrsig->algo = *(unsigned char *)ptr;
+	rrsig->algo = *(unsigned char *)*ptr;
 	*ptr += 1;
-	rrsig->labels = *(unsigned char *)ptr;
+	rrsig->labels = *(unsigned char *)*ptr;
 	*ptr += 1;
 	NS_GET32(rrsig->original_ttl, *ptr);
 	NS_GET32(rrsig->sig_expiration, *ptr);
@@ -1057,7 +1057,7 @@ int get_rr_type_wks(char **ptr, wks_t *wks, char *end)
 	if(* ptr + 4 > end) return -1;
 	NS_GET32(wks->addr, * ptr);
 	if(* ptr + 1 > end) return -1;
-	wks->protocol = *(unsigned char *)ptr;
+	wks->protocol = *(unsigned char *)*ptr;
 	*ptr += 1;
 	wks->bitmap = *(u_char**)ptr;
 
@@ -1088,7 +1088,7 @@ int get_rr_type_soa(char *msg, char **ptr, soa_t *soa, char *end)
 int get_rr_type_info(char **ptr, hinfo_t *hinfo, char *end)
 {
 	int len = 0;
-	hinfo->cpu_len = ((unsigned char *)ptr)[0];
+	hinfo->cpu_len = ((unsigned char *)*ptr)[0];
 	*ptr += 1;
 	len = MIN(hinfo->cpu_len, sizeof(DNS_HINFO_MAX_CPU-1));
 	memcpy((char *)hinfo->cpu, *ptr, len);
@@ -1096,7 +1096,7 @@ int get_rr_type_info(char **ptr, hinfo_t *hinfo, char *end)
 	*ptr += hinfo->cpu_len;
 	hinfo->cpu_len = len;
 	
-	hinfo->os_len = ((unsigned char *)ptr)[0];
+	hinfo->os_len = ((unsigned char *)*ptr)[0];
 	*ptr += 1;
 	len = MIN(hinfo->os_len, sizeof(DNS_HINFO_MAX_OS-1));
 	memcpy((char *)hinfo->os, *ptr, len);
@@ -1453,9 +1453,9 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 		case DNS_TYPE_DLV:
 			if(* ptr + 4 > end) return 0;
 			NS_GET16(rr->rdata.ds.key_tag, *ptr);
-			rr->rdata.ds.algo = *(unsigned char *)ptr;
+			rr->rdata.ds.algo = *(unsigned char *)*ptr;
 			*ptr += 1;
-			rr->rdata.ds.digest_type = *(unsigned char *)ptr;
+			rr->rdata.ds.digest_type = *(unsigned char *)*ptr;
 			*ptr += 1;
 			rr->rdata.ds.digest = *(u_char**)ptr;
 			rr->rdata.ds.digest_len = rr->rdlength - 4;
@@ -1495,7 +1495,7 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 				if((byte&0xFF) == 0xFF || byte == 128)
 				{
 					*ptr += 1;	/* jump 0xFF */
-					byte = ((unsigned char *)ptr)[0];
+					byte = ((unsigned char *)*ptr)[0];
 					*ptr += 1;	/* jump 1 byte of len */
 					len = MIN(DNS_MAX_MAPS-1-len, byte);
 					memcpy(rr->rdata.nsec.type_bit_maps+rr->rdata.nsec.maps_len, *ptr, len);
@@ -1508,9 +1508,9 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 		case DNS_TYPE_DNSKEY:
 			if(* ptr + 4 > end) return 0;			
 			NS_GET16(rr->rdata.dnskey.flags, *ptr);
-			rr->rdata.dnskey.protocol = *(unsigned char *)ptr;
+			rr->rdata.dnskey.protocol = *(unsigned char *)*ptr;
 			*ptr += 1;
-			rr->rdata.dnskey.algo = *(unsigned char *)ptr;
+			rr->rdata.dnskey.algo = *(unsigned char *)*ptr;
 			*ptr += 1;
 			rr->rdata.dnskey.public_key = *(u_char**)ptr;
 			rr->rdata.dnskey.public_key_len = rr->rdlength - 4;/* sizeof(flags)+sizeof(protocol)+sizeof(algo) */
@@ -1548,9 +1548,9 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			}
 			break;
 		case DNS_TYPE_NSEC3PARAM:
-			rr->rdata.nsec3param.hash_algo = *(unsigned char *)ptr;
+			rr->rdata.nsec3param.hash_algo = *(unsigned char *)*ptr;
 			*ptr += 1;
-			rr->rdata.nsec3param.flags = *(unsigned char *)ptr;
+			rr->rdata.nsec3param.flags = *(unsigned char *)*ptr;
 			*ptr += 1;
 			NS_GET16(rr->rdata.nsec3param.iteration, *ptr);
 			rr->rdata.nsec3param.salt_len = rr->rdlength -4-1;
