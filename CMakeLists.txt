@@ -47,7 +47,9 @@ else()
 endif()
 
 set(CPACK_RPM_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns/dns.inf"
-                           		 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf")
+                           		 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf"
+			 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/etc/entrylist.conf"
+			 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/conflist.inf ")
 
 set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp_run)
 install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT LIBRARY)
