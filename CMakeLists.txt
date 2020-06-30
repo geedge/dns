@@ -33,7 +33,7 @@ include_directories(/opt/MESA/include/MESA/)
 file(GLOB SRC
     "src/*.cpp"
 )
-
+set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp_run)
 set(DNS_DEPEND_DYN_LIB MESA_handle_logger MESA_field_stat2 MESA_prof_load)
 
 # Shared Library Output
@@ -46,10 +46,9 @@ else()
 	set_target_properties(dns PROPERTIES OUTPUT_NAME ${lib_name})
 endif()
 
-set(CPACK_RPM_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns/dns.inf"
-                           		 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf"
-			 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/etc/entrylist.conf"
-			 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/conflist.inf ")
+set(CPACK_RPM_LIBRARY_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns/dns.inf"
+                           	"%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf"
+			 )
 
 set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp_run)
 install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT LIBRARY)

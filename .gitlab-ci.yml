@@ -76,6 +76,7 @@ release_build_release:
     BUILD_TYPE: RelWithDebInfo
     PACKAGE: 1
     UPLOAD: 1
+    SYMBOL_TARGET: dns
     PULP3_REPO_NAME: protocol-stable-x86_64.el7
     PULP3_DIST_NAME: protocol-stable-x86_64.el7
   extends: .build_by_travis
