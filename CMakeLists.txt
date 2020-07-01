@@ -33,7 +33,7 @@ include_directories(/opt/MESA/include/MESA/)
 file(GLOB SRC
     "src/*.cpp"
 )
-
+set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp_run)
 set(DNS_DEPEND_DYN_LIB MESA_handle_logger MESA_field_stat2 MESA_prof_load)
 
 # Shared Library Output
@@ -46,10 +46,9 @@ else()
 	set_target_properties(dns PROPERTIES OUTPUT_NAME ${lib_name})
 endif()
 
-set(CPACK_RPM_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns/dns.inf"
-                           		 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf"
-			 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/etc/entrylist.conf"
-			 "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/conflist.inf ")
+set(CPACK_RPM_LIBRARY_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns/dns.inf"
+                           	"%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf"
+			 )
 
 set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp_run)
 install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT LIBRARY)
@@ -58,15 +57,15 @@ install(FILES bin/dns.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/conf/dns COMPONEN
 install(FILES include/dns.h DESTINATION /opt/MESA/include/MESA COMPONENT HEADER)
 
 
-file(GLOB DEMO
-    "test/src/*.c"
-)
+#file(GLOB DEMO
+#    "test/src/*.c"
+#)
 
-add_library(dns_test SHARED ${DEMO})
-set_target_properties(dns_test  PROPERTIES PREFIX "")
-target_link_libraries(dns_test ${DNS_DEPEND_DYN_LIB})
+#add_library(dns_test SHARED ${DEMO})
+#set_target_properties(dns_test  PROPERTIES PREFIX "")
+#target_link_libraries(dns_test ${DNS_DEPEND_DYN_LIB})
 
-install(TARGETS dns_test LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/business/dns_test  COMPONENT LIBRARY)
-install(FILES test/bin/dns_test.inf DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/business/dns_test COMPONENT  PROFILE)
+#install(TARGETS dns_test LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/business/dns_test  COMPONENT LIBRARY)
+#install(FILES test/bin/dns_test.inf DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/business/dns_test COMPONENT  PROFILE)
 
 include(Package)
