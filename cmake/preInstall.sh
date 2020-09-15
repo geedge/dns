@@ -4,6 +4,7 @@ mkdir -p ${DST}/plug/protocol/
 mkdir -p  ${DST}/etc/
 touch ${DST}/plug/conflist.inf
 touch ${DST}/etc/entrylist.conf
+
 if [[ -z `grep -rn 'dns.inf' ${DST}/plug/conflist.inf` ]];then
 	sed -i '/\[protocol\]/a\./plug/protocol/dns/dns.inf' ${DST}/plug/conflist.inf
 fi
