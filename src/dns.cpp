@@ -68,6 +68,7 @@ g_dns_proto_info_t g_dns_proto_info;
 
 static dns_str_contrast_id_t DNS_FLAG_ID[] = 
 {
+	{"ALL",					DNS_ALL},
 	{"DNS_ALL",				DNS_ALL},
 	{"DNS_REQ_ALL",			DNS_REQ_ALL},
 	{"DNS_RES_ALL",			DNS_RES_ALL},
@@ -1263,23 +1264,6 @@ int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *in
 	{
 		app_state=APP_STATE_DROPPKT;
 	}
-
-	if(state&PROT_STATE_DROPME)
-	{
-		if(app_state&APP_STATE_DROPPKT)
-		{
-			app_state|=APP_STATE_DROPME;
-		}
-		else
-		{
-			app_state=APP_STATE_DROPME;
-		}
-	}
-
-	if(state&PROT_STATE_GIVEME)
-	{
-		app_state=APP_STATE_GIVEME;
-	}
 	
 	return app_state;
 }
@@ -1740,7 +1724,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 			}
 
 			ret=callback_dns_business_plug(a_stream, pme, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
-			if(ret&APP_STATE_DROPME || ret&APP_STATE_DROPPKT)
+			if(ret&APP_STATE_DROPPKT)
 			{
 				return ret;
 			}
@@ -2030,7 +2014,7 @@ int DNS_INIT()
 *****************************************************************************/
 void  DNS_DESTROY()
 {
-	printf("Hello! This is dns.so PROT_DESTORY, but i am not complete!!!\n");
+	return ;
 }
 
 

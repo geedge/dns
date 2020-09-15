@@ -303,17 +303,18 @@ enum flag_id
 {
 	/* 解各个字段时，都会自动带上头部信息 */
 	DNS_UNKOWN			=0,
-	DNS_ALL				= 1<<0,		/* 全解 */
-	DNS_REQ_ALL 		= 1<<1,		/* 请求侧全解 */
-	DNS_RES_ALL			= 1<<2,		/* 解解应答侧全部内容 */
-	DNS_REQ_HDR 		= 1<<3,		/* 解请求侧头部内容 */
-	DNS_RES_HDR 		= 1<<4,		/* 解应答侧头部内容 */	
-	//DNS_REQ_QUERY		= 1<<5,		/* 解应答侧中的请求信息(解请求侧请求查询信息会自动带上头部，即为DNS_REQ_ALL_FLAG_ID，所有没必要再设一个值) */
-	DNS_RES_QUERY		= 1<<6,		/* 解应答侧中的请求信息 */
-	DNS_RES_RRS			= 1<<7,		/* 解所有应答资源记录 */
-	DNS_RES_ANSWER		= 1<<8,		/* 解answer应答记录 */
-	DNS_RES_AUTH		= 1<<9,		/* 解授权资源记录 */
-	DNS_RES_ADD			= 1<<10,		/* 解附加资源记录 */
+	ALL					= 1<<0,		/* 全解 */
+	DNS_ALL				= 1<<1,		/* 全解 */
+	DNS_REQ_ALL 		= 1<<2,		/* 请求侧全解 */
+	DNS_RES_ALL			= 1<<3,		/* 解解应答侧全部内容 */
+	DNS_REQ_HDR 		= 1<<4,		/* 解请求侧头部内容 */
+	DNS_RES_HDR 		= 1<<5,		/* 解应答侧头部内容 */	
+	//DNS_REQ_QUERY		= 1<<6,		/* 解应答侧中的请求信息(解请求侧请求查询信息会自动带上头部，即为DNS_REQ_ALL_FLAG_ID，所有没必要再设一个值) */
+	DNS_RES_QUERY		= 1<<7,		/* 解应答侧中的请求信息 */
+	DNS_RES_RRS			= 1<<8,		/* 解所有应答资源记录 */
+	DNS_RES_ANSWER		= 1<<9,		/* 解answer应答记录 */
+	DNS_RES_AUTH		= 1<<10,		/* 解授权资源记录 */
+	DNS_RES_ADD			= 1<<11,		/* 解附加资源记录 */
 };
 
 
