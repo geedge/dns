@@ -3,7 +3,7 @@ variables:
   GIT_STRATEGY: "clone"
   BUILD_PADDING_PREFIX: /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX/
   INSTALL_PREFIX: "/opt/MESA/lib/"
-  INSTALL_DEPENDENCY_LIBRARY: libMESA_handle_logger-devel  libcjson-devel libMESA_field_stat2-devel  sapp-devel framework_env  libMESA_prof_load-devel sapp-devel
+  INSTALL_DEPENDENCY_LIBRARY: libMESA_handle_logger-devel  libcjson-devel libMESA_field_stat2-devel  sapp-devel framework_env  libMESA_prof_load-devel sapp-devel libasan
 
 stages:
 - build
@@ -47,6 +47,11 @@ develop_build_debug:
   variables:
     BUILD_TYPE: Debug
     PACKAGE: 1
+    UPLOAD_RPM: 1
+    ASAN_OPTION: ADDRESS
+    TESTING_VERSION_BUILD: 1
+    PULP3_REPO_NAME: protocol-testing-x86_64.el7
+    PULP3_DIST_NAME: protocol-testing-x86_64.el7
   artifacts:
     name: "dns-$CI_COMMIT_REF_NAME-debug"
     paths:
@@ -61,6 +66,11 @@ develop_build_release:
   variables:
     BUILD_TYPE: RelWithDebInfo
     PACKAGE: 1
+    UPLOAD_RPM: 1
+    ASAN_OPTION: ADDRESS
+    TESTING_VERSION_BUILD: 1
+    PULP3_REPO_NAME: protocol-testing-x86_64.el7
+    PULP3_DIST_NAME: protocol-testing-x86_64.el7
   artifacts:
     name: "dns-$CI_COMMIT_REF_NAME-release"
     paths:
@@ -69,13 +79,29 @@ develop_build_release:
     - /^develop.*$/i
     - /^master.*$/i
 
+release_build_debug:
+  stage: build
+  variables:
+    BUILD_TYPE: Debug
+    PACKAGE: 1
+    UPLOAD_RPM: 1
+    PULP3_REPO_NAME: protocol-stable-x86_64.el7
+    PULP3_DIST_NAME: protocol-stable-x86_64.el7
+  extends: .build_by_travis
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*.rpm
+  only:
+    - tags
 
 release_build_release:
   stage: build
   variables:
     BUILD_TYPE: RelWithDebInfo
     PACKAGE: 1
-    UPLOAD: 1
+    UPLOAD_RPM: 1
+    UPLOAD_SYMBOL_FILES: 1
     SYMBOL_TARGET: dns
     PULP3_REPO_NAME: protocol-stable-x86_64.el7
     PULP3_DIST_NAME: protocol-stable-x86_64.el7
