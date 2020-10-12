@@ -144,7 +144,7 @@ enum dns_statis_info_t
 	Q_UNKNOWN
 };
 
-#define	DNS_MAX_FIELD_ID_NUM	32
+#define	DNS_MAX_FIELD_ID_NUM	17
 
 typedef struct _dns_proto_info
 {

@@ -81,7 +81,7 @@ static dns_str_contrast_id_t DNS_FLAG_ID[] =
 	{"DNS_RES_ADD",			DNS_RES_ADD}
 };
 
-static dns_str_contrast_id_t DNS_STATIS_INFO[] = 
+static dns_str_contrast_id_t DNS_STATIS_INFO[DNS_MAX_FIELD_ID_NUM] = 
 {
 	{"V4_T_PPS",		V4_T_PPS},
 	{"V4_T_BPS",		V4_T_BPS},
