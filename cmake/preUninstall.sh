@@ -9,5 +9,5 @@ if [ $1 == 0 ]; then
 	touch ${DST}/etc/entrylist.conf
 
 	sed -i '/dns.inf/d' ${DST}/plug/conflist.inf
-	sed -i '/DNS/d' ${DST}etc/entrylist.conf
+	sed -i '/DNS/d' ${DST}/etc/entrylist.conf
 fi
