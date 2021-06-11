@@ -1852,9 +1852,13 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 			break;
 		case OP_STATE_CLOSE:
 			state=callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
-			dictator_free(thread_seq, *pme);
-			*pme = NULL;
 			break;
+	}
+
+	if(state&APP_STATE_DROPME || a_udp->opstate==OP_STATE_CLOSE)
+	{
+		dictator_free(thread_seq, *pme);
+		*pme = NULL;
 	}
 
 	return state;
@@ -1940,12 +1944,16 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 			state=parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
-			state=callback_dns_business_plug(a_tcp, pme, NULL, DNS_UNKOWN, SESSION_STATE_CLOSE, thread_seq, a_packet);			
-			dictator_free(thread_seq, *pme);
-			*pme = NULL;
+			state=callback_dns_business_plug(a_tcp, pme, NULL, DNS_UNKOWN, SESSION_STATE_CLOSE, thread_seq, a_packet);
 			break;
 	}
 
+	if(state&APP_STATE_DROPME || a_tcp->opstate==OP_STATE_CLOSE)
+	{
+		dictator_free(thread_seq, *pme);
+		*pme = NULL;
+	}
+	
 	return state;
 }
 
@@ -1985,8 +1993,8 @@ int DNS_INIT()
 	
 	FS_set_para(g_dns_proto_info.stat_handle, STAT_CYCLE, &g_dns_proto_info.cycle_time, sizeof(g_dns_proto_info.cycle_time));
 	
-	for(i = 0; DNS_STATIS_INFO[i].str != NULL && i == (int)DNS_STATIS_INFO[i].id && i < DNS_MAX_FIELD_ID_NUM; i++)
-	{
+	for(i = 0; i<DNS_MAX_FIELD_ID_NUM; i++)
+	{	
 		g_dns_proto_info.fild_id[DNS_STATIS_INFO[i].id] = FS_register(g_dns_proto_info.stat_handle,
 																		FS_STYLE_FIELD,
 																		FS_CALC_CURRENT,
@@ -2055,8 +2063,7 @@ static long long get_flag_id(const char *flag_str)
 
 	for(i = 0; DNS_FLAG_ID[i].str != NULL; i++)
 	{
-		if((strncasecmp(DNS_FLAG_ID[i].str, flag_str, strlen(DNS_FLAG_ID[i].str)) == 0)
-		 && (strlen(DNS_FLAG_ID[i].str) == strlen(flag_str)))
+		if((strlen(DNS_FLAG_ID[i].str)==strlen(flag_str)) && (strncasecmp(DNS_FLAG_ID[i].str, flag_str, strlen(DNS_FLAG_ID[i].str))==0))
 		{
 			return DNS_FLAG_ID[i].id;
 		} 
