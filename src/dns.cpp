@@ -1663,10 +1663,10 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 	unsigned long long register_flag = dns_register_flag;
 	save_dns_business_info_t *context = (save_dns_business_info_t *)(*pme);
 
-	if(payload_len < 12 )
+	if(payload_len<12 || payload==NULL)
 	{
 		FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);		
-		MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_FATAL, "parse_dns_protocol", "tuple4: %s payload_len < 12", printaddr(&a_stream->addr, thread_seq));
+		MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "tuple4: %s payload_len<12 or payload==NULL", printaddr(&a_stream->addr, thread_seq));
 		return APP_STATE_DROPME;
 	}
 
@@ -1694,10 +1694,12 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 			if(context->session_state&SESSION_STATE_PENDING)
 			{
 				session_state = SESSION_STATE_CLOSE;
+				context->session_state=SESSION_STATE_CLOSE;
 			}
 			else
 			{
 				session_state = SESSION_STATE_PENDING|SESSION_STATE_DATA|SESSION_STATE_CLOSE;
+				context->session_state=SESSION_STATE_CLOSE;
 			}
 		}
 
@@ -1851,12 +1853,18 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 			state=parse_dns_protocol(a_udp, a_udp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
-			state=callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+			state=parse_dns_protocol(a_udp, a_udp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 	}
 
 	if(state&APP_STATE_DROPME || a_udp->opstate==OP_STATE_CLOSE)
 	{
+		save_dns_business_info_t *context=(save_dns_business_info_t *)(*pme);
+		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
+		{
+			state=callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+		}
+		
 		dictator_free(thread_seq, *pme);
 		*pme = NULL;
 	}
@@ -1871,7 +1879,7 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 	char *payload = NULL;
 	char state=APP_STATE_GIVEME;
 	struct tcpdetail* tcp_detail = (struct tcpdetail*)a_tcp->pdetail;
-	save_dns_business_info_t *dns_pme=(save_dns_business_info_t*)*pme;
+	save_dns_business_info_t *context=(save_dns_business_info_t*)*pme;
 		
 	if(!check_port(a_tcp->addr, DNS_PORT))
 	{
@@ -1894,8 +1902,8 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 			{
 				*pme = dictator_malloc(thread_seq, sizeof(save_dns_business_info_t));
 				memset(*pme, 0, sizeof(save_dns_business_info_t));
-				dns_pme = (save_dns_business_info_t *)*pme;
-				dns_pme->skip_len=2;
+				context = (save_dns_business_info_t *)*pme;
+				context->skip_len=2;
 			}
 			
 		/*   no break here!!!!  */
@@ -1919,17 +1927,17 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 
 			if(tcp_detail->serverbytes <= 2)
 			{
-				dns_pme->skip_len -= payload_len;
+				context->skip_len -= payload_len;
 				break;
 			}
 			else
 			{
-				if(dns_pme->skip_len!=0)
+				if(context->skip_len!=0)
 				{
-					payload_len -= dns_pme->skip_len;
-					payload += dns_pme->skip_len;
+					payload_len -= context->skip_len;
+					payload += context->skip_len;
 					
-					dns_pme->skip_len=0;
+					context->skip_len=2;	//https://datatracker.ietf.org/doc/html/rfc7766#section-8
 				}
 			}
 			
@@ -1944,12 +1952,18 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 			state=parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
-			state=callback_dns_business_plug(a_tcp, pme, NULL, DNS_UNKOWN, SESSION_STATE_CLOSE, thread_seq, a_packet);
+			state=parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 	}
 
 	if(state&APP_STATE_DROPME || a_tcp->opstate==OP_STATE_CLOSE)
 	{
+		save_dns_business_info_t *context=(save_dns_business_info_t *)(*pme);
+		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
+		{
+			state=callback_dns_business_plug(a_tcp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+		}
+		
 		dictator_free(thread_seq, *pme);
 		*pme = NULL;
 	}
