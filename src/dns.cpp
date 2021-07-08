@@ -939,10 +939,6 @@ int check_port(struct layer_addr addr, unsigned short port)
 	return 1;	
 }
 
-void free_dns_info(dns_info_t *dns_info)
-{
-	return ;
-}
 int get_dns_hdr_info(dns_hdr_t *dns_hdr, char *payload)
 {
 	dns_hdr_t *tmp = ((dns_hdr_t *)payload);
@@ -1667,7 +1663,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 	{
 		FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);		
 		MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "tuple4: %s payload_len<12 or payload==NULL", printaddr(&a_stream->addr, thread_seq));
-		return APP_STATE_DROPME;
+		return APP_STATE_GIVEME;
 	}
 
 	memset(&dns_info, 0, sizeof(dns_info_t));
@@ -1712,8 +1708,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 			{				
 				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);				
 				MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "parse_query_question return APP_STATE_DROPME, tuple4: %s, question_num: %d", printaddr(&a_stream->addr, thread_seq), dns_info.hdr_info.qdcount);
-				free_dns_info(&dns_info);
-				return APP_STATE_DROPME;
+				return APP_STATE_GIVEME;
 			}
 			
 			ret = parse_resource_record(a_stream, &dns_info, payload, payload_len, &cur_pos, DNS_RR_TYPE_ALL);	
@@ -1721,8 +1716,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 			{					
 				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
 				MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "parse_resource_record return APP_STATE_DROPME, tuple4: %s", printaddr(&a_stream->addr, thread_seq));
-				free_dns_info(&dns_info);
-				return APP_STATE_DROPME;
+				return APP_STATE_GIVEME;
 			}
 
 			ret=callback_dns_business_plug(a_stream, pme, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
@@ -1803,8 +1797,6 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 		}
 	}
 
-	free_dns_info(&dns_info);
-
 	return APP_STATE_GIVEME;
 }
 
@@ -1862,7 +1854,7 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 		save_dns_business_info_t *context=(save_dns_business_info_t *)(*pme);
 		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
 		{
-			state=callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+			callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
 		}
 		
 		dictator_free(thread_seq, *pme);
@@ -1961,7 +1953,7 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 		save_dns_business_info_t *context=(save_dns_business_info_t *)(*pme);
 		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
 		{
-			state=callback_dns_business_plug(a_tcp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+			callback_dns_business_plug(a_tcp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
 		}
 		
 		dictator_free(thread_seq, *pme);
