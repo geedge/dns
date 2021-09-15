@@ -1267,6 +1267,7 @@ int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *in
 int get_dns_query_question(char *msg, char **ptr, dns_query_question_t *q, char *end)
 {
 	int used_len = 0;
+	
 	if(0 >= get_rr_domain(msg, (unsigned char**)ptr, q->qname, DNS_MAX_NAME+1, end))
 	{
 		return -1;
@@ -1597,6 +1598,7 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 			dns_info->rr_count = dns_info->hdr_info.adcount;
 			break;
 		default:
+			dns_info->rr_count=0;
 			break;
 	}
 
@@ -1666,7 +1668,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 		return APP_STATE_GIVEME;
 	}
 
-	memset(&dns_info, 0, sizeof(dns_info_t));
+	//memset(&dns_info, 0, sizeof(dns_info_t));
 	get_dns_hdr_info(&dns_info.hdr_info, payload);
 
 	cur_pos = payload + sizeof(dns_hdr_t);
