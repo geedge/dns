@@ -1,0 +1,8 @@
+[platform]
+
+[protocol]
+./plug/protocol/dns/dns.inf
+
+
+[business]
+./plug/business/dns_test_plug/dns_test_plug.inf

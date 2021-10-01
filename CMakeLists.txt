@@ -47,6 +47,9 @@ else()
 	set_target_properties(dns PROPERTIES OUTPUT_NAME ${lib_name})
 endif()
 
+enable_testing()
+add_subdirectory(test)
+
 set(CPACK_RPM_LIBRARY_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns/dns.inf"
                            	"%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf"
 			 )

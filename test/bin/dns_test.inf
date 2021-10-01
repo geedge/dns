@@ -1,9 +1,0 @@
-[PLUGINFO]
-PLUGNAME=DNS_TEST
-SO_PATH=./plug/business/dns_test/dns_test.so
-INIT_FUNC=dns_test_init
-DESTROY_FUNC=dns_test_destory
-
-[DNS]
-FUNC_FLAG=DNS_ALL
-FUNC_NAME=dns_test_entry
