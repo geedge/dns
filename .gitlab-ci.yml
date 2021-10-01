@@ -3,10 +3,12 @@ variables:
   GIT_STRATEGY: "clone"
   BUILD_PADDING_PREFIX: /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX/
   INSTALL_PREFIX: "/opt/MESA/lib/"
-  INSTALL_DEPENDENCY_LIBRARY: libMESA_handle_logger-devel  libcjson-devel libMESA_field_stat2-devel  sapp-devel framework_env  libMESA_prof_load-devel sapp-devel libasan
+  INSTALL_DEPENDENCY_LIBRARY: libMESA_handle_logger-devel  libcjson-devel libMESA_field_stat2-devel  sapp-devel framework_env  libMESA_prof_load-devel sapp-devel libasan libbreakpad_mini-devel libMESA_htable-devel systemd-devel
 
 stages:
 - build
+- test
+- package
 
 .build_by_travis:
   before_script:
@@ -20,6 +22,15 @@ stages:
   - cd build
   tags:
   - share
+
+run_test:
+  stage: test
+  extends: .build_by_travis
+  script:
+    - yum makecache
+    - ./ci/travis.sh
+    - cd build
+    - ctest --verbose
 
 branch_build_debug:
   stage: build
@@ -42,7 +53,7 @@ branch_build_release:
     - tags
 
 develop_build_debug:
-  stage: build
+  stage: package
   extends: .build_by_travis
   variables:
     BUILD_TYPE: Debug
@@ -61,7 +72,7 @@ develop_build_debug:
     - /^master.*$/i
 
 develop_build_release:
-  stage: build
+  stage: package
   extends: .build_by_travis
   variables:
     BUILD_TYPE: RelWithDebInfo
@@ -79,7 +90,7 @@ develop_build_release:
     - /^master.*$/i
 
 release_build_debug:
-  stage: build
+  stage: package
   variables:
     BUILD_TYPE: Debug
     PACKAGE: 1
@@ -95,7 +106,7 @@ release_build_debug:
     - tags
 
 release_build_release:
-  stage: build
+  stage: package
   variables:
     BUILD_TYPE: RelWithDebInfo
     PACKAGE: 1
