@@ -3,17 +3,9 @@
 
 #include <MESA/cJSON.h>
 
-#ifndef u_char
-#define u_char unsigned char
-#endif
-
-#ifndef u_int16_t
-#define u_int16_t unsigned short
-#endif
-
-#ifndef u_int32_t
-#define u_int32_t unsigned int  //adjust by lqy 20070521 long to int
-#endif
+typedef unsigned char u_char;
+typedef unsigned short u_int16_t;
+typedef unsigned int u_int32_t;
 
 #define G_DNS_TTL (rand()%1800+1800)//0.5->1hour 2015.01.26by ljp
 
