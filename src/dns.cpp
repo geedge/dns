@@ -459,6 +459,7 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 										dns_rr->rdata.rrsig.key_tag, dns_rr->rdata.rrsig.signer_name, tmp_buf);
 				break;
 			case DNS_TYPE_NSEC:
+				break;
 				*dns_sec = 2;
 				len = 0;				
 				tmp_len=MIN(dns_rr->rdata.nsec.maps_len*2, sizeof(tmp_buf)-2)/2;
@@ -481,6 +482,7 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 							dns_rr->rdata.dnskey.flags, dns_rr->rdata.dnskey.protocol, dns_rr->rdata.dnskey.algo, tmp_buf);
 				break;
 			case DNS_TYPE_NSEC3:
+				break;
 				*dns_sec = 2;
 				memset(tmp_buf, 0, sizeof(tmp_buf));
 				memset(maps, 0, sizeof(maps));
@@ -1461,6 +1463,9 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			{
 				return -1;
 			}
+
+			*ptr = (char *)original_ptr+rr->rdlength;
+			break;
 			
 			if((original_ptr+rr->rdlength != (unsigned char*)*ptr) && (*ptr != NULL))
 			{
@@ -1503,6 +1508,8 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			//salt_len = *(unsigned char *)(*ptr+4);	/* salt length */
 			//hash_len = *(salt_len + (unsigned char *)(*ptr+5));	/* hash length */
 			get_rr_type_nsec3(ptr, &(rr->rdata.nsec3), end);
+			*ptr = (char *)original_ptr+rr->rdlength;
+			break;
 
 			if((original_ptr+rr->rdlength != (unsigned char*)*ptr) && (*ptr != NULL))
 			{
