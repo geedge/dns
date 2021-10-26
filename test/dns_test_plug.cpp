@@ -41,32 +41,10 @@ extern "C" unsigned char DNS_TEST_PLUG_ENTRY(stSessionInfo *session_info, void *
     cJSON_AddNumberToObject(ctx, "dns_opcode", (double)dns_info->hdr_info.opcode);
     cJSON_AddNumberToObject(ctx, "dns_rd", (double)dns_info->hdr_info.rd);
 
-	cJSON *item=NULL;
-    cJSON *cname_array=cJSON_CreateArray();
-    dns_rr_t *rr=NULL;
-	for(int i=0; i<dns_info->rr_count && dns_info->rr != NULL; i++)
-	{
-		rr = &dns_info->rr[i];
-		if(rr!=NULL && rr->type==DNS_TYPE_CNAME)
-		{
-			if(rr->rdata.cname != NULL)
-			{
-				item=cJSON_CreateString((const char *)rr->rdata.cname);
-				cJSON_AddItemToArray(cname_array, item);
-			}
-		}
-	}
-
-    if(cJSON_GetArraySize(cname_array) > 0)
-    {
-        cJSON_AddItemToObject(ctx, "dns_cnames", cname_array);
-    }
-    else
-    {
-        cJSON_Delete(cname_array);
-	    cname_array=NULL;
-    }
-
+	int dns_sec=0;
+	cJSON *rr_object=cJSON_CreateObject();
+	get_rr_str2json(rr_object, dns_info, &dns_sec);
+	cJSON_AddItemToObject(ctx, "rr", rr_object);
 
     char result_name[16] = "";
     sprintf(result_name, "DNS_RESULT_%d", g_result_count);

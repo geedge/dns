@@ -1,0 +1,21 @@
+[{
+		"Tuple4":	"175.43.16.118.51870>211.138.145.194.53",
+		"dns_qname":	"9.8.0.1.4.9.7.e.1.0.0.0.1.0.0.0.1.e.3.d.0.2.0.5.4.3.9.8.9.0.4.2.ip6.arpa",
+		"dns_qtype":	12,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	1432,
+					"rcode":	0,
+					"version":	0,
+					"Z":	1,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_1"
+}]

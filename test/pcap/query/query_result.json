@@ -1,0 +1,177 @@
+[{
+		"Tuple4":	"109.194.160.4.57766>95.211.92.14.53",
+		"dns_qname":	"picslife.ru",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	4096,
+					"rcode":	0,
+					"version":	0,
+					"Z":	1,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_1"
+	}, {
+		"Tuple4":	"109.60.128.2.61396>95.211.92.15.53",
+		"dns_qname":	"finance.vtomske.ru",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[]
+		},
+		"name":	"DNS_RESULT_2"
+	}, {
+		"Tuple4":	"208.69.33.21.18984>95.211.92.15.53",
+		"dns_qname":	"mail.guru-net.com",
+		"dns_qtype":	28,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	1410,
+					"rcode":	0,
+					"version":	0,
+					"Z":	0,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_3"
+	}, {
+		"Tuple4":	"80.70.96.161.18784>95.211.92.14.53",
+		"dns_qname":	"xage.ru",
+		"dns_qtype":	28,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[]
+		},
+		"name":	"DNS_RESULT_4"
+	}, {
+		"Tuple4":	"77.37.251.74.22422>95.211.92.14.53",
+		"dns_qname":	"oknakonsalt.ru",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	4096,
+					"rcode":	0,
+					"version":	0,
+					"Z":	1,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_5"
+	}, {
+		"Tuple4":	"37.9.88.84.5301>95.211.92.14.53",
+		"dns_qname":	"73dom.com",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	4096,
+					"rcode":	0,
+					"version":	0,
+					"Z":	1,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_6"
+	}, {
+		"Tuple4":	"109.60.128.2.17115>95.211.92.15.53",
+		"dns_qname":	"pogoda.vtomske.ru",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[]
+		},
+		"name":	"DNS_RESULT_7"
+	}, {
+		"Tuple4":	"5.45.192.86.5301>95.211.92.14.53",
+		"dns_qname":	"rpp.nashaucheba.ru",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	4096,
+					"rcode":	0,
+					"version":	0,
+					"Z":	1,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_8"
+	}, {
+		"Tuple4":	"173.252.79.126.21760>95.211.92.14.53",
+		"dns_qname":	"mail.yarisvet.com",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	4096,
+					"rcode":	0,
+					"version":	0,
+					"Z":	1,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_9"
+	}, {
+		"Tuple4":	"194.9.70.2.56818>95.211.92.14.53",
+		"dns_qname":	"kuklazine.ru",
+		"dns_qtype":	1,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	0,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	4096,
+					"rcode":	0,
+					"version":	0,
+					"Z":	1,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_10"
+}]

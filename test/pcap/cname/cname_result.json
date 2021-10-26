@@ -1,0 +1,21 @@
+[{
+		"Tuple4":	"36.250.92.233.46916>114.114.114.114.53",
+		"dns_qname":	"img.soulapp.cn",
+		"dns_qtype":	5,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	1,
+		"rr":	{
+			"rr":	[{
+					"name":	"",
+					"type":	41,
+					"udp_payload":	1280,
+					"rcode":	0,
+					"version":	0,
+					"Z":	0,
+					"rdlength":	0
+				}]
+		},
+		"name":	"DNS_RESULT_1"
+}]

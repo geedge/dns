@@ -1,0 +1,13 @@
+[{
+		"Tuple4":	"36.251.139.34.51235>114.114.114.114.53",
+		"dns_qname":	"_http._tcp.(null)",
+		"dns_qtype":	33,
+		"dns_qclass":	1,
+		"dns_qr":	0,
+		"dns_opcode":	0,
+		"dns_rd":	1,
+		"rr":	{
+			"rr":	[]
+		},
+		"name":	"DNS_RESULT_1"
+}]

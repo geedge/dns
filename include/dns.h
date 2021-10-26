@@ -53,6 +53,7 @@ typedef unsigned int u_int32_t;
 #define	DNS_TYPE_DNSKEY		48
 #define	DNS_TYPE_NSEC3		50
 #define	DNS_TYPE_NSEC3PARAM	51
+#define	DNS_TYPE_HTTPS		65
 #define DNS_QTYPE_AXFR		252
 #define DNS_QTYPE_MAILB		253
 #define DNS_QTYPE_MAILA		254
