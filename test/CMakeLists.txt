@@ -43,3 +43,4 @@ add_test(NAME DNS_NSEC COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/
 add_test(NAME DNS_PTR COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/ptr/ptr_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/ptr/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})
 add_test(NAME DNS_SRV COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/srv/srv_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/srv/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})
 add_test(NAME DNS_TXT COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/txt/txt_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/txt/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})
+add_test(NAME DNS_HTTPS COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/https/https_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/https/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})
