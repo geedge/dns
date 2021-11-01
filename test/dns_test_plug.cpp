@@ -25,11 +25,19 @@ extern "C" unsigned char DNS_TEST_PLUG_ENTRY(stSessionInfo *session_info, void *
 {
     assert(NULL != session_info || pme != NULL);
 
+	int dns_sec=0;
     cJSON *ctx = NULL;
     dns_info_t *dns_info=(dns_info_t *)session_info->app_info;
+	if(dns_info==NULL)
+	{
+		return PROT_STATE_GIVEME;
+	}
 	assert(dns_info!=NULL && a_stream!=NULL);
 
     if(strlen((char *)dns_info->query_question.qname)==0)return PROT_STATE_DROPME;
+
+	char rr_buf[4096]={0};
+	get_rr_content2buf(dns_info->rr, dns_info->rr_count, rr_buf, sizeof(rr_buf), &dns_sec);
 
     ctx = cJSON_CreateObject();
     cJSON_AddStringToObject(ctx, "Tuple4", printaddr(&a_stream->addr, thread_seq));
@@ -41,7 +49,6 @@ extern "C" unsigned char DNS_TEST_PLUG_ENTRY(stSessionInfo *session_info, void *
     cJSON_AddNumberToObject(ctx, "dns_opcode", (double)dns_info->hdr_info.opcode);
     cJSON_AddNumberToObject(ctx, "dns_rd", (double)dns_info->hdr_info.rd);
 
-	int dns_sec=0;
 	cJSON *rr_object=cJSON_CreateObject();
 	get_rr_str2json(rr_object, dns_info, &dns_sec);
 	cJSON_AddItemToObject(ctx, "rr", rr_object);
@@ -51,7 +58,7 @@ extern "C" unsigned char DNS_TEST_PLUG_ENTRY(stSessionInfo *session_info, void *
     commit_test_result_json(ctx, result_name);
     g_result_count += 1;
 
-    return PROT_STATE_DROPME;
+    return PROT_STATE_GIVEME;
 }
 
 extern "C" int QUIC_TEST_PLUG_INIT()

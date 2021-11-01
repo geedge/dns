@@ -126,6 +126,8 @@ int dissect_type_bitmap(unsigned char *buff, int rr_len, unsigned char *maps_buf
 	unsigned char bits=0;
 	int mask=0, blockbase=0, blocksize=0;
 	
+	*maps_len=0;
+
 	while (rr_len!=0) 
 	{
 		blockbase = buff[cur_offset];
@@ -334,7 +336,7 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddStringToObject(one_rr_object, "salt_value", tmp_buff);
 				
 				str2hex(dns_rr->rdata.nsec3.next_hash_owner, dns_rr->rdata.nsec3.hash_len, tmp_buff, sizeof(tmp_buff));					
-				cJSON_AddStringToObject(one_rr_object, "next_hash_owner", (char *)(dns_rr->rdata.nsec3.next_hash_owner));
+				cJSON_AddStringToObject(one_rr_object, "next_hash_owner", tmp_buff);
 				
 				str2hex(dns_rr->rdata.nsec3.type_bit_maps, dns_rr->rdata.nsec3.maps_len, tmp_buff, sizeof(tmp_buff));					
 				cJSON_AddStringToObject(one_rr_object, "type_bit_maps", tmp_buff);
@@ -563,12 +565,14 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3.next_hash_owner[j]);
 				}
 				len = 0;
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3.maps_len); j++)
+				tmp_len=MIN(dns_rr->rdata.nsec3.maps_len*2, sizeof(maps)-2)/2;
+				for(j = 0; j < tmp_len; j++)
 				{
 					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec3.type_bit_maps[j]);
 				}
 				len = 0;
-				for(j = 0; j < (int)(dns_rr->rdata.nsec3.salt_len); j++)
+				tmp_len=MIN(dns_rr->rdata.nsec3.salt_len*2, sizeof(salt_value)-2)/2;
+				for(j = 0; j < tmp_len; j++)
 				{
 					len += snprintf(salt_value+len, sizeof(salt_value)-len, "%02x", dns_rr->rdata.nsec3.salt_value[j]);
 				}
@@ -1050,14 +1054,20 @@ int get_rr_type_nsec3(char **ptr, nsec3_t *nsec3, char *end)
 	NS_GET16(nsec3->iteration, *ptr);
 	nsec3->salt_len = *(unsigned char *)*ptr;
 	*ptr += 1;
-	nsec3->salt_value=*(u_char**)ptr;
-	*ptr += nsec3->salt_len;	/* jump salt_value */
+	if(nsec3->salt_len>0)
+	{
+		nsec3->salt_value=*(u_char**)ptr;
+		*ptr += nsec3->salt_len;	/* jump salt_value */
+	}
 	
 	nsec3->hash_len = *(unsigned char *)*ptr;
 	*ptr += 1;
-	nsec3->next_hash_owner=*(u_char**)ptr;	
-	*ptr += nsec3->hash_len;/* jump next_hash_owner */
-		
+	if(nsec3->hash_len>0)
+	{
+		nsec3->next_hash_owner=*(u_char**)ptr;	
+		*ptr += nsec3->hash_len;/* jump next_hash_owner */
+	}
+	
 	return 0;
 }
 
