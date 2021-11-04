@@ -48,3 +48,4 @@ add_test(NAME DNS_TXT COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/t
 add_test(NAME DNS_HTTPS COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/https/https_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/https/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})
 add_test(NAME DNS_CERT1 COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/cernet1/cernet1_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/cernet1/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})
 add_test(NAME DNS_CERT2 COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/cernet2/cernet2_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/cernet2/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})
+add_test(NAME DNS_SEC COMMAND proto_test_main ${CMAKE_CURRENT_SOURCE_DIR}/pcap/dnssec/dnssec_result.json -f "find ${CMAKE_CURRENT_SOURCE_DIR}/pcap/dnssec/ -name *.pcap|sort -V" WORKING_DIRECTORY ${PROTO_TEST_RUN_DIR})

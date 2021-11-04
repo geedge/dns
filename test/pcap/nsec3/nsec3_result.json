@@ -18,7 +18,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -75,7 +74,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"ba41f737f63ca9d840b5f85529e33f74d90154ee",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -159,7 +157,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -188,7 +185,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"0d42cf36c61508ab424b19b62c3aa5ebdcbf16ad",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -378,7 +374,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -407,7 +402,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"0d42cf36c61508ab424b19b62c3aa5ebdcbf16ad",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -470,7 +464,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -499,7 +492,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"5e8ce5a752713510a1a1553f925ac2b3d56eca59",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -654,7 +646,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -711,7 +702,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"db06e2ece468ae1a2e50e3c6421ac2d9fa716efa",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -760,7 +750,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -817,7 +806,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"ba41f737f63ca9d840b5f85529e33f74d90154ee",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -958,7 +946,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -1015,7 +1002,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"bc9ebfffebdcf5955156ca9bee96ce28c5c734f1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -1515,7 +1501,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -1544,7 +1529,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"974a158898ea62983fc2a31b7e1221893373f62f",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -1847,7 +1831,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -1904,7 +1887,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"3f4e9dade47e19f6f5095b7aeb10e1c4536a2b18",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -2498,7 +2480,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -2527,7 +2508,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"c72cf8f48c7b52bc856a52d3263ac30bc1541a36",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -2887,7 +2867,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -2916,7 +2895,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"91c24c585d7a742643cda3c6d5a7e82e0fff6708",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -3246,7 +3224,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -3351,7 +3328,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -3449,7 +3425,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -3463,7 +3438,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"000722000000000290",
 					"next_hash_owner":	"4dd0bee7d0172f4b37bfe1b66fdd43b351108fa7",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -3758,7 +3732,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -3772,7 +3745,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"000722000000000290",
 					"next_hash_owner":	"4dd0bee7d0172f4b37bfe1b66fdd43b351108fa7",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -3918,7 +3890,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4101,7 +4072,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4164,7 +4134,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4193,7 +4162,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"9b7a33d5d918fb0b8842e0e2e05562fdb65f56d6",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -4276,7 +4244,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4339,7 +4306,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4368,7 +4334,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"9b7a33d5d918fb0b8842e0e2e05562fdb65f56d6",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -4733,7 +4698,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4810,7 +4774,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4839,7 +4802,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"a57f7b40e910c56f8f02901dc16f84322f4f7045",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -4901,7 +4863,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -4930,7 +4891,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"a57f7b40e910c56f8f02901dc16f84322f4f7045",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -4992,7 +4952,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -5021,7 +4980,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"a57f7b40e910c56f8f02901dc16f84322f4f7045",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -5153,7 +5111,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -5182,7 +5139,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"7a8e80f6b0d8110670f7492ab6ed6302617bef2b",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -5357,7 +5313,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -5386,7 +5341,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"f5c11b5dbcabe81938b4e46f450c813fbf722fed",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -5469,7 +5423,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -5546,7 +5499,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -5575,7 +5527,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"f5c11b5dbcabe81938b4e46f450c813fbf722fed",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -5637,7 +5588,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -5666,7 +5616,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"f5c11b5dbcabe81938b4e46f450c813fbf722fed",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -5749,7 +5698,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -6165,7 +6113,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -6194,7 +6141,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"f5c11b5dbcabe81938b4e46f450c813fbf722fed",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -6348,7 +6294,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -6377,7 +6322,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"a57f7b40e910c56f8f02901dc16f84322f4f7045",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -6694,7 +6638,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -6751,7 +6694,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"dc558f474d1636fe3dca619d84cdcc0071aa3ad8",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -7132,7 +7074,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -7189,7 +7130,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"3f4e9dade47e19f6f5095b7aeb10e1c4536a2b18",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -7238,7 +7178,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -7295,7 +7234,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"3f4e9dade47e19f6f5095b7aeb10e1c4536a2b18",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -7464,7 +7402,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -7521,7 +7458,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"895533e99d8e61ea75756530008715e3d86c079b",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -7916,7 +7852,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -7945,7 +7880,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"709428d4d5a0dc3ee32974199ef877b6c314efae",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -8563,7 +8497,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -8592,7 +8525,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"8ab5e48ccfed4f202167fbbec8de49a73614c51d",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -9064,7 +8996,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -9093,7 +9024,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"29e0461e4d4e6900f80cd6c0b8b50553804511f3",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -9608,7 +9538,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -9637,7 +9566,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"17edbfbd7b45b8f8b4fcc64485f8fef21792ea04",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -10033,7 +9961,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -10090,7 +10017,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"3f4e9dade47e19f6f5095b7aeb10e1c4536a2b18",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -10259,7 +10185,6 @@
 					"iteration":	1,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"0c53cc9ee211467da454a408dbe0bb483b68d99a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -10273,7 +10198,6 @@
 					"iteration":	1,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"000722000000000290",
 					"next_hash_owner":	"453072543a8c326836424bd0d29285028a3a278d",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -10478,7 +10402,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -10507,7 +10430,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"070f6cafc644ed48e697f71f0d02dd3919ac123a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -10626,7 +10548,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -10655,7 +10576,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"070f6cafc644ed48e697f71f0d02dd3919ac123a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -10774,7 +10694,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -10803,7 +10722,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"070f6cafc644ed48e697f71f0d02dd3919ac123a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -11205,7 +11123,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"dab7b8f4408e01f9a45cbf89321e15b22f584a1eafdde0b5402d9253271ed9b19e5603e3a7808ba79c5f6f6188e67f4fc7682a6088422671ba4adaabe34c8d6cc2d4cb9c1a38793227ed72cb81d671128d1435b73e94409fa2da5c4eb1fcc4d0f6a3d2d8b00c00dd9d4d47d4d4d02d24b519b49c4c33200c74e4035ebdeb802be171709f18d1be1c5adbe8ca23867e0c7a7122fb677a04b7b63fa0c9f9de2350",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -11234,7 +11151,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"a3bbd7437ae0039e07a786dde4e6a990909ba969",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -11263,7 +11179,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"9d3ce4a55d81f01f636af4e8ae1404b9acbfd8bd8774de7655ddac73b81eca65ddaea632f3f76504ec9a93726af803a942b81cb68fd80e733036d7c16a43013a9067dc6b5269996a7b3dc718f63286ba00f1fae6b9697d553c0b3e25d7dad1d329eef936ca0e8bcb5a1c45df415a87b48c2a8d0c8e811f2dc054307a66ece78c1ffad8f3bcb88424dab00ffe74ad6e7b32db77bc40739acbc8946bf34df6ac1f",
 					"next_hash_owner":	"73b5347f28eda92b1d49ef48d96f666866652f7b",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -11736,7 +11651,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -11765,7 +11679,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"deb223e71b1d5e3f9cce6d3151fc8cc15c4b84e1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -12428,7 +12341,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -12457,7 +12369,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"cafbfdc2d141700a411fa6cc7bbc8758e9c2174a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -12486,7 +12397,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"7807298dd6245d16c752b344d730b0b09850c3b149fa80bf8924db65d8ec0cdd51fe5c246b1476a495fc254f7a9b686ffb48836d2e6b17693c9de01a6ea4f455dfd051638f539d4551d82bde76d08aa33b8dbda1d932545436182d28235cf728b8d9e647532ae6ed4015fe519067831b62179f32f85eb619b37ef762470e0abe33280ed1f8b9d211bf08bd4f2189e2e08106b403c823fa2c596a536bac75ccdd",
 					"next_hash_owner":	"1eea34bafc224d48eb40ac1e344107be09c3a784",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -12626,7 +12536,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -12655,7 +12564,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"cc0699432bcb309e735423b5fd5c9fc8213572d1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -12916,7 +12824,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -12973,7 +12880,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"3e24fc85813f4851ac2aee1c6cb0927108bb8b20",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -13022,7 +12928,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -13079,7 +12984,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"2e6bf2feb98b508c7522562f2647c7caa5b564c3",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -13326,7 +13230,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -13383,7 +13286,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"db06e2ece468ae1a2e50e3c6421ac2d9fa716efa",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -13432,7 +13334,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -13489,7 +13390,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"4ecc6ce07b3c720ac1060bb87254614a7aa16daf",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -13692,7 +13592,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -13721,7 +13620,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"90910eb699fb3da84e9ea1dd92eac6ef645ee06a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -13840,7 +13738,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -13869,7 +13766,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"6de539ccdbb6479f6a0a7b7b3fe9dabadfb412e4",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -15427,7 +15323,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -15456,7 +15351,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"86658fb8ac60d8a0343109201848930206583a8b",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -15596,7 +15490,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -15625,7 +15518,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"5dda49d4ee169b44508b4816d381aaf935c2175b",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -15681,7 +15573,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -15738,7 +15629,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"a6feb2f681b2905332492d75f2cc28d78581d678",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -15787,7 +15677,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -15844,7 +15733,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"dc558f474d1636fe3dca619d84cdcc0071aa3ad8",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -15907,7 +15795,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -15936,7 +15823,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"9ffdea0e0b56d8de454fd4baaf3ef5d8231c988d",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -16111,7 +15997,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -16168,7 +16053,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"04b669f02996d8c129e12f8130b62fed61a41c83",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -16323,7 +16207,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -16380,7 +16263,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"3f4e9dade47e19f6f5095b7aeb10e1c4536a2b18",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -16598,7 +16480,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -16655,7 +16536,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"a6feb2f681b2905332492d75f2cc28d78581d678",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -16704,7 +16584,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -16761,7 +16640,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"3f4e9dade47e19f6f5095b7aeb10e1c4536a2b18",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -16838,7 +16716,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -16867,7 +16744,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"fb2e78f5ab915463e9e3bcb69d2270ba0436bb09",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -16972,7 +16848,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -17001,7 +16876,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"55d83f8e82d0849d984c4568423de6b19a9868e2",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -18744,7 +18618,6 @@
 					"iteration":	1,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"fce4ba4b67b5df342c628491d59ac52ebe7b95bf",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -18758,7 +18631,6 @@
 					"iteration":	1,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"000722000000000290",
 					"next_hash_owner":	"07d9245e4f7a0b13c1cb59ae393e43a5c4b5c322",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -18821,7 +18693,6 @@
 					"iteration":	1,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"fce4ba4b67b5df342c628491d59ac52ebe7b95bf",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -18835,7 +18706,6 @@
 					"iteration":	1,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"000722000000000290",
 					"next_hash_owner":	"07d9245e4f7a0b13c1cb59ae393e43a5c4b5c322",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -18884,7 +18754,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -18941,7 +18810,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"dc558f474d1636fe3dca619d84cdcc0071aa3ad8",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -19011,7 +18879,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -19040,7 +18907,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"9f79fbd99c839adaf4e70c197b1a80251aabedef",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -19209,7 +19075,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -19266,7 +19131,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"db06e2ece468ae1a2e50e3c6421ac2d9fa716efa",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -19357,7 +19221,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -19505,7 +19368,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -19562,7 +19424,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"09b491d163c1f58162dc7c99f042378bf1a28b08",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -19639,7 +19500,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -19709,7 +19569,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -19738,7 +19597,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"150f4b753d566aea0cdf9613378c051059a6592c",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -20146,7 +20004,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -20175,7 +20032,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"150f4b753d566aea0cdf9613378c051059a6592c",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -20350,7 +20206,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -20407,7 +20262,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"09b491d163c1f58162dc7c99f042378bf1a28b08",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -22192,7 +22046,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -22221,7 +22074,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"09f90edad8d7512b7091e50a472e015ae51bd9ed",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -22375,7 +22227,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -22404,7 +22255,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"c6df512a06da9a894b033005d3a0be8609328479",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -22459,7 +22309,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -22488,7 +22337,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"c8fd81aeebfa644488ccc6b253f6c1f411056b96",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -22565,7 +22413,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -22594,7 +22441,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"c8fd81aeebfa644488ccc6b253f6c1f411056b96",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -22671,7 +22517,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -22700,7 +22545,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"c8fd81aeebfa644488ccc6b253f6c1f411056b96",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -22869,7 +22713,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -22898,7 +22741,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"4c120654c80d1fac92db87915c7b03afc5ccdef9",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23031,7 +22873,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -23060,7 +22901,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"36a657551a1bcc8d4bc8c4b7b703204b947421fb",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23129,7 +22969,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -23158,7 +22997,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"f1840539e2c75e520d9b0a1bc4da5cbf884772f7",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23220,7 +23058,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -23249,7 +23086,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"355257e8f63417f6184286881627e8c144c36436",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23403,7 +23239,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -23432,7 +23267,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"974a158898ea62983fc2a31b7e1221893373f62f",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23508,7 +23342,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -23537,7 +23370,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"023d8536aa57fb0b66cd8682395c5e66dff60a66",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23599,7 +23431,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -23628,7 +23459,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"6a6e35efc905e46dae14dba77d5d80760c5d8c8e",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23697,7 +23527,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -23726,7 +23555,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"6a6e35efc905e46dae14dba77d5d80760c5d8c8e",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -23965,7 +23793,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -24022,7 +23849,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"1bfe8d2702498ff8b46277d1f24fb58ff5fdeb8e",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -24536,7 +24362,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -24565,7 +24390,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"1328584d73e308c647486d599937a1b5f4e0deb9",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -24719,7 +24543,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -24748,7 +24571,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"e80d21b7b2e0819aa1da7c51c33d4852c6a40d2e",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -24916,7 +24738,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25162,7 +24983,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25191,7 +25011,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"012cce0c1faf66d115a66d5647253e899a8939c8",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -25387,7 +25206,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25416,7 +25234,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"49e68cf05011f7992ea683323286f067df3ae6b1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -25471,7 +25288,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25500,7 +25316,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"03f3735c9b55481c1feae82c8a9b39d4f4cd2b6a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -25569,7 +25384,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25598,7 +25412,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"67084cf4a38ba834d440758a633b626f297e2cd3",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -25646,7 +25459,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25675,7 +25487,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"70b3e50ca2862f0acf8f529c8b8a0ff83c5b0ecc",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -25730,7 +25541,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25759,7 +25569,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"70b3e50ca2862f0acf8f529c8b8a0ff83c5b0ecc",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -25814,7 +25623,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -25843,7 +25651,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"b376d37f056976e9565423c3568962ded1361495",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -25990,7 +25797,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26019,7 +25825,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"b376d37f056976e9565423c3568962ded1361495",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -26081,7 +25886,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26110,7 +25914,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"24895d29ad4e36b89da5544574fe05d15ca3d6ea",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -26179,7 +25982,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26208,7 +26010,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"e39a68336eac6289b665116a18c3ecb267209c41",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -26277,7 +26078,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26306,7 +26106,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"e39a68336eac6289b665116a18c3ecb267209c41",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -26559,7 +26358,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26588,7 +26386,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"e39a68336eac6289b665116a18c3ecb267209c41",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -26657,7 +26454,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26686,7 +26482,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"e39a68336eac6289b665116a18c3ecb267209c41",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -26832,7 +26627,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26861,7 +26655,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"e39a68336eac6289b665116a18c3ecb267209c41",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -26930,7 +26723,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -26959,7 +26751,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"e39a68336eac6289b665116a18c3ecb267209c41",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27028,7 +26819,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27057,7 +26847,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"e39a68336eac6289b665116a18c3ecb267209c41",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27119,7 +26908,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27148,7 +26936,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"fe5bffe8b3ae810066fe4846e9f1d93fd21bc160",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27295,7 +27082,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27324,7 +27110,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"91c1a7cb853c6e3709c825f5666311510844e9b1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27379,7 +27164,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27408,7 +27192,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"91c1a7cb853c6e3709c825f5666311510844e9b1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27470,7 +27253,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27499,7 +27281,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"9c3509ffdbcae73091b72046443c8577b492d1d8",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27547,7 +27328,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27576,7 +27356,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"4c493270b13c4fbfd48eb90e85e013832ed46f1c",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27723,7 +27502,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27752,7 +27530,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"59a36aa365eb576f64c78407e3ee99fe7b4ebd2c",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27828,7 +27605,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27857,7 +27633,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -27933,7 +27708,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -27962,7 +27736,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28038,7 +27811,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28067,7 +27839,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28143,7 +27914,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28172,7 +27942,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28248,7 +28017,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28277,7 +28045,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28353,7 +28120,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28382,7 +28148,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28458,7 +28223,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28487,7 +28251,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28563,7 +28326,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28592,7 +28354,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28654,7 +28415,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28738,7 +28498,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28767,7 +28526,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"2104d58ee81c6b3d6e53e4c0b624f8970dcdc3d5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28836,7 +28594,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28865,7 +28622,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"38251fe664d7309ca3765df3aac12825994d99b2",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -28934,7 +28690,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -28963,7 +28718,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"38251fe664d7309ca3765df3aac12825994d99b2",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -29095,7 +28849,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -29124,7 +28877,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"1280d997f992387bebf89064d52e45ef41361e07",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -29391,7 +29143,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -29420,7 +29171,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"8352b28ca660c50c63f29e85733b49a54985a37d",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -29489,7 +29239,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -29587,7 +29336,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -29671,7 +29419,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -29700,7 +29447,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"e02fe4d9ecf8741bf17656756f0227b46e43cdbd",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -29847,7 +29593,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -29917,7 +29662,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -29946,7 +29690,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"e686442b78616c67b38116b3e03036cb7afeb6c9",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -30001,7 +29744,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -30030,7 +29772,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"d661e0b126840e611f1275fc59fedfedba59f4a1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -30085,7 +29826,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -30114,7 +29854,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"d661e0b126840e611f1275fc59fedfedba59f4a1",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -30169,7 +29908,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -30198,7 +29936,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"8bf9a46688c82eb392923ce44286d8f7d36dbd84",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -30939,7 +30676,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -30968,7 +30704,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"9c07e8426c1dc154205281749318ea20a5be483b",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -31030,7 +30765,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -31135,7 +30869,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -31240,7 +30973,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -31345,7 +31077,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -31726,7 +31457,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -31831,7 +31561,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -31936,7 +31665,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -32084,7 +31812,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -32141,7 +31868,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"90910eb699fb3da84e9ea1dd92eac6ef645ee06a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -32190,7 +31916,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -32247,7 +31972,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"80dfc0f48ab52bbf3d455efe9db569ffa77353de",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -32388,7 +32112,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -32445,7 +32168,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"db06e2ece468ae1a2e50e3c6421ac2d9fa716efa",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -32642,7 +32364,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -32699,7 +32420,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"3e24fc85813f4851ac2aee1c6cb0927108bb8b20",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -32804,7 +32524,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -32833,7 +32552,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"894ce85a249ee56af4130e83de03e4528b548e34",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -32938,7 +32656,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -32995,7 +32712,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"57296902eac99629e070f46e851c667e33f4dee18edffeec466aaf15b3cc30a10c88f38ce38aeeab2023f88012bbdbdcd06f94942009373596b29d46d2bff9494991c568e635f3612279cbfa47652925610836871c92ab6de170fe3b8eb550c4f6b9e923175e61e7919070a174cb0213de5344f5f4d28f0c96fbd0dc92e3309268d7ee8acd840a53f1f71de36459ed5d8de42c6e7b6b65dc7bfc7f8e376e34a7",
 					"next_hash_owner":	"2e6bf2feb98b508c7522562f2647c7caa5b564c3",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -33058,7 +32774,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -33087,7 +32802,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"4bad0970b67bda0a716dcd12979d4451b22f7ac5",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -33545,7 +33259,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -33602,7 +33315,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"c25f0f284b0d6a996e915ef4cc59ee2c5ab8f76102a088b7064aea89a0b21e42c8eedf0ea1caf6583be22bdfe73dfa020942715f3f89077c3e68f3cade43a25011258c6ddc7488aa9e5265fd231c5dd0d394d88d69774e19c03edcb2a31734e09b30b30b0e83b6e30574beb4592e7fd731861d7300d220e6f0abb768e0f59c111485b9baa0a1b32aa6447deac8854eaae464fe1a2878c576a3243236fa377351",
 					"next_hash_owner":	"90910eb699fb3da84e9ea1dd92eac6ef645ee06a",
 					"type_bit_maps":	"0006200000000012"
 				}, {
@@ -33679,7 +33391,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"6501a0c25720ee156f6c4e39636b3ada0312d92a",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -33708,7 +33419,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"1f77dc4c5796eda9ced317925c67d91c52922152424c9dca024948c1169e8429053fdf50a23370d9c3dc79de909f2f79475b2c731d6060d1db7b5d294b8ee43c91a57b8a4afa06c25fb13127bfca3fb353c7d5a38eaf093e12ffa1e33bc80bd7118851ca730ed22bd27b6f16673b86b44898785c6e13b3dd3620750492e47bb8ca823ffa6e25225ffa5408184c25e4ff423497802deed0586629d78103b3e6e7",
 					"next_hash_owner":	"e02fe4d9ecf8741bf17656756f0227b46e43cdbd",
 					"type_bit_maps":	"0006200000000012"
 				}, {

@@ -2668,7 +2668,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"",
 					"next_hash_owner":	"5077ef3df3a33a2d14993a1e874e1344d743c90b",
 					"type_bit_maps":	"000722000000000290"
 				}, {
@@ -2697,7 +2696,6 @@
 					"iteration":	0,
 					"salt_len":	0,
 					"hash_len":	20,
-					"salt_value":	"99742854cdb4e7be28fa1f234456d67b13c1e60a6ab365e5cefc56d4a6f03ce13dfb9572ad7d54fd616fd729c59cf62e5f3cb6fef2833d33bc442242e52c9137110bf1b6289e037cd5fd3efdf610b6e10c8dbeaccfc19c84508b8f0d87d6f317d92030e537eb6554b364e05c04b2e7e0e3261c73055ab36856149423c0d8b8539cb2ca2930064239ba338ff9c21a9ea7f83bb7b5833616ab3f9fd4d55a99ad10",
 					"next_hash_owner":	"a3e3fefffd174e2ae3fb6ebd5d2029cffe5a9817",
 					"type_bit_maps":	"0006200000000012"
 				}, {

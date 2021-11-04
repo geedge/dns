@@ -110,13 +110,22 @@ const unsigned char PCAP_FILE_HEAD[24] = {0xD4, 0xC3, 0xB2, 0xA1, 0x02, 0x00, 0x
 static int str2hex(unsigned char *source, int s_len, char *dest, int d_len)
 {
 	int i=0,used_len=0;
-	
+
 	for(i=0; i<s_len && i<d_len/2; i++)
 	{
 		used_len+=snprintf(dest+used_len, d_len-used_len, "%02x", source[i]);
 	}
 
-	return 0;
+	if(used_len<d_len)
+	{
+		dest[used_len]='\0';
+	}
+	else
+	{
+		dest[used_len-1]='\0';
+	}
+	
+	return used_len;
 }
 
 int dissect_type_bitmap(unsigned char *buff, int rr_len, unsigned char *maps_buff, unsigned short *maps_len)
@@ -164,7 +173,7 @@ int dissect_type_bitmap(unsigned char *buff, int rr_len, unsigned char *maps_buf
 
 int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 {
-	int i=0;
+	int i=0,ret=0;
 	char ip_str[128];
 	char tmp_buff[4096]={0};
 	dns_rr_t *dns_rr=NULL;
@@ -253,8 +262,11 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "protocol", dns_rr->rdata.wks.protocol);
 				cJSON_AddNumberToObject(one_rr_object, "size", dns_rr->rdata.wks.size);
 				
-				str2hex(dns_rr->rdata.wks.bitmap, dns_rr->rdata.wks.size, tmp_buff, sizeof(tmp_buff));					
-				cJSON_AddStringToObject(one_rr_object, "bitmap", tmp_buff);
+				ret=str2hex(dns_rr->rdata.wks.bitmap, dns_rr->rdata.wks.size, tmp_buff, sizeof(tmp_buff));
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "bitmap", tmp_buff);
+				}
 				break;
 			case DNS_TYPE_PTR:
 				cJSON_AddStringToObject(one_rr_object, "ptr", (const char *)(dns_rr->rdata.ptr));
@@ -291,8 +303,11 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "algo", dns_rr->rdata.ds.algo);
 				cJSON_AddNumberToObject(one_rr_object, "digest_type", dns_rr->rdata.ds.digest_type);
 				
-				str2hex(dns_rr->rdata.ds.digest, dns_rr->rdata.ds.digest_len, tmp_buff, sizeof(tmp_buff));					
-				cJSON_AddStringToObject(one_rr_object, "digest", tmp_buff);
+				ret=str2hex(dns_rr->rdata.ds.digest, dns_rr->rdata.ds.digest_len, tmp_buff, sizeof(tmp_buff));					
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "digest", tmp_buff);
+				}
 				break;
 			case DNS_TYPE_RRSIG:
 				*dns_sec = 2;
@@ -305,15 +320,21 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "key_tag", dns_rr->rdata.rrsig.key_tag);
 				cJSON_AddStringToObject(one_rr_object, "signer_name", (const char *)(dns_rr->rdata.rrsig.signer_name));
 
-				str2hex(dns_rr->rdata.rrsig.signature, dns_rr->rdata.rrsig.signature_len, tmp_buff, sizeof(tmp_buff));				
-				cJSON_AddStringToObject(one_rr_object, "signature", tmp_buff);
+				ret=str2hex(dns_rr->rdata.rrsig.signature, dns_rr->rdata.rrsig.signature_len, tmp_buff, sizeof(tmp_buff));				
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "signature", tmp_buff);
+				}
 				break;
 			case DNS_TYPE_NSEC:
 				*dns_sec = 2;
 				cJSON_AddStringToObject(one_rr_object, "next_domain", (const char *)(dns_rr->rdata.nsec.next_domain));
 				
-				str2hex(dns_rr->rdata.nsec.type_bit_maps, dns_rr->rdata.nsec.maps_len, tmp_buff, sizeof(tmp_buff));					
-				cJSON_AddStringToObject(one_rr_object, "type_bit_maps", tmp_buff);
+				ret=str2hex(dns_rr->rdata.nsec.type_bit_maps, dns_rr->rdata.nsec.maps_len, tmp_buff, sizeof(tmp_buff));					
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "type_bit_maps", tmp_buff);
+				}
 				break;
 			case DNS_TYPE_DNSKEY:
 				*dns_sec = 2;
@@ -321,8 +342,11 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "protocol", dns_rr->rdata.dnskey.protocol);
 				cJSON_AddNumberToObject(one_rr_object, "algo", dns_rr->rdata.dnskey.algo);
 				
-				str2hex(dns_rr->rdata.dnskey.public_key, dns_rr->rdata.dnskey.public_key_len, tmp_buff, sizeof(tmp_buff));					
-				cJSON_AddStringToObject(one_rr_object, "public_key", tmp_buff);
+				ret=str2hex(dns_rr->rdata.dnskey.public_key, dns_rr->rdata.dnskey.public_key_len, tmp_buff, sizeof(tmp_buff));					
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "public_key", tmp_buff);
+				}
 				break;
 			case DNS_TYPE_NSEC3:
 				*dns_sec = 2;
@@ -332,14 +356,23 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "salt_len", dns_rr->rdata.nsec3.salt_len);
 				cJSON_AddNumberToObject(one_rr_object, "hash_len", dns_rr->rdata.nsec3.hash_len);
 
-				str2hex(dns_rr->rdata.nsec3.salt_value, dns_rr->rdata.nsec3.salt_len, tmp_buff, sizeof(tmp_buff));
-				cJSON_AddStringToObject(one_rr_object, "salt_value", tmp_buff);
+				ret=str2hex(dns_rr->rdata.nsec3.salt_value, dns_rr->rdata.nsec3.salt_len, tmp_buff, sizeof(tmp_buff));
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "salt_value", tmp_buff);
+				}
 				
-				str2hex(dns_rr->rdata.nsec3.next_hash_owner, dns_rr->rdata.nsec3.hash_len, tmp_buff, sizeof(tmp_buff));					
-				cJSON_AddStringToObject(one_rr_object, "next_hash_owner", tmp_buff);
+				ret=str2hex(dns_rr->rdata.nsec3.next_hash_owner, dns_rr->rdata.nsec3.hash_len, tmp_buff, sizeof(tmp_buff));					
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "next_hash_owner", tmp_buff);
+				}
 				
-				str2hex(dns_rr->rdata.nsec3.type_bit_maps, dns_rr->rdata.nsec3.maps_len, tmp_buff, sizeof(tmp_buff));					
-				cJSON_AddStringToObject(one_rr_object, "type_bit_maps", tmp_buff);
+				ret=str2hex(dns_rr->rdata.nsec3.type_bit_maps, dns_rr->rdata.nsec3.maps_len, tmp_buff, sizeof(tmp_buff));					
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "type_bit_maps", tmp_buff);
+				}
 				break;
 			case DNS_TYPE_NSEC3PARAM:
 				cJSON_AddNumberToObject(one_rr_object, "hash_algo", dns_rr->rdata.nsec3param.hash_algo);
@@ -347,8 +380,11 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "iteration", dns_rr->rdata.nsec3param.iteration);
 				cJSON_AddNumberToObject(one_rr_object, "salt_len", dns_rr->rdata.nsec3param.salt_len);
 				
-				str2hex(dns_rr->rdata.nsec3param.salt_value, dns_rr->rdata.nsec3param.salt_len, tmp_buff, sizeof(tmp_buff));
-				cJSON_AddStringToObject(one_rr_object, "salt_value", tmp_buff);
+				ret=str2hex(dns_rr->rdata.nsec3param.salt_value, dns_rr->rdata.nsec3param.salt_len, tmp_buff, sizeof(tmp_buff));
+				if(ret>0)
+				{
+					cJSON_AddStringToObject(one_rr_object, "salt_value", tmp_buff);
+				}
 				break;
 			case DNS_QTYPE_AXFR:
 				break;
@@ -470,8 +506,11 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.wks.bitmap[j]);
 				}
-				used_len += snprintf(buf+used_len, buflen-used_len, "[WKS addr: %s, protocol: %u, bitmap: %s, size: %u]};",
+				if(len>0)
+				{
+					used_len += snprintf(buf+used_len, buflen-used_len, "[WKS addr: %s, protocol: %u, bitmap: %s, size: %u]};",
 									ip_str, dns_rr->rdata.wks.protocol, tmp_buf, dns_rr->rdata.wks.size);
+				}
 				break;
 			case DNS_TYPE_PTR:
 				used_len += snprintf(buf+used_len, buflen-used_len, "[PTR: %s]};", dns_rr->rdata.ptr);
@@ -510,10 +549,14 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.ds.digest[j]);
 				}
-				used_len += snprintf(buf+used_len, buflen-used_len,
+
+				if(len>0)
+				{
+					used_len += snprintf(buf+used_len, buflen-used_len,
 									"[DS key_tag: %u, algo: %u, digest_type: %u, digest: %s]};",
 										dns_rr->rdata.ds.key_tag, dns_rr->rdata.ds.algo,
 										dns_rr->rdata.ds.digest_type, tmp_buf);
+				}
 				break;
 			case DNS_TYPE_RRSIG:
 				*dns_sec = 2;
@@ -524,12 +567,16 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.rrsig.signature[j]);
 				}
-				used_len += snprintf(buf+used_len, buflen-used_len,
+
+				if(len>0)
+				{
+					used_len += snprintf(buf+used_len, buflen-used_len,
 									"[RRSIG type_covered: %u, algo: %u, labels: %u, original_ttl: %u, sig_expiration: %u, sig_inception: %u, key_tag: %u, signer_name: %s, signature: %s]};",
 										dns_rr->rdata.rrsig.type_covered, dns_rr->rdata.rrsig.algo,
 										dns_rr->rdata.rrsig.labels, dns_rr->rdata.rrsig.original_ttl,
 										dns_rr->rdata.rrsig.sig_expiration, dns_rr->rdata.rrsig.sig_inception,
 										dns_rr->rdata.rrsig.key_tag, dns_rr->rdata.rrsig.signer_name, tmp_buf);
+				}
 				break;
 			case DNS_TYPE_NSEC:
 				*dns_sec = 2;
@@ -539,7 +586,10 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				{
 					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec.type_bit_maps[j]);
 				}
-				used_len += snprintf(buf+used_len, buflen-used_len, "[NSEC next_domain: %s, type_bit_maps: %s]};", dns_rr->rdata.nsec.next_domain, maps);
+				if(len>0)
+				{
+					used_len += snprintf(buf+used_len, buflen-used_len, "[NSEC next_domain: %s, type_bit_maps: %s]};", dns_rr->rdata.nsec.next_domain, maps);
+				}
 				break;
 			case DNS_TYPE_DNSKEY:
 				*dns_sec = 2;
@@ -550,8 +600,11 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.dnskey.public_key[j]);
 				}
-				used_len += snprintf(buf+used_len, buflen-used_len, "[DNSKEY flags: %u, protocol: %u, algo: %u, public_key: %s]};",
+				if(len>0)
+				{
+					used_len += snprintf(buf+used_len, buflen-used_len, "[DNSKEY flags: %u, protocol: %u, algo: %u, public_key: %s]};",
 							dns_rr->rdata.dnskey.flags, dns_rr->rdata.dnskey.protocol, dns_rr->rdata.dnskey.algo, tmp_buf);
+				}
 				break;
 			case DNS_TYPE_NSEC3:
 				*dns_sec = 2;
@@ -591,12 +644,15 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				{
 					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3param.salt_value[j]);
 				}
-				
-				used_len += snprintf(buf+used_len, buflen-used_len,
+
+				if(len>0)
+				{
+					used_len += snprintf(buf+used_len, buflen-used_len,
 								"[NSEC3PARAM hash_algo: %u, flags: %u, iteration: %u, salt_len: %u, salt_value: %s]};",
 										dns_rr->rdata.nsec3param.hash_algo, dns_rr->rdata.nsec3param.flags,
 										dns_rr->rdata.nsec3param.iteration, dns_rr->rdata.nsec3param.salt_len,
 										tmp_buf);
+				}
 				break;
 			case DNS_QTYPE_AXFR:
 				continue;
@@ -1541,8 +1597,11 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			{
 				return -1;
 			}
-			
-			dissect_type_bitmap((unsigned char*)*ptr, rr->rdlength-len, (rr->rdata.nsec.type_bit_maps), &(rr->rdata.nsec.maps_len));
+
+			if(rr->rdlength-len>0 && rr->rdlength-len<sizeof(rr->rdata.nsec.type_bit_maps))
+			{
+				dissect_type_bitmap((unsigned char*)*ptr, rr->rdlength-len, (rr->rdata.nsec.type_bit_maps), &(rr->rdata.nsec.maps_len));
+			}
 			*ptr = (char *)original_ptr+rr->rdlength;			
 			break;
 		case DNS_TYPE_DNSKEY:
@@ -1564,8 +1623,10 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			get_rr_type_nsec3(ptr, &(rr->rdata.nsec3), end);
 
 			len=((char *)*ptr)-(char *)original_ptr;
-			dissect_type_bitmap((unsigned char*)*ptr, rr->rdlength-len, (rr->rdata.nsec3.type_bit_maps), &(rr->rdata.nsec3.maps_len));
-
+			if(rr->rdlength-len>0 && rr->rdlength-len<sizeof(rr->rdata.nsec3.type_bit_maps))
+			{
+				dissect_type_bitmap((unsigned char*)*ptr, rr->rdlength-len, (rr->rdata.nsec3.type_bit_maps), &(rr->rdata.nsec3.maps_len));
+			}
 			*ptr = (char *)original_ptr+rr->rdlength;			
 			break;
 		case DNS_TYPE_NSEC3PARAM:
