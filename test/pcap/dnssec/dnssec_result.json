@@ -48,6 +48,7 @@
 					"sig_inception":	1357852847,
 					"key_tag":	40452,
 					"signer_name":	"ietf.org",
+					"signature_len":	256,
 					"signature":	"88303c6c99eb004cf78e0627c85466e7aedaefaaa5bf55740aac4e49dfe8f67be73741a564b695a039ae5e96886a8ca96c6c70cf080afcb63a095da4e9258ac227019a910d2f6ea1c328e41733c35bc917de26c586d7ec39bf2961eee7063df6e9a72da7fee21be0d1b8398f9e46018dafb00d893ad5da13b64a99839edf9f7892f7bb6334f082f42f649d102e0d8506f9d5716a56b34b062ba6f63dedd502d47daca43d20e14743c826c6038ea6a2e67818fccd31ec207fde3cab1ae753ca563e4de7416e5380b5641a85a0728da8c1f2c4941a9feab2782ceb30ba16b0f08a53b66c3716c8b1c532d0bca384e677ed7759cc85041df426878e828d014133e5"
 				}, {
 					"name":	"",
@@ -98,6 +99,7 @@
 					"flags":	257,
 					"protocol":	3,
 					"algo":	5,
+					"public_key_len":	260,
 					"public_key":	"03010001abe34351faa44f0557c2c63f4c1004554bd0433d0517eac73f69fec67ef00072ab21472dd65c1e838617b0a007938a60cbc63a0cacb98425a0f9706eaed6b395b2c1bbad6d7c86db894c5b2e238a394952c685ad2e44bd4bb8c9d9ae45cfd31a71179cdd574243bec1a213e1c2edae67168e863c3aab9dea50da25d8f570aaf69d7d4dae6311a3022edc3215b466d0266ce9ba4a4355969830c026f0ce6fcf8536bd10951132e00e843bae1b220f5dbb27c8151318cef01d35d778c26a36c545c32d52d1538c7e33ee35cfd99cc3717b20a5ee0b605b9e9c5400711051944ea86b290747bae53eaaa6c39f272042c9505a0c71bfc17512e06f24debab1659f1b"
 				}, {
 					"name":	"ietf.org",
@@ -108,6 +110,7 @@
 					"flags":	256,
 					"protocol":	3,
 					"algo":	5,
+					"public_key_len":	260,
 					"public_key":	"03010001d0c409a8c76938df4a8353639f167016a1d41c4f295207073e087cb8dfa8cbe2ba6e2580ab4a64b7bdec3809e7f350acd1061909abe9f2af523ebb71fad95288d9d9c1918b35618243aa67db1c69355736e5cb3394f0ed558e54871e79702eb87da63c888457a32125852c5ba76f98db09e17c0280d82ba00997868304896123041fb08d8650e46b591c114a5570024964e20ad75d1dcb9e39e4953e2e561fde1596e6e11df8b2b4d3d92eb39b8540874fa934b4d13aa612e81e75d653eeafa6c629cfa1a1330fd1f411715b93dd3c5216060a16936fd7155452286f4bafad5bdb3d51d76eb1794c2fc38e91572de16a7577bcd3bb2cce479e2a9a61c9416e19"
 				}, {
 					"name":	"ietf.org",
@@ -123,6 +126,7 @@
 					"sig_inception":	1357852847,
 					"key_tag":	45586,
 					"signer_name":	"ietf.org",
+					"signature_len":	256,
 					"signature":	"16328fe13c5aef54d21a5bda003df90cc6f97df48098a11834522a81c2029ed1ec55b3cf26c673b0927574d0e880720e809b88ff67e9d0b51e0bd4720e89ed0d23e73194729e8e3a3fe2248d07738d908f74a381e699026cac3f9ac017d8d52fc728ef6f3c53a9931d80210df1c1d54c513079793dc88e07e5c3a85360fb0331bc92bb7ad476834048eba6d92fa0d0d7e2e70a914e0feef2322ec9e94d6baf73c19a583edd29e53746d65a39b0ddab110ff9b3ef110a9c30f4becef0010a08290ad8ef3668e3189de241e6b8dcf11efa17306b41d7bf85363aaaefee2f0ee374b52eb9a706e6a4c42c4bdfdde03c599f28314cc52d7f53e1a4696552218ba9c4"
 				}, {
 					"name":	"ietf.org",
@@ -138,6 +142,7 @@
 					"sig_inception":	1357852847,
 					"key_tag":	40452,
 					"signer_name":	"ietf.org",
+					"signature_len":	256,
 					"signature":	"48e629526ded2e7441a4d24978bcf3c3b6b7f8f83abbe6f52cd2864412fc6e2f015b6fe05d0e5527927f445722283fedd52879a2987d5b180ecd8b4713f80a78f095be14a922b510d8c96e15e21d8f8ad8d76df89e13ab34d09cb9830aacc2dad4d76c19bff3d04df01030d4f620b94f0bed377b0d9aaf266efb5e94c96269a2d06bcb25ae1a99f317125bb726071da558c00bc31dcbf3ebe1a435e6235d60889f2dd4aa580035f19f18ceca222c9a59a8240f342849e4056097a71806c53ea7e01c56f7a4bca2ceed52d59e80d59ebfe111335fc9e17a6d7c0318eba946f055dbc79c62834689bed39eb09a93c46a71cfad840a8793b3af69316a929a360e6c"
 				}, {
 					"name":	"",
@@ -188,6 +193,7 @@
 					"key_tag":	45586,
 					"algo":	5,
 					"digest_type":	2,
+					"digest_len":	32,
 					"digest":	"67fcd7e0b9e0366309f3b6f7476dff931d5226edc5348cd80fd82a081dfcf6ee"
 				}, {
 					"name":	"ietf.org",
@@ -198,6 +204,7 @@
 					"key_tag":	45586,
 					"algo":	5,
 					"digest_type":	1,
+					"digest_len":	20,
 					"digest":	"d0fdf996d1af2ccdbdc942b02cb02d379629e20b"
 				}, {
 					"name":	"ietf.org",
@@ -213,6 +220,7 @@
 					"sig_inception":	1358434164,
 					"key_tag":	41790,
 					"signer_name":	"org",
+					"signature_len":	128,
 					"signature":	"0b34731d7fdb30dbbe61c61ea3504927558817a33dbfa94cde8fb5544286f8a2f35291223b465530c5aba539e1dbbcb1d8acc4568db5aa57c2ba8f4a71302c6974a6e66f77d3867f813f747dc1b6b6c5e5b72ae482e7bd195cec460048f85a30c30a24537eeced81d4d0d47fef1b112729b4d20b3d3f7b87a5d137a71b17c653"
 				}, {
 					"name":	"",
@@ -263,6 +271,7 @@
 					"flags":	256,
 					"protocol":	3,
 					"algo":	7,
+					"public_key_len":	132,
 					"public_key":	"03010001c203bbb026b7951f39112b6b8f35432ecf270e83ca7d7d5296de3826b31d0ab8c0a0886f0dd3112ab2c04e78df6761f140a6e013bc5fec18a1a0ede74d03b8bb1fc4d04ed742fed4403d94fb2cc04311432a1bc29ebbbd42fb9f4864e3fcd1f85b93272a3a9617692a68a2e9af568c2df4db5b87b85f81eb637ed7e3dff9b83d"
 				}, {
 					"name":	"org",
@@ -273,6 +282,7 @@
 					"flags":	257,
 					"protocol":	3,
 					"algo":	7,
+					"public_key_len":	260,
 					"public_key":	"030100018a587e3dda691cf3931590a8c765ed813163cd4d7584affaa6b2b990e876767d20c8746f031c61a5547733406d5789f2077a8ead6c47756f3ff491dfa9a61acb1b57851d9793910edaa264fd930cd0c7c449ca2935fe8d67f2b59793edddc06d2cc1282d2feee66b33a3367a826797a89debaac4526402da9f43aeb0e0f45ead5c2f420ffcc2effcbe04d36988e7673390d793b1e1666eeb6bd13b96d2f5de1da6c7b904814f1eea7a49942a178eb688060503b6162ce3c5bfb1d4c32eeecde7dae3086f9ba6297e73ca19f5fecd477aa6493a533f59bce91a94427544ae27eb1fc2a30ea2fedf0cd4745e400a4630b755e13d53d4fb04889736da010378f4f5"
 				}, {
 					"name":	"org",
@@ -283,6 +293,7 @@
 					"flags":	257,
 					"protocol":	3,
 					"algo":	7,
+					"public_key_len":	260,
 					"public_key":	"0301000194e36c83b9908a71594b725dcf1abec2b21c8219f8b8c2d83bfc9da3be4f3e97d9fab30c2d5b76aec7959c2d91aa9390c55527ef2013d148ade189e1cf06d4675b8d081b3f53b26081bb3874dce21bf94f6365c96afa93a405cfdf10e33c052064c556fc01866acc0d8b0e4ed5da90ae90c07a2f035fbcdc1b14002c6589da7007485069c6c3eb1f88d91083cd8b93ce3eb826fd3ff57b17e80615dde6dc827e212f58c84767896325e5ac0a16c5dcf1716fffe7278be51556ba14717a39a74959c2bb191f4b8010e3ce4a1f6b6975b59c0a8a4b259b3ab70f2ade359ca531b3761fefdf17587cda5035c3c898597102e9f706d3913c0dabf2d8ba30da091075"
 				}, {
 					"name":	"org",
@@ -293,6 +304,7 @@
 					"flags":	256,
 					"protocol":	3,
 					"algo":	7,
+					"public_key_len":	132,
 					"public_key":	"03010001aee525535ede9c367389e83e73d2b79c6c9fcabbdd1f16a20c742a2bbb687cf1c5fc49ab71d7b2cc445759eb8626b66eb5fbd5d4873644d216ef531071bf88cc856af1406545059984e41b6eba6d0cae2cf9baa46e9e7a603a0dc95237c383ec8882d298c32a28e33a8b8183582ad43fed0d7d3b5f1dd8e308b7da6b17bf3a9d"
 				}, {
 					"name":	"org",
@@ -308,6 +320,7 @@
 					"sig_inception":	1358434164,
 					"key_tag":	21366,
 					"signer_name":	"org",
+					"signature_len":	256,
 					"signature":	"8177117681857bd566cbb18c9802de1ea18292e8cfa0f5dff4caa266c7e9fd07a65e1fc18eacef358c91232232c2dff53ffc97d45e38182f2319dca28fa9f177855cca7ae6f790df3e606b6b22b6a09db478d8b77096d34e6fc140a3bbd741f750a248a0b282e22bfbba123eb30587667fb24206bd8e5a7afe917a6c5b3c402ed2d04196b9ba5063ab7cc918408bf05325b7ec16161957d01514e64d5d8b2ee411cc79022daea67194fc0abe95a4886428477b401f3d1cba0545909293b5e888c0e8b4948ba12710c7d37ea48d7ba97a6729408cb5f1aedd5fbeb2d713c91042931836d2624a60749952c8ebee99d69e064d89bf9605b6ef9bed9a55723b5a87"
 				}, {
 					"name":	"org",
@@ -323,6 +336,7 @@
 					"sig_inception":	1358434164,
 					"key_tag":	41790,
 					"signer_name":	"org",
+					"signature_len":	128,
 					"signature":	"05c6b040d4cb8e57ffe633bae78b5a8b7a3a7b9b8e9ae20cd83997e01d925911a4308768c3f8e21f81de0586fd8133beef8e395f790c13ba0306a3305a8121640e38c9eb2c8313eed9459e97198f798cf762479595a871398798b01c9dce4983d374ce18037351a79d2b693e07d687e71547a3529e7a3fe381ef3886dc7838ba"
 				}, {
 					"name":	"",
@@ -373,6 +387,7 @@
 					"key_tag":	21366,
 					"algo":	7,
 					"digest_type":	1,
+					"digest_len":	20,
 					"digest":	"e6c1716cfb6bdc84e84ce1ab5510dac69173b5b2"
 				}, {
 					"name":	"org",
@@ -383,6 +398,7 @@
 					"key_tag":	21366,
 					"algo":	7,
 					"digest_type":	2,
+					"digest_len":	32,
 					"digest":	"96eeb2ffd9b00cd4694e78278b5efdab0a80446567b69f634da078f0d90f01ba"
 				}, {
 					"name":	"org",
@@ -398,6 +414,7 @@
 					"sig_inception":	1358809200,
 					"key_tag":	40323,
 					"signer_name":	"",
+					"signature_len":	128,
 					"signature":	"40999bb0a73b10fe268d378c9dfec0deb56022a0237d37be8998e0b9d4f77882a8494ecce64ad06c887d5fdab1c0b2b7179736f5fbe954798334fdb5f1b5bbae2c1e25b642477c832618e2a26240571ee15df56f819544d9bcde86dacfaf9d623a20849112d1d86558a009c390465f806be6d360eb31e61c6438043c67505b46"
 				}, {
 					"name":	"",

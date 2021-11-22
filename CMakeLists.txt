@@ -10,6 +10,23 @@ include(Version)
 set(CMAKE_MACOSX_RPATH 0)
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wall)
 
+find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
+if (CMAKE_CXX_CPPCHECK)
+    list(
+        APPEND CMAKE_CXX_CPPCHECK 
+            "--enable=all"
+            "--error-exitcode=1"
+            "--suppress=unusedFunction"
+            "--suppress=missingInclude"
+            "--suppress=uselessAssignmentPtrArg"
+            "--suppress=unmatchedSuppression"
+    )
+    set(CMAKE_C_CPPCHECK ${CMAKE_CXX_CPPCHECK})
+else()
+  message(FATAL_ERROR "Could not find the program cppcheck.")
+endif()
+
+
 #for ASAN
 set(ASAN_OPTION "OFF" CACHE STRING " set asan type chosen by the user, using OFF as default")
 set_property(CACHE ASAN_OPTION  PROPERTY STRINGS OFF ADDRESS THREAD)

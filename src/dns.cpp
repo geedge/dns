@@ -110,6 +110,11 @@ const unsigned char PCAP_FILE_HEAD[24] = {0xD4, 0xC3, 0xB2, 0xA1, 0x02, 0x00, 0x
 static int str2hex(unsigned char *source, int s_len, char *dest, int d_len)
 {
 	int i=0,used_len=0;
+	
+	if(source==NULL || s_len<=0 || dest==NULL || d_len<=0)
+	{
+		return 0;
+	}
 
 	for(i=0; i<s_len && i<d_len/2; i++)
 	{
@@ -131,41 +136,37 @@ static int str2hex(unsigned char *source, int s_len, char *dest, int d_len)
 int dissect_type_bitmap(unsigned char *buff, int rr_len, unsigned char *maps_buff, unsigned short *maps_len)
 {
 	int cur_offset=0;
-	int i=0, rr_type=0;
-	unsigned char bits=0;
-	int mask=0, blockbase=0, blocksize=0;
-	
-	*maps_len=0;
+	int map_offset=0;
 
-	while (rr_len!=0) 
+	if(buff==NULL || rr_len<=0)
 	{
-		blockbase = buff[cur_offset];
-		blocksize = buff[cur_offset+1];
-		
-		maps_buff[(*maps_len)++]=buff[cur_offset];		
-		maps_buff[(*maps_len)++]=buff[cur_offset+1];
-		
-		cur_offset += 2;
-		rr_len -= 2;
-
-		rr_type = blockbase * 256;
-		for( ; blocksize; blocksize-- ) 
-		{
-			maps_buff[(*maps_len)++]=buff[cur_offset];
-			bits=buff[cur_offset];
-			mask = 1<<7;
-			for (i = 0; i < 8; i++)
-			{
-				if (bits & mask) 
-				{
-				}
-				mask >>= 1;
-				rr_type++;
-			}
-			cur_offset += 1;
-			rr_len     -= 1;
-		}
+		*maps_len=0;
+		return 0;
 	}
+
+	while ((rr_len-cur_offset)>0) 
+	{
+		if(map_offset+2 > *maps_len)
+		{
+			break;
+		}
+
+		maps_buff[map_offset++]=buff[cur_offset++];		
+		maps_buff[map_offset++]=buff[cur_offset];
+		int blocksize = buff[cur_offset++];	
+
+		int length=MIN(*maps_len-map_offset, blocksize);
+		if(length<=0 || blocksize>(rr_len-cur_offset))
+		{
+			break;
+		}
+		
+		memcpy(maps_buff+map_offset, buff+cur_offset, length);
+		cur_offset+=blocksize;
+		map_offset+=length;
+	}
+
+	*maps_len=map_offset;
 
 	return cur_offset;
 }
@@ -302,6 +303,7 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "key_tag", dns_rr->rdata.ds.key_tag);
 				cJSON_AddNumberToObject(one_rr_object, "algo", dns_rr->rdata.ds.algo);
 				cJSON_AddNumberToObject(one_rr_object, "digest_type", dns_rr->rdata.ds.digest_type);
+				cJSON_AddNumberToObject(one_rr_object, "digest_len", dns_rr->rdata.ds.digest_len);
 				
 				ret=str2hex(dns_rr->rdata.ds.digest, dns_rr->rdata.ds.digest_len, tmp_buff, sizeof(tmp_buff));					
 				if(ret>0)
@@ -319,6 +321,7 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "sig_inception", dns_rr->rdata.rrsig.sig_inception);
 				cJSON_AddNumberToObject(one_rr_object, "key_tag", dns_rr->rdata.rrsig.key_tag);
 				cJSON_AddStringToObject(one_rr_object, "signer_name", (const char *)(dns_rr->rdata.rrsig.signer_name));
+				cJSON_AddNumberToObject(one_rr_object, "signature_len", dns_rr->rdata.rrsig.signature_len);
 
 				ret=str2hex(dns_rr->rdata.rrsig.signature, dns_rr->rdata.rrsig.signature_len, tmp_buff, sizeof(tmp_buff));				
 				if(ret>0)
@@ -329,6 +332,7 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 			case DNS_TYPE_NSEC:
 				*dns_sec = 2;
 				cJSON_AddStringToObject(one_rr_object, "next_domain", (const char *)(dns_rr->rdata.nsec.next_domain));
+				cJSON_AddNumberToObject(one_rr_object, "maps_len", dns_rr->rdata.nsec.maps_len);
 				
 				ret=str2hex(dns_rr->rdata.nsec.type_bit_maps, dns_rr->rdata.nsec.maps_len, tmp_buff, sizeof(tmp_buff));					
 				if(ret>0)
@@ -341,6 +345,7 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "flags", dns_rr->rdata.dnskey.flags);
 				cJSON_AddNumberToObject(one_rr_object, "protocol", dns_rr->rdata.dnskey.protocol);
 				cJSON_AddNumberToObject(one_rr_object, "algo", dns_rr->rdata.dnskey.algo);
+				cJSON_AddNumberToObject(one_rr_object, "public_key_len", dns_rr->rdata.dnskey.public_key_len);
 				
 				ret=str2hex(dns_rr->rdata.dnskey.public_key, dns_rr->rdata.dnskey.public_key_len, tmp_buff, sizeof(tmp_buff));					
 				if(ret>0)
@@ -353,21 +358,22 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 				cJSON_AddNumberToObject(one_rr_object, "hash_algo", dns_rr->rdata.nsec3.hash_algo);
 				cJSON_AddNumberToObject(one_rr_object, "flags", dns_rr->rdata.nsec3.flags);
 				cJSON_AddNumberToObject(one_rr_object, "iteration", dns_rr->rdata.nsec3.iteration);
-				cJSON_AddNumberToObject(one_rr_object, "salt_len", dns_rr->rdata.nsec3.salt_len);
-				cJSON_AddNumberToObject(one_rr_object, "hash_len", dns_rr->rdata.nsec3.hash_len);
 
+				cJSON_AddNumberToObject(one_rr_object, "salt_len", dns_rr->rdata.nsec3.salt_len);
 				ret=str2hex(dns_rr->rdata.nsec3.salt_value, dns_rr->rdata.nsec3.salt_len, tmp_buff, sizeof(tmp_buff));
 				if(ret>0)
 				{
 					cJSON_AddStringToObject(one_rr_object, "salt_value", tmp_buff);
 				}
 				
+				cJSON_AddNumberToObject(one_rr_object, "hash_len", dns_rr->rdata.nsec3.hash_len);
 				ret=str2hex(dns_rr->rdata.nsec3.next_hash_owner, dns_rr->rdata.nsec3.hash_len, tmp_buff, sizeof(tmp_buff));					
 				if(ret>0)
 				{
 					cJSON_AddStringToObject(one_rr_object, "next_hash_owner", tmp_buff);
 				}
 				
+				cJSON_AddNumberToObject(one_rr_object, "maps_len", dns_rr->rdata.nsec3.maps_len);
 				ret=str2hex(dns_rr->rdata.nsec3.type_bit_maps, dns_rr->rdata.nsec3.maps_len, tmp_buff, sizeof(tmp_buff));					
 				if(ret>0)
 				{
@@ -409,26 +415,21 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 
 int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int *dns_sec)
 {
-	int i=0,j=0,tmp_len=0;
-	int len = 0, used_len = 0;
+	int i=0, used_len=0;
 	char ip_str[128]={0};
 	char tmp_buf[2048]={0};
 	char maps[2048]={0};
 	char salt_value[2048]={0};
-	char *buf = NULL;
-	FILE *fp = NULL;
 	dns_rr_t *dns_rr = NULL;
-
-	buf = (char *)malloc(buflen+1024);
 	
 	for(i = 0; i < rr_count; i++)
 	{
-		len = 0;
+		int len=0;
 		dns_rr = &rr[i];
 
 		if(dns_rr->type == DNS_TYPE_OPT)
 		{
-			used_len += snprintf(buf+used_len, buflen-used_len, 
+			used_len+=snprintf(rr_buf+used_len, buflen-used_len, 
 									"{RRS%d OPT <name: %s, type: %u, udp_payload: %u, extended RCODE: %u, version: %u, Z; 0X%x, rdlength: %u>};",
 									i,
 									dns_rr->name,
@@ -441,7 +442,7 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 		}
 		else
 		{
-			used_len += snprintf(buf+used_len, buflen-used_len, "{RRS%d <name: %s, type: %u, rr_class: %u, ttl: %u, rdlength: %u>",
+			used_len+=snprintf(rr_buf+used_len, buflen-used_len, "{RRS%d <name: %s, type: %u, rr_class: %u, ttl: %u, rdlength: %u>",
 											i,
 											dns_rr->name,
 											dns_rr->type,
@@ -449,6 +450,11 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 											dns_rr->ttl,
 											dns_rr->rdlength);
 
+		}
+
+		if(used_len>=(buflen-1))
+		{
+			break;
 		}
 
 		if(dns_rr->rdlength == 0)
@@ -460,22 +466,22 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 		{
 			case DNS_TYPE_A:
 				inet_ntop(AF_INET, (void *)(dns_rr->rdata.a), ip_str, sizeof(ip_str));
-				used_len += snprintf(buf+used_len, buflen-used_len, "[A: %s]};", ip_str);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[A: %s]};", ip_str);
 				break;
 			case DNS_TYPE_NS:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[NS: %s]};", dns_rr->rdata.ns);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[NS: %s]};", dns_rr->rdata.ns);
 				break;
 			case DNS_TYPE_MD:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[MD: %s]};", dns_rr->rdata.md);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[MD: %s]};", dns_rr->rdata.md);
 				break;
 			case DNS_TYPE_MF:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[MF: %s]};", dns_rr->rdata.mf);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[MF: %s]};", dns_rr->rdata.mf);
 				break;
 			case DNS_TYPE_CNAME:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[CNAME: %s]};", dns_rr->rdata.cname);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[CNAME: %s]};", dns_rr->rdata.cname);
 				break;
 			case DNS_TYPE_SOA:
-				used_len += snprintf(buf+used_len, buflen-used_len, 
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, 
 							"[SOA  mname: %s, rname: %s, serial: %u, refresh: %u, retry: %u, expire: %u, minimum: %u]};",
 							dns_rr->rdata.soa.mname,
 							dns_rr->rdata.soa.rname,
@@ -486,172 +492,156 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 							dns_rr->rdata.soa.minimum);
 				break;
 			case DNS_TYPE_MB:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[MB: %s]};", dns_rr->rdata.mb);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[MB: %s]};", dns_rr->rdata.mb);
 				break;
 			case DNS_TYPE_MG:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[MG: %s]};", dns_rr->rdata.mg);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[MG: %s]};", dns_rr->rdata.mg);
 				break;
 			case DNS_TYPE_MR:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[MR: %s]};", dns_rr->rdata.mr);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[MR: %s]};", dns_rr->rdata.mr);
 				break;
 			case DNS_TYPE_NULL:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[null size: %u, null: %s]};",
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[null size: %u, null: %s]};",
 													dns_rr->rdata.null.size, dns_rr->rdata.null.null);
 				break;
 			case DNS_TYPE_WKS:
 				inet_ntop(AF_INET, &(dns_rr->rdata.wks.addr), ip_str, sizeof(ip_str));
-				len=0;
-				tmp_len=MIN(dns_rr->rdata.wks.size*2, sizeof(tmp_buf)-2)/2;
-				for(j=0; j<tmp_len; j++)
-				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.wks.bitmap[j]);
-				}
+				len=str2hex(dns_rr->rdata.wks.bitmap, dns_rr->rdata.wks.size, tmp_buf, sizeof(tmp_buf));
 				if(len>0)
 				{
-					used_len += snprintf(buf+used_len, buflen-used_len, "[WKS addr: %s, protocol: %u, bitmap: %s, size: %u]};",
+					used_len += snprintf(rr_buf+used_len, buflen-used_len, "[WKS addr: %s, protocol: %u, bitmap: %s, size: %u]};",
 									ip_str, dns_rr->rdata.wks.protocol, tmp_buf, dns_rr->rdata.wks.size);
+				}
+				else
+				{
+					used_len += snprintf(rr_buf+used_len, buflen-used_len, "[WKS addr: %s, protocol: %u, size: %u]};",
+									ip_str, dns_rr->rdata.wks.protocol, dns_rr->rdata.wks.size);
 				}
 				break;
 			case DNS_TYPE_PTR:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[PTR: %s]};", dns_rr->rdata.ptr);
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[PTR: %s]};", dns_rr->rdata.ptr);
 				break;
 			case DNS_TYPE_HINFO:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[HINFO cpu: %s, os: %s]};", 
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[HINFO cpu: %s, os: %s]};", 
 								dns_rr->rdata.hinfo.cpu, dns_rr->rdata.hinfo.os);
 				break;
 			case DNS_TYPE_MINFO:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[MINFO rmailbx: %s, emailbx: %s]};",
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[MINFO rmailbx: %s, emailbx: %s]};",
 								dns_rr->rdata.minfo.rmailbx, dns_rr->rdata.minfo.emailbx);
 				break;
 			case DNS_TYPE_MX:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[MX preference: %u, exchange: %s]};",
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[MX preference: %u, exchange: %s]};",
 								dns_rr->rdata.mx.preference, dns_rr->rdata.mx.exchange);
 				break;
 			case DNS_TYPE_TXT:
-				used_len += snprintf(buf+used_len, buflen-used_len, "[TXT size: %u, txt: %s]};",
+				used_len += snprintf(rr_buf+used_len, buflen-used_len, "[TXT size: %u, txt: %s]};",
 								dns_rr->rdata.txt.size, dns_rr->rdata.txt.txt);
 				break;
 			case DNS_TYPE_AAAA:
 				if(dns_rr->rdata.aaaa != NULL)
 				{
 					inet_ntop(AF_INET6, dns_rr->rdata.aaaa, ip_str, sizeof(ip_str));
-					used_len += snprintf(buf+used_len, buflen-used_len, "[AAAA: %s]};", ip_str);
+					used_len += snprintf(rr_buf+used_len, buflen-used_len, "[AAAA: %s]};", ip_str);
 				}
 				break;
 			case DNS_TYPE_OPT:
 				break;
 			case DNS_TYPE_DS:
 				*dns_sec = 2;
-				len = 0;
-				//assert(dns_rr->rdata.ds.digest_len*2<sizeof(tmp_buf));
-				tmp_len=MIN(dns_rr->rdata.ds.digest_len*2, sizeof(tmp_buf)-2)/2;
-				for(j=0; j<tmp_len; j++)
-				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.ds.digest[j]);
-				}
-
+				len=str2hex(dns_rr->rdata.ds.digest, dns_rr->rdata.ds.digest_len, tmp_buf, sizeof(tmp_buf));
 				if(len>0)
 				{
-					used_len += snprintf(buf+used_len, buflen-used_len,
+					used_len += snprintf(rr_buf+used_len, buflen-used_len,
 									"[DS key_tag: %u, algo: %u, digest_type: %u, digest: %s]};",
 										dns_rr->rdata.ds.key_tag, dns_rr->rdata.ds.algo,
 										dns_rr->rdata.ds.digest_type, tmp_buf);
 				}
+				else
+				{
+					used_len += snprintf(rr_buf+used_len, buflen-used_len,
+									"[DS key_tag: %u, algo: %u, digest_type: %u]};",
+										dns_rr->rdata.ds.key_tag, dns_rr->rdata.ds.algo,
+										dns_rr->rdata.ds.digest_type);	
+				}
 				break;
 			case DNS_TYPE_RRSIG:
 				*dns_sec = 2;
-				len = 0;
-				//assert(dns_rr->rdata.rrsig.signature_len*2<sizeof(tmp_buf));
-				tmp_len=MIN(dns_rr->rdata.rrsig.signature_len*2, sizeof(tmp_buf)-2)/2;
-				for(j=0; j<tmp_len; j++)
-				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.rrsig.signature[j]);
-				}
-
+				len=str2hex(dns_rr->rdata.rrsig.signature, dns_rr->rdata.rrsig.signature_len, tmp_buf, sizeof(tmp_buf));
 				if(len>0)
 				{
-					used_len += snprintf(buf+used_len, buflen-used_len,
+					used_len += snprintf(rr_buf+used_len, buflen-used_len,
 									"[RRSIG type_covered: %u, algo: %u, labels: %u, original_ttl: %u, sig_expiration: %u, sig_inception: %u, key_tag: %u, signer_name: %s, signature: %s]};",
 										dns_rr->rdata.rrsig.type_covered, dns_rr->rdata.rrsig.algo,
 										dns_rr->rdata.rrsig.labels, dns_rr->rdata.rrsig.original_ttl,
 										dns_rr->rdata.rrsig.sig_expiration, dns_rr->rdata.rrsig.sig_inception,
 										dns_rr->rdata.rrsig.key_tag, dns_rr->rdata.rrsig.signer_name, tmp_buf);
 				}
+				else
+				{
+					used_len += snprintf(rr_buf+used_len, buflen-used_len,
+									"[RRSIG type_covered: %u, algo: %u, labels: %u, original_ttl: %u, sig_expiration: %u, sig_inception: %u, key_tag: %u, signer_name: %s]};",
+										dns_rr->rdata.rrsig.type_covered, dns_rr->rdata.rrsig.algo,
+										dns_rr->rdata.rrsig.labels, dns_rr->rdata.rrsig.original_ttl,
+										dns_rr->rdata.rrsig.sig_expiration, dns_rr->rdata.rrsig.sig_inception,
+										dns_rr->rdata.rrsig.key_tag, dns_rr->rdata.rrsig.signer_name);
+				}
 				break;
 			case DNS_TYPE_NSEC:
 				*dns_sec = 2;
-				len = 0;				
-				tmp_len=MIN(dns_rr->rdata.nsec.maps_len*2, sizeof(tmp_buf)-2)/2;
-				for(j=0; j<tmp_len; j++)
-				{
-					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec.type_bit_maps[j]);
-				}
+				len=str2hex(dns_rr->rdata.nsec.type_bit_maps, dns_rr->rdata.nsec.maps_len, tmp_buf, sizeof(tmp_buf));
 				if(len>0)
 				{
-					used_len += snprintf(buf+used_len, buflen-used_len, "[NSEC next_domain: %s, type_bit_maps: %s]};", dns_rr->rdata.nsec.next_domain, maps);
+					used_len += snprintf(rr_buf+used_len, buflen-used_len, "[NSEC next_domain: %s, type_bit_maps: %s]};", dns_rr->rdata.nsec.next_domain, maps);
+				}
+				else
+				{
+					used_len += snprintf(rr_buf+used_len, buflen-used_len, "[NSEC next_domain: %s]};", dns_rr->rdata.nsec.next_domain);
 				}
 				break;
 			case DNS_TYPE_DNSKEY:
 				*dns_sec = 2;
-				len = 0;
-				//assert(dns_rr->rdata.dnskey.public_key_len*2<sizeof(tmp_buf));
-				tmp_len=MIN(dns_rr->rdata.dnskey.public_key_len*2, sizeof(tmp_buf)-2)/2;
-				for(j=0; j<tmp_len; j++)
-				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.dnskey.public_key[j]);
-				}
+				len=str2hex(dns_rr->rdata.dnskey.public_key, dns_rr->rdata.dnskey.public_key_len, tmp_buf, sizeof(tmp_buf));
 				if(len>0)
 				{
-					used_len += snprintf(buf+used_len, buflen-used_len, "[DNSKEY flags: %u, protocol: %u, algo: %u, public_key: %s]};",
+					used_len += snprintf(rr_buf+used_len, buflen-used_len, "[DNSKEY flags: %u, protocol: %u, algo: %u, public_key: %s]};",
 							dns_rr->rdata.dnskey.flags, dns_rr->rdata.dnskey.protocol, dns_rr->rdata.dnskey.algo, tmp_buf);
+				}
+				else
+				{
+					used_len += snprintf(rr_buf+used_len, buflen-used_len, "[DNSKEY flags: %u, protocol: %u, algo: %u]};",
+							dns_rr->rdata.dnskey.flags, dns_rr->rdata.dnskey.protocol, dns_rr->rdata.dnskey.algo);
 				}
 				break;
 			case DNS_TYPE_NSEC3:
 				*dns_sec = 2;
 				memset(tmp_buf, 0, sizeof(tmp_buf));
 				memset(maps, 0, sizeof(maps));
-				len = 0;
-				//assert(dns_rr->rdata.nsec3.hash_len*2<sizeof(tmp_buf));
-				tmp_len=MIN(dns_rr->rdata.nsec3.hash_len*2, sizeof(tmp_buf)-2)/2;
-				for(j=0; j<tmp_len; j++)
-				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3.next_hash_owner[j]);
-				}
-				len = 0;
-				tmp_len=MIN(dns_rr->rdata.nsec3.maps_len*2, sizeof(maps)-2)/2;
-				for(j = 0; j < tmp_len; j++)
-				{
-					len += snprintf(maps+len, sizeof(maps)-len, "%02x", dns_rr->rdata.nsec3.type_bit_maps[j]);
-				}
-				len = 0;
-				tmp_len=MIN(dns_rr->rdata.nsec3.salt_len*2, sizeof(salt_value)-2)/2;
-				for(j = 0; j < tmp_len; j++)
-				{
-					len += snprintf(salt_value+len, sizeof(salt_value)-len, "%02x", dns_rr->rdata.nsec3.salt_value[j]);
-				}
-				
-				used_len += snprintf(buf+used_len, buflen-used_len,
+				memset(salt_value, 0, sizeof(salt_value));
+				str2hex(dns_rr->rdata.nsec3.next_hash_owner, dns_rr->rdata.nsec3.hash_len, tmp_buf, sizeof(tmp_buf));
+				str2hex(dns_rr->rdata.nsec3.type_bit_maps, dns_rr->rdata.nsec3.maps_len, maps, sizeof(maps));
+				str2hex(dns_rr->rdata.nsec3.salt_value, dns_rr->rdata.nsec3.salt_len, salt_value, sizeof(salt_value));
+				used_len+=snprintf(rr_buf+used_len, buflen-used_len,
 								"[NSEC3 hash_algo: %u, flags: %u, iteration: %u, salt_len: %u, hash_len: %u, salt_value: %s, next_hash_owner: %s, type_bit_maps: %s]};",
 										dns_rr->rdata.nsec3.hash_algo, dns_rr->rdata.nsec3.flags, 
 										dns_rr->rdata.nsec3.iteration, dns_rr->rdata.nsec3.salt_len, 
 										dns_rr->rdata.nsec3.hash_len, salt_value, tmp_buf, maps);
 				break;
 			case DNS_TYPE_NSEC3PARAM:
-				len = 0;
-				//assert(dns_rr->rdata.nsec3param.salt_len*2<sizeof(tmp_buf));				
-				tmp_len=MIN(dns_rr->rdata.nsec3param.salt_len*2, sizeof(tmp_buf)-2)/2;
-				for(j=0; j<tmp_len; j++)
-				{
-					len += snprintf(tmp_buf+len, sizeof(tmp_buf)-len, "%02x", dns_rr->rdata.nsec3param.salt_value[j]);
-				}
-
+				len=str2hex(dns_rr->rdata.nsec3param.salt_value, dns_rr->rdata.nsec3param.salt_len, tmp_buf, sizeof(tmp_buf));
 				if(len>0)
 				{
-					used_len += snprintf(buf+used_len, buflen-used_len,
+					used_len += snprintf(rr_buf+used_len, buflen-used_len,
 								"[NSEC3PARAM hash_algo: %u, flags: %u, iteration: %u, salt_len: %u, salt_value: %s]};",
 										dns_rr->rdata.nsec3param.hash_algo, dns_rr->rdata.nsec3param.flags,
 										dns_rr->rdata.nsec3param.iteration, dns_rr->rdata.nsec3param.salt_len,
 										tmp_buf);
+				}
+				else
+				{
+					used_len += snprintf(rr_buf+used_len, buflen-used_len,
+								"[NSEC3PARAM hash_algo: %u, flags: %u, iteration: %u, salt_len: %u]};",
+										dns_rr->rdata.nsec3param.hash_algo, dns_rr->rdata.nsec3param.flags,
+										dns_rr->rdata.nsec3param.iteration, dns_rr->rdata.nsec3param.salt_len);
 				}
 				break;
 			case DNS_QTYPE_AXFR:
@@ -671,35 +661,11 @@ int get_rr_content2buf(dns_rr_t *rr, int rr_count, char *rr_buf, int buflen, int
 				break;
 		}
 
-		if(used_len > buflen-1)
-			break;
-		
-	}
-	if(used_len > buflen-1)
-	{
-		memcpy(rr_buf, buf, buflen);
-		rr_buf[buflen-1] = '\0';
-		used_len = buflen;
-	}
-	else
-	{
-		memcpy(rr_buf, buf, used_len);
-		rr_buf[used_len] = '\0';
-	}
-
-	if(g_dns_proto_info.log_level < 30)
-	{
-		fp = fopen("aaaaa", "a+");
-		if(fp)
+		if(used_len>=(buflen-1))
 		{
-			fwrite(rr_buf, used_len, 1, fp);
-			fclose(fp);
-			fp = NULL;
+			break;
 		}
 	}
-	
-	free(buf);
-	buf = NULL;
 	
 	return used_len;
 }
@@ -820,11 +786,10 @@ int dns_save_error_pkt(const struct streaminfo * a_stream, int error_type)
 	return 0;	
 }
 
-int dns_compress_rr_str(unsigned char *domain, int domain_len, u_char *result)
+int dns_compress_rr_str(const unsigned char *domain, int domain_len, u_char *result)
 {
-	int section_len = 0;
-	int result_pos = 1;
-	int domain_pos = 0;
+	int result_pos=1;
+	int domain_pos=0;
 
     if(domain_len < 0 || domain_len > DNS_MAX_NAME+1 ||
                 '.' == domain[0] || '.' == domain[domain_len - 1])
@@ -832,17 +797,17 @@ int dns_compress_rr_str(unsigned char *domain, int domain_len, u_char *result)
         return -1;
     }
 
-	while((domain[domain_pos] != '\n')||(domain[domain_pos] != '\0'))
+	while((domain[domain_pos]!='\n') && (domain[domain_pos]!='\0'))
 	{
-		section_len = 0;
-		while((domain[domain_pos] != '.') &&(domain[domain_pos] != '\n')&&(domain[domain_pos] != '\0'))
+		int section_len = 0;
+		while((domain[domain_pos] != '.') && (domain[domain_pos] != '\n') && (domain[domain_pos] != '\0'))
 		{
 			result[result_pos] = domain[domain_pos];
 			result_pos++;
 			domain_pos++;
 			section_len++;
 		}
-		result[result_pos - section_len -1] = section_len;
+		result[result_pos-section_len-1] = section_len;
 
 		if((domain[domain_pos] == '\n')||(domain[domain_pos] == '\0'))
 			break;
@@ -1101,7 +1066,8 @@ int get_dns_hdr_info(dns_hdr_t *dns_hdr, char *payload)
 	
 	return 0;
 }
-int get_rr_type_nsec3(char **ptr, nsec3_t *nsec3, char *end)
+
+int get_rr_type_nsec3(char **ptr, nsec3_t *nsec3, const char *end)
 {
 	nsec3->hash_algo = *(unsigned char *)*ptr;
 	*ptr += 1;
@@ -1127,7 +1093,7 @@ int get_rr_type_nsec3(char **ptr, nsec3_t *nsec3, char *end)
 	return 0;
 }
 
-int get_rr_signer(unsigned char ** ptr, unsigned char *buf, int buflen, char* end)
+int get_rr_signer(unsigned char ** ptr, unsigned char *buf, int buflen, const char* end)
 {
 	unsigned char *p = NULL;
 	int len = 0, i = 0;
@@ -1171,7 +1137,8 @@ int get_rr_signer(unsigned char ** ptr, unsigned char *buf, int buflen, char* en
 		
 	return len;
 }
-int get_rr_type_rrsig(char **ptr, rrsig_t *rrsig, char *end)
+
+int get_rr_type_rrsig(char **ptr, rrsig_t *rrsig, const char *end)
 {
 	NS_GET16(rrsig->type_covered, *ptr);
 	rrsig->algo = *(unsigned char *)*ptr;
@@ -1186,7 +1153,7 @@ int get_rr_type_rrsig(char **ptr, rrsig_t *rrsig, char *end)
 	return 0;
 }
 
-int get_rr_type_wks(char **ptr, wks_t *wks, char *end)
+int get_rr_type_wks(char **ptr, wks_t *wks, const char *end)
 {
 	if(* ptr + 4 > end) return -1;
 	NS_GET32(wks->addr, * ptr);
@@ -1198,12 +1165,16 @@ int get_rr_type_wks(char **ptr, wks_t *wks, char *end)
 	return 0;
 }
 
-int get_rr_type_soa(char *msg, char **ptr, soa_t *soa, char *end)
+int get_rr_type_soa(char *msg, char **ptr, soa_t *soa, const char *end)
 {
 	if(0 >= get_rr_domain(msg, (unsigned char**)ptr, soa->mname, sizeof(soa->mname), end))
+	{
 		return -1;
+	}
 	if(0 >= get_rr_domain(msg, (unsigned char**)ptr, soa->rname, sizeof(soa->rname), end))
+	{
 		return -1;
+	}
 	
 	if(* ptr + 4 > end) return -1;
 	NS_GET32(soa->serial, *ptr);
@@ -1219,34 +1190,51 @@ int get_rr_type_soa(char *msg, char **ptr, soa_t *soa, char *end)
 	return 0;
 }
 
-int get_rr_type_info(char **ptr, hinfo_t *hinfo, char *end)
+int get_rr_type_info(char **ptr, hinfo_t *hinfo, const char *end)
 {
-	int len = 0;
-	hinfo->cpu_len = ((unsigned char *)*ptr)[0];
-	*ptr += 1;
-	len = MIN(hinfo->cpu_len, sizeof(DNS_HINFO_MAX_CPU-1));
-	memcpy((char *)hinfo->cpu, *ptr, len);
-	hinfo->cpu[len]='\0';
-	*ptr += hinfo->cpu_len;
-	hinfo->cpu_len = len;
+	int length;
 	
-	hinfo->os_len = ((unsigned char *)*ptr)[0];
+	hinfo->cpu_len=((unsigned char *)*ptr)[0];
 	*ptr += 1;
-	len = MIN(hinfo->os_len, sizeof(DNS_HINFO_MAX_OS-1));
-	memcpy((char *)hinfo->os, *ptr, len);
-	hinfo->os[len]='\0';
+	length=MIN(hinfo->cpu_len, sizeof(hinfo->cpu)-1);
+	if(length>0)
+	{
+		memcpy((char *)hinfo->cpu, *ptr, length);
+		hinfo->cpu[length]='\0';
+	}
+	else
+	{
+		hinfo->cpu[0]='\0';
+	}
+	
+	*ptr += hinfo->cpu_len;
+	hinfo->cpu_len=(length>0 ? length : 0);
+	
+	hinfo->os_len=((unsigned char *)*ptr)[0];
+	*ptr += 1;
+	length = MIN(hinfo->os_len, sizeof(hinfo->os)-1);
+	if(length>0)
+	{
+		memcpy((char *)hinfo->os, *ptr, length);
+		hinfo->os[length]='\0';
+	}
+	else
+	{
+		hinfo->os[0]='\0';
+	}
+	
 	*ptr += hinfo->os_len;
-	hinfo->os_len = len;
+	hinfo->os_len=(length>0 ? length : 0);
 	
 	return 0;
 }
 
-int get_decompressed_name(char * msg, unsigned char**ptr, unsigned char *buf, int buflen, char *end)
+int get_decompressed_name(char * msg, unsigned char**ptr, unsigned char *buf, int buflen, const char *end)
 {
-	unsigned char *p = NULL;
-	int index = 0, len = 0;
-	int np = 0, tot_len = 0;
-
+	int index=0,len;
+	int np=0,tot_len=0;
+	unsigned char *p=NULL;
+	
 	p = *ptr;
 	*ptr = NULL;
 	index = 0;
@@ -1321,14 +1309,13 @@ int get_decompressed_name(char * msg, unsigned char**ptr, unsigned char *buf, in
 }
 
 
-int get_rr_domain( char * msg,unsigned char ** ptr, unsigned char * buf, int buflen, char * end)
+int get_rr_domain( char * msg,unsigned char ** ptr, unsigned char * buf, int buflen, const char *end)
 {
 	return get_decompressed_name(msg, ptr, buf, buflen, end);
 }
 
 int get_rr_common_field(char *msg, char **ptr, dns_rr_t *rr,  char *end)
 {
-	char * p = NULL;
 	if(*ptr==NULL) 
 	{
 		return -1;
@@ -1368,13 +1355,12 @@ int get_rr_common_field(char *msg, char **ptr, dns_rr_t *rr,  char *end)
 	{
 		return -1;
 	}
-	NS_GET16(rr->rdlength, * ptr);
-	p = *ptr + rr->rdlength;
-	if(*ptr==NULL || p>end) 
+	NS_GET16(rr->rdlength, *ptr);
+	if(*ptr==NULL || (*ptr+rr->rdlength)>end) 
 	{
 		return -1;
 	}
-
+	
 	return 0;
 }
 
@@ -1431,17 +1417,17 @@ int get_dns_query_question(char *msg, char **ptr, dns_query_question_t *q, char 
 	return 0;
 }
 
-int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
+int get_one_resource_record(char *msg, char **ptr, dns_rr_t *rr,  const char *end)
 {	
-	unsigned int len=0;
+	int len=0;
 	unsigned char *original_ptr = NULL;
 	
 	switch(rr->type) 
 	{
 		case DNS_TYPE_CNAME:
-			original_ptr = (unsigned char*)*ptr;
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.cname, DNS_MAX_NAME+1, end))
 			{
+				rr->rdata.cname[0]='\0';
 				return 0;
 			}
 			
@@ -1449,34 +1435,57 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 		case DNS_TYPE_HINFO:
 			if(0 != get_rr_type_info(ptr, &(rr->rdata.hinfo), end))
 			{
+				memset(&(rr->rdata.hinfo), 0, sizeof(struct _hinfo));
 				return 0;
 			}
 			break;
 		case DNS_TYPE_MB:
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.mb, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.mb[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_MD:
 			if(0 >= get_rr_domain(msg, (unsigned char**) ptr, rr->rdata.md, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.md[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_MF:
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.mf, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.mf[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_MG:
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.mg, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.mg[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_MINFO:
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.minfo.rmailbx, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.minfo.rmailbx[0]='\0';
 				return 0;
+			}
+			
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.minfo.emailbx, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.minfo.emailbx[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_MR:
 			if(0 >= get_rr_domain(msg,(unsigned char**) ptr, rr->rdata.mr, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.mr[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_MX:
 			if(*ptr + 2 > end) return 0;
@@ -1496,21 +1505,33 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			else
 			{
 				if(0 >= get_rr_domain(msg,(unsigned char**) ptr, rr->rdata.mx.exchange, DNS_MAX_NAME+1, end))
+				{
+					rr->rdata.mx.exchange[0]='\0';
 					return 0;
+				}
 			}
 			break;
 		case DNS_TYPE_NS:
 			if(0 >= get_rr_domain(msg,(unsigned char**) ptr, rr->rdata.ns, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.ns[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_PTR:
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.ptr, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.ptr[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_SOA:
 			original_ptr = (unsigned char*)*ptr;
 			if(0 != get_rr_type_soa(msg, ptr, &(rr->rdata.soa), end))
+			{
+				memset(&(rr->rdata.soa), 0, sizeof(struct _soa));
 				return 0;
+			}
 			if((char *)original_ptr+rr->rdlength!=*ptr)
 			{
 				*ptr=(char *)original_ptr+rr->rdlength;
@@ -1528,7 +1549,10 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			break;
 		case DNS_TYPE_DNAME:
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.dname, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.dname[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_ISDN:
 			memcpy(rr->rdata.isdn, *ptr, sizeof(u_char));
@@ -1542,9 +1566,15 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			break;
 		case DNS_TYPE_RP:
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rp.mailbox, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.rp.mailbox[0]='\0';
 				return 0;
+			}
 			if(0 >= get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rp.txt_rr, DNS_MAX_NAME+1, end))
+			{
+				rr->rdata.rp.txt_rr[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_NULL:
 			len = MIN(DNS_MAX_NAME-1, rr->rdlength-1);	/*size=1byte*/
@@ -1554,15 +1584,27 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			break;
 		case DNS_TYPE_WKS:
 			if(0 != get_rr_type_wks(ptr, &(rr->rdata.wks), end))
+			{
+				memset(&(rr->rdata.wks), 0, sizeof(struct _wks));
 				return 0;
+			}
 			rr->rdata.wks.size = rr->rdlength - 5;
+			if(rr->rdata.wks.size==0)
+			{
+				rr->rdata.wks.size=0;
+				rr->rdata.wks.bitmap=NULL;
+				
+			}
 			*ptr += rr->rdlength - 5;
 		case DNS_TYPE_SRV:
 			NS_GET16(rr->rdata.srv.priority, *ptr);
 			NS_GET16(rr->rdata.srv.weight, *ptr);
 			NS_GET16(rr->rdata.srv.port, *ptr);
 			if(0 >= get_rr_domain(msg,(unsigned char**) ptr, rr->rdata.srv.target, DNS_MAX_TARGET, end))
+			{
+				rr->rdata.srv.target[0]='\0';
 				return 0;
+			}
 			break;
 		case DNS_TYPE_OPT:
 			break;
@@ -1575,31 +1617,45 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			rr->rdata.ds.digest_type = *(unsigned char *)*ptr;
 			*ptr += 1;
 			rr->rdata.ds.digest = *(u_char**)ptr;
-			rr->rdata.ds.digest_len = rr->rdlength - 4;
+			rr->rdata.ds.digest_len=rr->rdlength - 4;
+			if(rr->rdata.ds.digest_len==0)
+			{
+				rr->rdata.ds.digest=NULL;
+				rr->rdata.ds.digest_len=0;
+			}
 			*ptr += rr->rdlength - 4;
 			break;
 		case DNS_TYPE_RRSIG:
 			if(* ptr + 18 > end) return 0;
+			memset(&(rr->rdata.rrsig), 0, sizeof(struct _rrsig));
 			get_rr_type_rrsig(ptr, &(rr->rdata.rrsig), end);
 			len = get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.rrsig.signer_name, DNS_MAX_SIGNER_NAME, end);
-			if(len <= 0)
+			if(len<=0)
 			{
+				rr->rdata.rrsig.signer_name[0]='\0';
 				return -1;
 			}
 			rr->rdata.rrsig.signature = *(u_char**)ptr;
 			rr->rdata.rrsig.signature_len = rr->rdlength - 18 - len;
+			if(rr->rdata.rrsig.signature_len==0)
+			{
+				rr->rdata.rrsig.signature=NULL;
+				rr->rdata.rrsig.signature_len=0;
+			}
 			*ptr += rr->rdlength - 18 - len;
 			break;
 		case DNS_TYPE_NSEC:
 			original_ptr = (unsigned char*)*ptr;
 			len = get_rr_domain(msg, (unsigned char**)ptr, rr->rdata.nsec.next_domain, DNS_MAX_OWNER, end);
-			if(len <= 0)
+			if(len<=0)
 			{
+				rr->rdata.nsec.next_domain[0]='\0';
 				return -1;
 			}
 
-			if(rr->rdlength-len>0 && rr->rdlength-len<sizeof(rr->rdata.nsec.type_bit_maps))
+			if((int)(rr->rdlength-len)<(int)(sizeof(rr->rdata.nsec.type_bit_maps)))
 			{
+				rr->rdata.nsec.maps_len=DNS_MAX_MAPS;
 				dissect_type_bitmap((unsigned char*)*ptr, rr->rdlength-len, (rr->rdata.nsec.type_bit_maps), &(rr->rdata.nsec.maps_len));
 			}
 			*ptr = (char *)original_ptr+rr->rdlength;			
@@ -1613,18 +1669,22 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			*ptr += 1;
 			rr->rdata.dnskey.public_key = *(u_char**)ptr;
 			rr->rdata.dnskey.public_key_len = rr->rdlength - 4;/* sizeof(flags)+sizeof(protocol)+sizeof(algo) */
+			if(rr->rdata.dnskey.public_key_len==0)
+			{
+				rr->rdata.dnskey.public_key=NULL;
+				rr->rdata.dnskey.public_key_len=0;
+			}
 			*ptr +=  rr->rdlength - 4; /* todo add log */
 			break;
 		case DNS_TYPE_NSEC3:
 			if(* ptr + 5 > end) return 0;
 			original_ptr = (unsigned char*)*ptr;
-			//salt_len = *(unsigned char *)(*ptr+4);	/* salt length */
-			//hash_len = *(salt_len + (unsigned char *)(*ptr+5));	/* hash length */
 			get_rr_type_nsec3(ptr, &(rr->rdata.nsec3), end);
 
 			len=((char *)*ptr)-(char *)original_ptr;
-			if(rr->rdlength-len>0 && rr->rdlength-len<sizeof(rr->rdata.nsec3.type_bit_maps))
+			if((int)(rr->rdlength-len)<(int)(sizeof(rr->rdata.nsec3.type_bit_maps)))
 			{
+				rr->rdata.nsec3.maps_len=DNS_MAX_MAPS;
 				dissect_type_bitmap((unsigned char*)*ptr, rr->rdlength-len, (rr->rdata.nsec3.type_bit_maps), &(rr->rdata.nsec3.maps_len));
 			}
 			*ptr = (char *)original_ptr+rr->rdlength;			
@@ -1637,12 +1697,21 @@ int get_one_resource_record(char * msg, char ** ptr, dns_rr_t * rr,  char * end)
 			NS_GET16(rr->rdata.nsec3param.iteration, *ptr);
 			rr->rdata.nsec3param.salt_len = rr->rdlength -4-1;
 			*ptr += 1;
-			rr->rdata.nsec3param.salt_value = *(u_char**)ptr;
+			if(rr->rdata.nsec3param.salt_len==0)
+			{
+				rr->rdata.nsec3param.salt_value=NULL;
+				rr->rdata.nsec3param.salt_len=0;
+			}
+			else
+			{
+				rr->rdata.nsec3param.salt_value = *(u_char**)ptr;
+			}
 			*ptr +=  rr->rdlength-5;
 			break;
 		case DNS_TYPE_UNKNOWN:
-			memcpy(rr->rdata.unknown_data, *ptr, rr->rdlength);
-			rr->rdata.unknown_data[rr->rdlength]='\0';
+			len=MIN(rr->rdlength, sizeof(rr->rdata.unknown_data)-1);
+			memcpy(rr->rdata.unknown_data, *ptr, len);
+			rr->rdata.unknown_data[len]='\0';
 			(*ptr)+=rr->rdlength;
 			break;
 		default:
@@ -1689,13 +1758,9 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 			dns_info->rr_count = dns_info->hdr_info.ancount;
 			break;
 		case DNS_RR_TYPE_AUTH:
-			dns_info->rr_count = dns_info->hdr_info.ancount;
-			/* todo */
 			dns_info->rr_count = dns_info->hdr_info.aucount;
 			break;
 		case DNS_RR_TYPE_ADD:
-			dns_info->rr_count = dns_info->hdr_info.ancount + dns_info->hdr_info.aucount;
-			/* todo */
 			dns_info->rr_count = dns_info->hdr_info.adcount;
 			break;
 		default:
@@ -1734,7 +1799,7 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 			}
 		}
 
-		if(dns_info->rr[i].rdlength == 0)
+		if(dns_info->rr[i].rdlength==0)
 		{
 			continue;
 		}
@@ -1755,7 +1820,7 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char *payload, int payload_len, void **pme, int thread_seq, void *a_packet)
 {
 	int i=0;
-	int session_state=SESSION_STATE_PENDING;
+	int session_state;
 	int ret=APP_STATE_GIVEME;
 	char *cur_pos = NULL;
 	dns_info_t dns_info;
@@ -1974,7 +2039,7 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 	char *payload = NULL;
 	char state=APP_STATE_GIVEME;
 	struct tcpdetail* tcp_detail = (struct tcpdetail*)a_tcp->pdetail;
-	save_dns_business_info_t *context=(save_dns_business_info_t*)*pme;
+	save_dns_business_info_t *context=(save_dns_business_info_t*)(*pme);
 		
 	if(!check_port(a_tcp->addr, DNS_PORT))
 	{
@@ -2053,7 +2118,7 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 
 	if(state&APP_STATE_DROPME || a_tcp->opstate==OP_STATE_CLOSE)
 	{
-		save_dns_business_info_t *context=(save_dns_business_info_t *)(*pme);
+		context=(save_dns_business_info_t *)(*pme);
 		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
 		{
 			callback_dns_business_plug(a_tcp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);

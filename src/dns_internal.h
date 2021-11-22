@@ -162,7 +162,6 @@ extern "C"
 {
 #endif
 
-int get_rr_domain( char * msg,unsigned char ** ptr, unsigned char * buf, int buflen, char * end);
 int DNS_INIT();
 void DNS_DESTROY();
 void PROT_FUNSTAT(long long protflag);
@@ -170,6 +169,8 @@ void GET_PLUGID(unsigned short plugid);
 long long FLAG_CHANGE(char* raw_flag_str);
 char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a_packet);
 char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a_packet);
+
+int get_rr_domain( char * msg,unsigned char ** ptr, unsigned char * buf, int buflen, const char *end);
 
 #ifdef __cplusplus
 }

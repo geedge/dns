@@ -6,6 +6,7 @@ variables:
   INSTALL_DEPENDENCY_LIBRARY: libMESA_handle_logger-devel  libcjson-devel libMESA_field_stat2-devel  sapp-devel framework_env  libMESA_prof_load-devel sapp-devel libasan libbreakpad_mini-devel libMESA_htable-devel systemd-devel
 
 stages:
+- analysis
 - build
 - test
 - package
@@ -22,6 +23,16 @@ stages:
   - cd build
   tags:
   - share
+
+run_cppcheck:
+  stage: analysis
+  script:
+    - mkdir build || true
+    - cd build
+    - cmake3 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+    - cppcheck --project=compile_commands.json --enable=all --error-exitcode=1 --suppress=unusedFunction --suppress=missingInclude
+  tags:
+    - share
 
 run_test:
   stage: test

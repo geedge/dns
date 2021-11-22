@@ -20,7 +20,7 @@ extern "C" int commit_test_result_json(cJSON *node, const char *name);
 
 static int g_result_count = 1;
 
-extern "C" unsigned char DNS_TEST_PLUG_ENTRY(stSessionInfo *session_info, void **pme,
+extern "C" unsigned char DNS_TEST_PLUG_ENTRY(stSessionInfo *session_info, const void **pme,
                              int thread_seq, struct streaminfo *a_stream, void *a_packet)
 {
     assert(NULL != session_info || pme != NULL);
