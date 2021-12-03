@@ -212,7 +212,7 @@ int get_rr_str2json(cJSON *object, dns_info_t *dns_info, int *dns_sec)
 			cJSON_AddNumberToObject(one_rr_object, "rdlength", dns_rr->rdlength);
 		}
 
-		if(dns_rr->rdata.a==NULL)
+		if(dns_rr->rdata.a==NULL || dns_rr->rdlength==0)
 		{
 			cJSON_AddItemToArray(dns_rr_array, one_rr_object);
 			continue;
@@ -1801,6 +1801,7 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 
 		if(dns_info->rr[i].rdlength==0)
 		{
+			memset(dns_info->rr[i].rdata.cname, 0, sizeof(dns_info->rr[i].rdata.cname));
 			continue;
 		}
 		
