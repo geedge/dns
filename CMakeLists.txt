@@ -51,7 +51,11 @@ include_directories(/opt/MESA/include/MESA/)
 file(GLOB SRC
     "src/*.cpp"
 )
-set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp_run)
+
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+	set(CMAKE_INSTALL_PREFIX "/home/mesasoft/sapp_run" CACHE PATH "default install path" FORCE)
+endif()
+
 set(DNS_DEPEND_DYN_LIB MESA_handle_logger MESA_field_stat2 MESA_prof_load)
 
 # Shared Library Output

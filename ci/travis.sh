@@ -33,12 +33,16 @@ env | sort
 : "${COMPILER_IS_GNUCXX:=OFF}"
 
 # Install dependency from YUM
-if [ -n "${INSTALL_DEPENDENCY_LIBRARY}" ]; then
-	yum install -y $INSTALL_DEPENDENCY_LIBRARY
+if [ -n "${INSTALL_DEPENDENCY_FRAMEWORK}" ]; then
+	yum install -y $INSTALL_DEPENDENCY_FRAMEWORK
 	source /etc/profile.d/framework.sh
 fi
 
-if [ $ASAN_OPTION ];then
+if [ -n "${INSTALL_DEPENDENCY_PLATFORM}" ]; then
+	yum install -y $INSTALL_DEPENDENCY_PLATFORM
+fi
+
+if [ $ASAN_OPTION ] && [ -f "/opt/rh/devtoolset-7/enable" ] ;then
 	source /opt/rh/devtoolset-7/enable
 fi
 

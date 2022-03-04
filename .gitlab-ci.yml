@@ -1,9 +1,11 @@
-image: "git.mesalab.cn:7443/mesa_platform/build-env:master"
 variables:
   GIT_STRATEGY: "clone"
+  BUILD_IMAGE_CENTOS7: "git.mesalab.cn:7443/mesa_platform/build-env:master"
+  BUILD_IMAGE_CENTOS8: "git.mesalab.cn:7443/mesa_platform/build-env:rockylinux"
   BUILD_PADDING_PREFIX: /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX/
-  INSTALL_PREFIX: "/opt/MESA/lib/"
-  INSTALL_DEPENDENCY_LIBRARY: libMESA_handle_logger-devel  libcjson-devel libMESA_field_stat2-devel  sapp-devel framework_env  libMESA_prof_load-devel sapp-devel libasan libbreakpad_mini-devel libMESA_htable-devel systemd-devel
+  INSTALL_DEPENDENCY_PLATFORM:  sapp-devel libasan systemd-devel libnsl
+  INSTALL_DEPENDENCY_FRAMEWORK:  libMESA_handle_logger-devel libcjson-devel libMESA_field_stat2-devel framework_env libMESA_prof_load-devel libbreakpad_mini-devel libMESA_htable-devel
+  INSTALL_PREFIX: "/home/mesasoft/sapp_run/"
 
 stages:
 - analysis
@@ -11,21 +13,42 @@ stages:
 - test
 - package
 
-.build_by_travis:
+.build_before_script:
   before_script:
   - mkdir -p $BUILD_PADDING_PREFIX/$CI_PROJECT_NAMESPACE/
   - ln -s $CI_PROJECT_DIR $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
   - cd $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
   - chmod +x ./ci/travis.sh
-  script:
   - yum makecache
-  - ./ci/travis.sh
-  - cd build
+  - yum install -y elfutils-libelf-devel
+
+
+.build_by_travis_for_centos7:
+  stage: build
+  image: $BUILD_IMAGE_CENTOS7
+  extends: .build_before_script
+  script:
+    - yum install -y libmnl-devel
+    - yum install -y libnfnetlink-devel
+    - ./ci/travis.sh
+      - cd build
   tags:
   - share
 
-run_cppcheck:
+.build_by_travis_for_centos8:
+  stage: build
+  image: $BUILD_IMAGE_CENTOS8
+  extends: .build_before_script
+  script:
+    - dnf --enablerepo=powertools install -y libmnl-devel
+    - dnf --enablerepo=powertools install -y libnfnetlink-devel
+    - ./ci/travis.sh
+  tags:
+    - share
+
+run_cppcheck_for_centos7:
   stage: analysis
+  image: $BUILD_IMAGE_CENTOS7
   script:
     - mkdir build || true
     - cd build
@@ -34,18 +57,38 @@ run_cppcheck:
   tags:
     - share
 
-run_test:
+run_cppcheck_for_centos8:
+  stage: analysis
+  image: $BUILD_IMAGE_CENTOS8
+  script:
+    - mkdir build || true
+    - cd build
+    - cmake3 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+    - cppcheck --project=compile_commands.json --enable=all --error-exitcode=1 --suppress=unusedFunction --suppress=missingInclude
+  tags:
+    - share
+
+run_test_for_centos7:
   stage: test
-  extends: .build_by_travis
+  extends: .build_by_travis_for_centos7
   script:
     - yum makecache
     - ./ci/travis.sh
     - cd build
     - ctest --verbose
 
-branch_build_debug:
+run_test_for_centos8:
+  stage: test
+  extends: .build_by_travis_for_centos8
+  script:
+    - yum makecache
+    - ./ci/travis.sh
+    - cd build
+    - ctest3 --verbose
+
+branch_build_debug_for_centos7:
   stage: build
-  extends: .build_by_travis
+  extends: .build_by_travis_for_centos7
   variables:
     BUILD_TYPE: Debug
   except:
@@ -53,19 +96,19 @@ branch_build_debug:
     - /^master.*$/i
     - tags
 
-branch_build_release:
+branch_build_release_for_centos7:
   stage: build
   variables:
     BUILD_TYPE: RelWithDebInfo
-  extends: .build_by_travis
+  extends: .build_by_travis_for_centos7
   except:
     - /^develop.*$/i
     - /^master.*$/i
     - tags
 
-develop_build_debug:
-  stage: package
-  extends: .build_by_travis
+develop_build_debug_for_centos7:
+  stage: build
+  extends: .build_by_travis_for_centos7
   variables:
     BUILD_TYPE: Debug
     PACKAGE: 1
@@ -82,9 +125,9 @@ develop_build_debug:
     - /^develop.*$/i
     - /^master.*$/i
 
-develop_build_release:
-  stage: package
-  extends: .build_by_travis
+develop_build_release_for_centos7:
+  stage: build
+  extends: .build_by_travis_for_centos7
   variables:
     BUILD_TYPE: RelWithDebInfo
     PACKAGE: 1
@@ -100,7 +143,7 @@ develop_build_release:
     - /^develop.*$/i
     - /^master.*$/i
 
-release_build_debug:
+release_build_debug_for_centos7:
   stage: package
   variables:
     BUILD_TYPE: Debug
@@ -108,15 +151,15 @@ release_build_debug:
     UPLOAD_RPM: 1
     PULP3_REPO_NAME: protocol-stable-x86_64.el7
     PULP3_DIST_NAME: protocol-stable-x86_64.el7
-  extends: .build_by_travis
+  extends: .build_by_travis_for_centos7
   artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-release"
+    name: "dns-$CI_COMMIT_REF_NAME-debug"
     paths:
       - build/*.rpm
   only:
     - tags
 
-release_build_release:
+release_build_release_for_centos7:
   stage: package
   variables:
     BUILD_TYPE: RelWithDebInfo
@@ -126,7 +169,98 @@ release_build_release:
     SYMBOL_TARGET: dns
     PULP3_REPO_NAME: protocol-stable-x86_64.el7
     PULP3_DIST_NAME: protocol-stable-x86_64.el7
-  extends: .build_by_travis
+  extends: .build_by_travis_for_centos7
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*.rpm
+  only:
+    - tags
+
+branch_build_debug_for_centos8:
+  stage: build
+  extends: .build_by_travis_for_centos8
+  variables:
+    BUILD_TYPE: Debug
+  except:
+    - /^develop.*$/i
+    - /^master.*$/i
+    - tags
+
+branch_build_release_for_centos8:
+  stage: build
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+  extends: .build_by_travis_for_centos8
+  except:
+    - /^develop.*$/i
+    - /^master.*$/i
+    - tags
+
+develop_build_debug_for_centos8:
+  stage: build
+  extends: .build_by_travis_for_centos8
+  variables:
+    BUILD_TYPE: Debug
+    PACKAGE: 1
+    UPLOAD_RPM: 1
+    ASAN_OPTION: ADDRESS
+    TESTING_VERSION_BUILD: 1
+    PULP3_REPO_NAME: protocol-testing-x86_64.el8
+    PULP3_DIST_NAME: protocol-testing-x86_64.el8
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-debug"
+    paths:
+      - build/*.rpm
+  only:
+    - /^develop.*$/i
+    - /^master.*$/i
+
+develop_build_release_for_centos8:
+  stage: build
+  extends: .build_by_travis_for_centos8
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+    PACKAGE: 1
+    UPLOAD_RPM: 1
+    TESTING_VERSION_BUILD: 1
+    PULP3_REPO_NAME: protocol-testing-x86_64.el8
+    PULP3_DIST_NAME: protocol-testing-x86_64.el8
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*.rpm
+  only:
+    - /^develop.*$/i
+    - /^master.*$/i
+
+release_build_debug_for_centos8:
+  stage: package
+  variables:
+    BUILD_TYPE: Debug
+    PACKAGE: 1
+    UPLOAD_RPM: 1
+    PULP3_REPO_NAME: protocol-stable-x86_64.el8
+    PULP3_DIST_NAME: protocol-stable-x86_64.el8
+  extends: .build_by_travis_for_centos8
+  artifacts:
+    name: "dns-$CI_COMMIT_REF_NAME-debug"
+    paths:
+      - build/*.rpm
+  only:
+    - tags
+
+release_build_release_for_centos8:
+  stage: package
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+    PACKAGE: 1
+    UPLOAD_RPM: 1
+    UPLOAD_SYMBOL_FILES: 1
+    SYMBOL_TARGET: dns
+    PULP3_REPO_NAME: protocol-stable-x86_64.el8
+    PULP3_DIST_NAME: protocol-stable-x86_64.el8
+  extends: .build_by_travis_for_centos8
   artifacts:
     name: "dns-$CI_COMMIT_REF_NAME-release"
     paths:
