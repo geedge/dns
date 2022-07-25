@@ -107,6 +107,69 @@ const unsigned char PCAP_FILE_HEAD[24] = {0xD4, 0xC3, 0xB2, 0xA1, 0x02, 0x00, 0x
 								 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 								 0xFF, 0xFF, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00};
 
+int jump_message_length(struct dns_context *context, int payload_len, int lostlen, char dir)
+{
+	char *skiped_len=NULL;
+	
+	if(dir==DIR_C2S)
+	{
+		skiped_len=&(context->c2s_skiped_len);
+	}
+	else
+	{
+		skiped_len=&(context->s2c_skiped_len);
+	}
+
+	if(lostlen>0)
+	{
+		switch(lostlen)
+		{
+			case	1: //drop 1 byte
+				if((*skiped_len)==1)
+				{
+					(*skiped_len)=0;
+					return 0;
+				}
+				else
+				{
+					(*skiped_len)=0;
+					return 1;
+				}
+				break;
+			case	2: //drop 2 byte	
+				(*skiped_len)=0;
+				return 0;
+			default:
+				(*skiped_len)=0;
+				return 2;
+		}
+	}
+
+	switch((*skiped_len))
+	{
+		case	1:
+			(*skiped_len)=0;
+			return 1;
+			break;
+		case	2:
+			(*skiped_len)=0;
+			return 0;
+			break;
+		case	0:
+			if(payload_len<=2)
+			{
+				(*skiped_len)=(char)payload_len;
+				return payload_len;
+			}
+			return 2;
+			break;
+		default:
+			break;
+	}
+	
+	return -1;
+}
+
 static int str2hex(unsigned char *source, int s_len, char *dest, int d_len)
 {
 	int i=0,used_len=0;
@@ -1369,7 +1432,7 @@ int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *in
 	char state=PROT_STATE_GIVEME;
 	char app_state=APP_STATE_GIVEME;
 	stSessionInfo sessionInfo;	
-	save_dns_business_info_t *apme = (save_dns_business_info_t *)*pme;
+	struct dns_context *apme = (struct dns_context *)*pme;
 
 	memset(&sessionInfo, 0, sizeof(stSessionInfo));
 	
@@ -1826,7 +1889,7 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 	char *cur_pos = NULL;
 	dns_info_t dns_info;
 	unsigned long long register_flag = dns_register_flag;
-	save_dns_business_info_t *context = (save_dns_business_info_t *)(*pme);
+	struct dns_context *context = (struct dns_context *)(*pme);
 
 	if(payload_len<12 || payload==NULL)
 	{
@@ -1990,8 +2053,8 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 		case OP_STATE_PENDING:
 			if(*pme == NULL)
 			{
-				*pme = dictator_malloc(thread_seq, sizeof(save_dns_business_info_t));
-				memset(*pme, 0, sizeof(save_dns_business_info_t));
+				*pme = dictator_malloc(thread_seq, sizeof(struct dns_context));
+				memset(*pme, 0, sizeof(struct dns_context));
 			}
 			/*   no break here!!!!  */
 		case OP_STATE_DATA:
@@ -2014,13 +2077,12 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 			state=parse_dns_protocol(a_udp, a_udp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
-			state=parse_dns_protocol(a_udp, a_udp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 	}
 
 	if(state&APP_STATE_DROPME || a_udp->opstate==OP_STATE_CLOSE)
 	{
-		save_dns_business_info_t *context=(save_dns_business_info_t *)(*pme);
+		struct dns_context *context=(struct dns_context *)(*pme);
 		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
 		{
 			callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
@@ -2036,40 +2098,38 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 
 char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a_packet)
 {
-	int payload_len = 0;
-	char *payload = NULL;
+	int jump_len=0, payload_len=0;
+	char *payload=NULL;
 	char state=APP_STATE_GIVEME;
 	struct tcpdetail* tcp_detail = (struct tcpdetail*)a_tcp->pdetail;
-	save_dns_business_info_t *context=(save_dns_business_info_t*)(*pme);
+	struct dns_context *context=(struct dns_context*)(*pme);
 		
 	if(!check_port(a_tcp->addr, DNS_PORT))
 	{
 		return APP_STATE_DROPME;
 	}
 	
-	tcp_detail = (struct tcpdetail *)a_tcp->ptcpdetail;
-	payload_len = tcp_detail->datalen;
-	payload = (char *)tcp_detail->pdata;
-
 	switch(a_tcp->opstate)
 	{
-		case OP_STATE_PENDING: /* 暂未保存上下文信息 */
-			if((NULL == tcp_detail->pdata) || (0 == tcp_detail->datalen))
-			{
-				return APP_STATE_GIVEME;
-			}
-			
+		case OP_STATE_PENDING: /* 暂未保存上下文信息 */			
 			if(*pme == NULL)
 			{
-				*pme = dictator_malloc(thread_seq, sizeof(save_dns_business_info_t));
-				memset(*pme, 0, sizeof(save_dns_business_info_t));
-				context = (save_dns_business_info_t *)*pme;
-				context->skip_len=2;
+				*pme = dictator_malloc(thread_seq, sizeof(struct dns_context));
+				memset(*pme, 0, sizeof(struct dns_context));
+				context = (struct dns_context *)*pme;
 			}
 			
 		/*   no break here!!!!  */
 		case OP_STATE_DATA:
+			tcp_detail = (struct tcpdetail *)a_tcp->ptcpdetail;
+			if((NULL==tcp_detail->pdata) || (0==tcp_detail->datalen))
+			{
+				return APP_STATE_GIVEME;
+			}
 			
+			payload_len = tcp_detail->datalen;
+			payload = (char *)tcp_detail->pdata;
+
 			switch(a_tcp->addr.addrtype)
 			{
 				case ADDR_TYPE_IPV4:
@@ -2086,40 +2146,21 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 					break;
 			}
 
-			if(tcp_detail->serverbytes <= 2)
+			jump_len=jump_message_length(context, payload_len, tcp_detail->lostlen, a_tcp->curdir);
+			if(jump_len<0 || payload_len-jump_len<12)
 			{
-				context->skip_len -= payload_len;
 				break;
 			}
-			else
-			{
-				if(context->skip_len!=0)
-				{
-					payload_len -= context->skip_len;
-					payload += context->skip_len;
-					
-					context->skip_len=2;	//https://datatracker.ietf.org/doc/html/rfc7766#section-8
-				}
-			}
-			
-            if(tcp_detail->clientbytes >= 1500)
-			{
-				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
-				MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "TCP_ENTRY",
-									"tuple4: %s PKT size(S: %d/C: %d) is too bigger", printaddr(&a_tcp->addr, thread_seq), tcp_detail->serverbytes, tcp_detail->clientbytes);
-            	return APP_STATE_GIVEME;
-			}
 		
-			state=parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
+			state=parse_dns_protocol(a_tcp, a_tcp->opstate, payload+jump_len, payload_len-jump_len, pme, thread_seq, a_packet);
 			break;
 		case OP_STATE_CLOSE:
-			state=parse_dns_protocol(a_tcp, a_tcp->opstate, payload, payload_len, pme, thread_seq, a_packet);
 			break;
 	}
 
 	if(state&APP_STATE_DROPME || a_tcp->opstate==OP_STATE_CLOSE)
 	{
-		context=(save_dns_business_info_t *)(*pme);
+		context=(struct dns_context *)(*pme);
 		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
 		{
 			callback_dns_business_plug(a_tcp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);

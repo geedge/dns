@@ -106,12 +106,14 @@ typedef struct
 }dns_str_contrast_id_t;
 
 
-typedef struct _save_dns_business_info
+struct dns_context
 {
+	char session_state;
+	char c2s_skiped_len;	
+	char s2c_skiped_len;
+	char padding[5];
 	void *business_pme;
-	int session_state;
-	int skip_len;/* 2 bytes */
-}save_dns_business_info_t;
+};
 
 typedef struct _pcap_hdr
 {
@@ -121,7 +123,7 @@ typedef struct _pcap_hdr
     u_int32_t caplen;
 }pcap_hdr_t;
 
-#define	MAX_LOG_PATH_LEN				256
+#define	MAX_LOG_PATH_LEN	256
 
 enum dns_statis_info_t
 {
