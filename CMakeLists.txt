@@ -20,6 +20,7 @@ if (CMAKE_CXX_CPPCHECK)
             "--suppress=missingInclude"
             "--suppress=uselessAssignmentPtrArg"
             "--suppress=unmatchedSuppression"
+            "--suppress=internalAstError"
     )
     set(CMAKE_C_CPPCHECK ${CMAKE_CXX_CPPCHECK})
 else()

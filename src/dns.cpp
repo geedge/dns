@@ -60,7 +60,6 @@ int DNS_PROTOCOL_VERSION_20191224;
 unsigned long long dns_register_flag = 0;
 unsigned short dns_plugid = 0;
 static pthread_mutex_t dns_lock;
-int dns_register_flag_num = 0;
 int pcap_index = 0;
 
 const char *dns_conf_file = "./conf/dns/dns.conf";
@@ -1427,12 +1426,11 @@ int get_rr_common_field(char *msg, char **ptr, dns_rr_t *rr,  char *end)
 	return 0;
 }
 
-int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *info, int prot_flag, int session_state, int thread_seq, void *a_packet)
+static char callback_dns_business_plug(struct streaminfo *a_stream, struct dns_session *one_session, void *info, int prot_flag, int session_state, int thread_seq, void *a_packet)
 {
 	char state=PROT_STATE_GIVEME;
 	char app_state=APP_STATE_GIVEME;
 	stSessionInfo sessionInfo;	
-	struct dns_context *apme = (struct dns_context *)*pme;
 
 	memset(&sessionInfo, 0, sizeof(stSessionInfo));
 	
@@ -1440,7 +1438,7 @@ int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *in
 	sessionInfo.session_state = session_state;
 	sessionInfo.prot_flag = prot_flag;
 	sessionInfo.app_info = (void *)info;
-	state=PROT_PROCESS(&sessionInfo, &apme->business_pme, thread_seq, a_stream, a_packet);
+	state=PROT_PROCESS(&sessionInfo, &one_session->business_pme, thread_seq, a_stream, a_packet);
 
 	if(state&PROT_STATE_DROPPKT)
 	{
@@ -1448,6 +1446,54 @@ int callback_dns_business_plug(struct streaminfo *a_stream, void **pme, void *in
 	}
 	
 	return app_state;
+}
+
+static int dns_delete_one_session(struct streaminfo *a_stream, struct dns_context *context, struct dns_session *session, void *a_packet)
+{
+	callback_dns_business_plug(a_stream, session, NULL, DNS_ALL, SESSION_STATE_CLOSE, a_stream->threadnum, a_packet);
+	DL_DELETE(context->session_list_head, session);
+	context->session_list_num--;
+	
+	HASH_DEL(context->session_hash, session);
+	dictator_free(a_stream->threadnum, (void *)session);
+	session=NULL;
+	
+	return 0;
+}
+
+static int dns_session_management(struct streaminfo *a_stream, struct dns_context *context, struct dns_session *session, int message_id, char dir_state, void *a_packet)
+{
+	switch(dir_state)
+	{
+		case	DNS_DIR_REQUEST:
+			if(context->session_list_num >= g_dns_proto_info.session_list_num_max)
+			{
+				dns_delete_one_session(a_stream, context, context->session_list_head, a_packet);
+			}
+			
+			session->message_id=message_id;
+			HASH_ADD_INT(context->session_hash, message_id, session);
+		
+			DL_APPEND(context->session_list_head, session);
+			context->session_list_num++;
+			break;
+		case	DNS_DIR_RESPONSE:
+			dictator_free(a_stream->threadnum, (void *)session);
+			session=NULL;
+			break;
+		case	DNS_DIR_DOUBLE:
+			DL_DELETE(context->session_list_head, session);
+			context->session_list_num--;
+		
+			HASH_DEL(context->session_hash, session);
+			dictator_free(a_stream->threadnum, (void *)session);
+			session=NULL;
+			break;
+		default:
+			break;
+	}
+
+	return 0;
 }
 
 int get_dns_query_question(char *msg, char **ptr, dns_query_question_t *q, char *end)
@@ -1883,12 +1929,11 @@ int parse_resource_record(struct streaminfo *a_stream, dns_info_t *dns_info, cha
 
 int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char *payload, int payload_len, void **pme, int thread_seq, void *a_packet)
 {
-	int i=0;
-	int session_state;
-	int ret=APP_STATE_GIVEME;
-	char *cur_pos = NULL;
+	char *cur_pos=NULL;
 	dns_info_t dns_info;
-	unsigned long long register_flag = dns_register_flag;
+	char state=APP_STATE_GIVEME;
+	int session_state,dir_state;
+	struct dns_session *one_session=NULL;
 	struct dns_context *context = (struct dns_context *)(*pme);
 
 	if(payload_len<12 || payload==NULL)
@@ -1898,138 +1943,81 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 		return APP_STATE_GIVEME;
 	}
 
-	//memset(&dns_info, 0, sizeof(dns_info_t));
 	get_dns_hdr_info(&dns_info.hdr_info, payload);
-
 	cur_pos = payload + sizeof(dns_hdr_t);
 
-	for(i = 0; i < dns_register_flag_num; i++)
+	if(dns_register_flag&DNS_ALL)
 	{
-		if(opstate != OP_STATE_CLOSE)
+		if(dns_info.hdr_info.qr==0)
 		{
-			if(context->session_state&SESSION_STATE_PENDING)
+			HASH_FIND_INT(context->session_hash, &dns_info.hdr_info.id, one_session);
+			if(one_session!=NULL)
 			{
-				session_state = SESSION_STATE_DATA;
+				dns_delete_one_session(a_stream, context, one_session, a_packet);
 			}
-			else
-			{
-				session_state = SESSION_STATE_PENDING|SESSION_STATE_DATA;
-			}
-			context->session_state = SESSION_STATE_PENDING|SESSION_STATE_DATA;
+			one_session=(struct dns_session *)dictator_malloc(thread_seq, sizeof(struct dns_session));
+			memset(one_session, 0, sizeof(struct dns_session));
+			session_state=SESSION_STATE_PENDING|SESSION_STATE_DATA;
+			dir_state=DNS_DIR_REQUEST;
 		}
 		else
 		{
-			if(context->session_state&SESSION_STATE_PENDING)
+			dir_state=DNS_DIR_DOUBLE;
+			session_state=SESSION_STATE_DATA|SESSION_STATE_CLOSE;
+			HASH_FIND_INT(context->session_hash, &dns_info.hdr_info.id, one_session);
+			if(one_session==NULL)
 			{
-				session_state = SESSION_STATE_CLOSE;
-				context->session_state=SESSION_STATE_CLOSE;
+				one_session=(struct dns_session *)dictator_malloc(thread_seq, sizeof(struct dns_session));
+				memset(one_session, 0, sizeof(struct dns_session));
+				session_state=SESSION_STATE_PENDING|SESSION_STATE_DATA|SESSION_STATE_CLOSE;
+				dir_state=DNS_DIR_RESPONSE;
 			}
-			else
-			{
-				session_state = SESSION_STATE_PENDING|SESSION_STATE_DATA|SESSION_STATE_CLOSE;
-				context->session_state=SESSION_STATE_CLOSE;
-			}
+		}
+		
+		int ret = parse_query_question(a_stream, &dns_info, payload, payload_len, &cur_pos);	
+		if(ret == APP_STATE_DROPME)
+		{
+			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
+			return APP_STATE_GIVEME;
+		}
+		
+		ret = parse_resource_record(a_stream, &dns_info, payload, payload_len, &cur_pos, DNS_RR_TYPE_ALL);
+		if(ret == APP_STATE_DROPME)
+		{
+			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
+			return APP_STATE_GIVEME;
 		}
 
-		if(register_flag&DNS_ALL)
-		{
-			register_flag = SET_BIT(register_flag, DNS_ALL);
-
-			ret = parse_query_question(a_stream, &dns_info, payload, payload_len, &cur_pos);	
-			if(ret == APP_STATE_DROPME)
-			{				
-				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);				
-				MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "parse_query_question return APP_STATE_DROPME, tuple4: %s, question_num: %d", printaddr(&a_stream->addr, thread_seq), dns_info.hdr_info.qdcount);
-				return APP_STATE_GIVEME;
-			}
-			
-			ret = parse_resource_record(a_stream, &dns_info, payload, payload_len, &cur_pos, DNS_RR_TYPE_ALL);	
-			if(ret == APP_STATE_DROPME)
-			{					
-				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
-				MESA_handle_runtime_log(g_dns_proto_info.logger, RLOG_LV_DEBUG, "parse_dns_protocol", "parse_resource_record return APP_STATE_DROPME, tuple4: %s", printaddr(&a_stream->addr, thread_seq));
-				return APP_STATE_GIVEME;
-			}
-
-			ret=callback_dns_business_plug(a_stream, pme, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
-			if(ret&APP_STATE_DROPPKT)
-			{
-				return ret;
-			}
-		}
-		else if((register_flag&DNS_REQ_ALL) && (0 == dns_info.hdr_info.qr))		/* process query packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_REQ_ALL);
-			
-			ret = parse_query_question(a_stream, &dns_info, payload, payload_len, &cur_pos);
-		}
-		else if((register_flag&DNS_REQ_HDR) && (0 == dns_info.hdr_info.qr))		/* process query packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_REQ_HDR);
-		}
-		else if((register_flag&DNS_RES_ALL) && (1 == dns_info.hdr_info.qr))		/* process response packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_RES_ALL);
-		}
-		else if((register_flag&DNS_RES_HDR) && (1 == dns_info.hdr_info.qr))		/* process response packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_RES_HDR);
-		}
-		else if((register_flag&DNS_RES_QUERY) && (1 == dns_info.hdr_info.qr))	/* process response packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_RES_QUERY);
-		}
-		else if((register_flag&DNS_RES_RRS) && (1 == dns_info.hdr_info.qr))		/* process response packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_RES_RRS);
-		}
-		else if((register_flag&DNS_RES_ANSWER) && (1 == dns_info.hdr_info.qr))	/* process response packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_RES_ANSWER);
-		}
-		else if((register_flag&DNS_RES_AUTH) && (1 == dns_info.hdr_info.qr))	/* process response packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_RES_AUTH);
-		}
-		else if((register_flag&DNS_RES_ADD) && (1 == dns_info.hdr_info.qr))		/* process response packet */
-		{
-			register_flag = SET_BIT(register_flag, DNS_RES_ADD);
-		}
-		else
-		{
-			
-		}
-
-		if(i != 0)
-			continue;
-
-		if(1 == dns_info.hdr_info.qr)	/* process response packet */
-		{			
-			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[R_PKT], 0, FS_OP_ADD, 1); 	
-		}
-		else
-		{
-			switch(dns_info.query_question.qtype)
-			{
-				case DNS_TYPE_A:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_A], 0, FS_OP_ADD, 1);		
-					break;
-				case DNS_TYPE_AAAA:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_AAAA], 0, FS_OP_ADD, 1);		
-					break;
-				case DNS_TYPE_CNAME:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_CNAME], 0, FS_OP_ADD, 1);		
-					break;
-				default:
-					FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_UNKNOWN], 0, FS_OP_ADD, 1); 	
-					break;
-			}
-			
-			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_PKT], 0, FS_OP_ADD, 1); 	
-		}
+		state=callback_dns_business_plug(a_stream, one_session, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
+		dns_session_management(a_stream, context, one_session, dns_info.hdr_info.id, dir_state, a_packet);
 	}
 
-	return APP_STATE_GIVEME;
+	if(1 == dns_info.hdr_info.qr)	/* process response packet */
+	{			
+		FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[R_PKT], 0, FS_OP_ADD, 1); 
+	}
+	else
+	{
+		switch(dns_info.query_question.qtype)
+		{
+			case DNS_TYPE_A:
+				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_A], 0, FS_OP_ADD, 1);
+				break;
+			case DNS_TYPE_AAAA:
+				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_AAAA], 0, FS_OP_ADD, 1);
+				break;
+			case DNS_TYPE_CNAME:
+				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_CNAME], 0, FS_OP_ADD, 1);
+				break;
+			default:
+				FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_UNKNOWN], 0, FS_OP_ADD, 1);
+				break;
+		}
+		
+		FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[Q_PKT], 0, FS_OP_ADD, 1);
+	}
+
+	return state;
 }
 
 char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a_packet)
@@ -2082,10 +2070,12 @@ char DNS_UDP_ENTRY(struct streaminfo *a_udp, void **pme, int thread_seq, void *a
 
 	if(state&APP_STATE_DROPME || a_udp->opstate==OP_STATE_CLOSE)
 	{
+		struct dns_session *one_session=NULL, *tmp_session=NULL;
 		struct dns_context *context=(struct dns_context *)(*pme);
-		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
+		HASH_ITER(hh, context->session_hash, one_session, tmp_session)
 		{
-			callback_dns_business_plug(a_udp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+			dns_delete_one_session(a_udp, context, one_session, a_packet);
+			one_session=NULL;
 		}
 		
 		dictator_free(thread_seq, *pme);
@@ -2160,10 +2150,12 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 
 	if(state&APP_STATE_DROPME || a_tcp->opstate==OP_STATE_CLOSE)
 	{
+		struct dns_session *one_session=NULL, *tmp_session=NULL;
 		context=(struct dns_context *)(*pme);
-		if((context->session_state&SESSION_STATE_CLOSE)!=SESSION_STATE_CLOSE)
+		HASH_ITER(hh, context->session_hash, one_session, tmp_session)
 		{
-			callback_dns_business_plug(a_tcp, pme, NULL, DNS_ALL, SESSION_STATE_CLOSE, thread_seq, a_packet);
+			dns_delete_one_session(a_tcp, context, one_session, a_packet);
+			one_session=NULL;
 		}
 		
 		dictator_free(thread_seq, *pme);
@@ -2191,6 +2183,8 @@ int DNS_INIT()
 	MESA_load_profile_int_def(dns_conf_file, "DNS", "STAT_CYCLE", &g_dns_proto_info.cycle_time, 2);
 	MESA_load_profile_int_def(dns_conf_file, "DNS", "LOG_LEVEL", &g_dns_proto_info.log_level, 30);
 	MESA_load_profile_string_def(dns_conf_file, "DNS", "LOG_PATH", g_dns_proto_info.log_path, MAX_LOG_PATH_LEN, NULL);
+	
+	MESA_load_profile_int_def(dns_conf_file, "DNS", "MAX_SESSION_NUM", &g_dns_proto_info.session_list_num_max, 32);
 	
 	g_dns_proto_info.logger = MESA_create_runtime_log_handle(g_dns_proto_info.log_path, g_dns_proto_info.log_level);
 	if(g_dns_proto_info.logger == NULL)
@@ -2241,11 +2235,8 @@ void  DNS_DESTROY()
 	return ;
 }
 
-
 void PROT_FUNSTAT(long long protflag)
 {
-	int i = 0;
-
 	if(0==protflag)
 	{
 		return;
@@ -2255,14 +2246,6 @@ void PROT_FUNSTAT(long long protflag)
 	pthread_mutex_lock(&dns_lock);
 
 	dns_register_flag = protflag;
-
-	for(i = 0; i < (int)sizeof(dns_register_flag)*8; i++)
-	{
-		if((dns_register_flag>>i)&0x01)
-		{
-			dns_register_flag_num++;
-		}
-	}
 
 	pthread_mutex_unlock(&dns_lock);
 	return;

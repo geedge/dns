@@ -1,5 +1,7 @@
-#ifndef DNS_ANALYSE_INTERNAL_H
-#define DNS_ANALYSE_INTERNAL_H
+#pragma once
+
+#include "uthash.h"
+#include "utlist.h"
 
 #include <MESA/stream.h>
 //#include <MESA/MESA_handle_logger.h>
@@ -12,18 +14,12 @@
 #define	MIN(a, b)	((a) > (b) ? (b) : (a))
 #endif
 
-
-#define RUNTIME_DNSMODULE "[DNS MODULE:]"
+#define	DNS_DIR_REQUEST		1
+#define	DNS_DIR_RESPONSE	2
+#define	DNS_DIR_DOUBLE		3
 
 #define DNS_PORT			53
-#define PROTID_DNS				6
-
-#define DNS_MAX_LABEL		63
-
-#define MAX_FLAG_LEN       30
-
-#define DNS_MAX_UDP_MESSAGE	 512
-
+#define PROTID_DNS			6
 
 #define DNSHDR_OPCODE_QUERY 	0
 #define DNSHDR_OPCODE_IQUERY	1
@@ -95,9 +91,6 @@
 	    (cp) += NS_INT16SZ; \
 } while (0)
 
-#define	SET_BIT(flag, bit)	(flag&(~bit))
-
-
 /* 2015-09-07 lijia add, for get_plug_id() bug.  */
 typedef struct
 {
@@ -105,14 +98,24 @@ typedef struct
 	unsigned long long id;
 }dns_str_contrast_id_t;
 
+struct dns_session
+{
+	void *business_pme;
+	int message_id;
+	UT_hash_handle hh;
+	struct dns_session *prev;
+	struct dns_session *next;
+};
 
 struct dns_context
 {
-	char session_state;
-	char c2s_skiped_len;	
+	char c2s_skiped_len;
 	char s2c_skiped_len;
-	char padding[5];
-	void *business_pme;
+	char padding[4];
+	short session_list_num;
+	struct dns_session *session_list_head;
+	struct dns_session *session_hash;
+
 };
 
 typedef struct _pcap_hdr
@@ -152,6 +155,7 @@ typedef struct _dns_proto_info
 {
 	int log_level;
 	int cycle_time;
+	int session_list_num_max;
 	int fild_id[DNS_MAX_FIELD_ID_NUM];
 	char log_path[MAX_LOG_PATH_LEN];
 	
@@ -176,6 +180,5 @@ int get_rr_domain( char * msg,unsigned char ** ptr, unsigned char * buf, int buf
 
 #ifdef __cplusplus
 }
-#endif
 #endif
 
