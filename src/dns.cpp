@@ -1948,9 +1948,11 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 
 	if(dns_register_flag&DNS_ALL)
 	{
+		int message_id=0;
 		if(dns_info.hdr_info.qr==0)
 		{
-			HASH_FIND_INT(context->session_hash, &dns_info.hdr_info.id, one_session);
+			message_id=dns_info.hdr_info.id;
+			HASH_FIND_INT(context->session_hash, &message_id, one_session);
 			if(one_session!=NULL)
 			{
 				dns_delete_one_session(a_stream, context, one_session, a_packet);
@@ -1964,7 +1966,8 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 		{
 			dir_state=DNS_DIR_DOUBLE;
 			session_state=SESSION_STATE_DATA|SESSION_STATE_CLOSE;
-			HASH_FIND_INT(context->session_hash, &dns_info.hdr_info.id, one_session);
+			message_id=dns_info.hdr_info.id;
+			HASH_FIND_INT(context->session_hash, &message_id, one_session);
 			if(one_session==NULL)
 			{
 				one_session=(struct dns_session *)dictator_malloc(thread_seq, sizeof(struct dns_session));
