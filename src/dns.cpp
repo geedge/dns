@@ -1,21 +1,21 @@
 /*
  *Author      	  ljp
- *V1.01 2015-01-05  ÐÞ¸ÄÍ·ÎÄ¼þ£¬°üº¬×îÐÂµÄstream.h
- *V1.02 2015-01-16  ÐÞ¸Ädns_compress_domainº¯ÊýwhileÑ­»·Ìõ¼þ£¬ÓÉ\0¸ÄÎª\n
- *                  Ìí¼Ó¶ÔTCP DNS²éÑ¯µÄÖ§³Ö
+ *V1.01 2015-01-05  ï¿½Þ¸ï¿½Í·ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½stream.h
+ *V1.02 2015-01-16  ï¿½Þ¸ï¿½dns_compress_domainï¿½ï¿½ï¿½ï¿½whileÑ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\0ï¿½ï¿½Îª\n
+ *                  ï¿½ï¿½ï¿½Ó¶ï¿½TCP DNSï¿½ï¿½Ñ¯ï¿½ï¿½Ö§ï¿½ï¿½
  *V1.03 2015-01-26  cheat pkt TTL set 0.5->1hour
- *V1.04 2015-02-05  ÐÞ¸ÄDNS¹¹ÔìÊý¾Ý°üBUG
- *V1.05 2015-02-12  build_dns_payloadÖÐÌí¼Ó¶ÔAAAAÀàÐÍÓ¦´ðµÄÖ§³Ö
- *V1.06 2015-03-05  ÐÞ¸´½âÎöTCP DNSÊ±parse_dnsÖÐmsg¸³ÖµÐ¡BUG
- *V1.07 2015-03-16  ÐÞ¸´A/AAAAÓ¦´ð°üÓòÃûÐÅÏ¢BUG
- *V1.08 2015-05-07  ÐÞ¸´au/adÓ¦´ð°üÓòÃûÐÅÏ¢BUG
- *V1.09 2015-07-15  ÐÞ¸´qtypeºÍqclassÁ½ÖÖÀàÐÍÎ´×ª»»³ÉÍøÂçÐò´íÎó
+ *V1.04 2015-02-05  ï¿½Þ¸ï¿½DNSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½BUG
+ *V1.05 2015-02-12  build_dns_payloadï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½AAAAï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
+ *V1.06 2015-03-05  ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½TCP DNSÊ±parse_dnsï¿½ï¿½msgï¿½ï¿½ÖµÐ¡BUG
+ *V1.07 2015-03-16  ï¿½Þ¸ï¿½A/AAAAÓ¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢BUG
+ *V1.08 2015-05-07  ï¿½Þ¸ï¿½au/adÓ¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢BUG
+ *V1.09 2015-07-15  ï¿½Þ¸ï¿½qtypeï¿½ï¿½qclassï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
  --------------------------------------------------------------------------
- *2015-09-07, LiJia, ÐÞ¸Ä×¢²á»ñÈ¡flag_id BUG.
- *2015-09-29, LiJia, ÐÞ¸ÄTCPÐ­Òé, Ã»ÓÐÌø¹ý³¤¶È×Ö¶ÎBUG.
- *2015-10-10, LiJia, ÐÞ¸ÄFLAG_CHANGE()º¯ÊýÃ»ÓÐcopy×Ö·û´®×îºóEOFµÄBUG.
- *2016-09-03, liuxueli, ÐÞ¸Ä´úÂë¸ñÊ½
+ *2015-09-07, LiJia, ï¿½Þ¸ï¿½×¢ï¿½ï¿½ï¿½È¡flag_id BUG.
+ *2015-09-29, LiJia, ï¿½Þ¸ï¿½TCPÐ­ï¿½ï¿½, Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½BUG.
+ *2015-10-10, LiJia, ï¿½Þ¸ï¿½FLAG_CHANGE()ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½copyï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½EOFï¿½ï¿½BUG.
+ *2016-09-03, liuxueli, ï¿½Þ¸Ä´ï¿½ï¿½ï¿½ï¿½Ê½
 */
 #include <stdio.h>
 #include <string.h>
@@ -899,7 +899,7 @@ int set_cheat_pkt_question(unsigned char *payload, int payload_len, dns_query_qu
 	int compress_len = 0, used_len = 0;
 	u_char compress_name[DNS_MAX_NAME+1];
 
-	/* Ö»´¦ÀíÒ»¸öÇëÇó */
+	/* Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	
 	memset(compress_name, 0, sizeof(compress_name));
 	compress_len = dns_compress_rr_str(query->qname,strlen((char *)(query->qname)), compress_name);
@@ -1947,7 +1947,21 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 	cur_pos = payload + sizeof(dns_hdr_t);
 
 	if(dns_register_flag&DNS_ALL)
-	{
+	{	
+		int ret = parse_query_question(a_stream, &dns_info, payload, payload_len, &cur_pos);	
+		if(ret == APP_STATE_DROPME)
+		{
+			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
+			return APP_STATE_GIVEME;
+		}
+		
+		ret = parse_resource_record(a_stream, &dns_info, payload, payload_len, &cur_pos, DNS_RR_TYPE_ALL);
+		if(ret == APP_STATE_DROPME)
+		{
+			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
+			return APP_STATE_GIVEME;
+		}
+
 		int message_id=0;
 		if(dns_info.hdr_info.qr==0)
 		{
@@ -1975,20 +1989,6 @@ int parse_dns_protocol(struct streaminfo *a_stream, unsigned char opstate, char 
 				session_state=SESSION_STATE_PENDING|SESSION_STATE_DATA|SESSION_STATE_CLOSE;
 				dir_state=DNS_DIR_RESPONSE;
 			}
-		}
-		
-		int ret = parse_query_question(a_stream, &dns_info, payload, payload_len, &cur_pos);	
-		if(ret == APP_STATE_DROPME)
-		{
-			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
-			return APP_STATE_GIVEME;
-		}
-		
-		ret = parse_resource_record(a_stream, &dns_info, payload, payload_len, &cur_pos, DNS_RR_TYPE_ALL);
-		if(ret == APP_STATE_DROPME)
-		{
-			FS_operate(g_dns_proto_info.stat_handle, g_dns_proto_info.fild_id[ERR_PKT], 0, FS_OP_ADD, 1);
-			return APP_STATE_GIVEME;
 		}
 
 		state=callback_dns_business_plug(a_stream, one_session, (void *)&dns_info, DNS_ALL, session_state, thread_seq, a_packet);
@@ -2104,7 +2104,7 @@ char DNS_TCP_ENTRY(struct streaminfo *a_tcp, void **pme, int thread_seq, void *a
 	
 	switch(a_tcp->opstate)
 	{
-		case OP_STATE_PENDING: /* ÔÝÎ´±£´æÉÏÏÂÎÄÐÅÏ¢ */			
+		case OP_STATE_PENDING: /* ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ */			
 			if(*pme == NULL)
 			{
 				*pme = dictator_malloc(thread_seq, sizeof(struct dns_context));
@@ -2229,7 +2229,7 @@ int DNS_INIT()
 
 /****************************************************************************
 ??????:DNS_DESTRORY()
-?????DNS???§Ø???????????????????
+?????DNS???ï¿½ï¿½???????????????????
 ??????
 ???????
 *****************************************************************************/
@@ -2303,7 +2303,7 @@ long long FLAG_CHANGE(char* raw_flag_str)
 	return dns_portflag;
 }
 
-//TODO£ºÔÝÎ´ÊµÏÖ
+//TODOï¿½ï¿½ï¿½ï¿½Î´Êµï¿½ï¿½
 void FLAG_PROT_FUNSTAT (long long protflag)
 {
   return ;
