@@ -9,7 +9,7 @@ include(ExternalProject)
 
 ExternalProject_Add(ProtoTest PREFIX ProtoTest
         URL ${CMAKE_CURRENT_SOURCE_DIR}/test_protocol_run.zip
-        URL_MD5 93d8b5fb891e9652f36540cf1af0c330  
+        URL_MD5 c1fcb5713d2ebb4506acbcc8ba2677ed  
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR> -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
