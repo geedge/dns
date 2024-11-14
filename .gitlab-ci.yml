@@ -1,287 +1,242 @@
 variables:
   GIT_STRATEGY: "clone"
-  BUILD_IMAGE_CENTOS7: "git.mesalab.cn:7443/mesa_platform/build-env:master"
-  BUILD_IMAGE_CENTOS8: "git.mesalab.cn:7443/mesa_platform/build-env:rockylinux"
   BUILD_PADDING_PREFIX: /tmp/padding_for_CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX_PREFIX/
-  INSTALL_DEPENDENCY_PLATFORM:  sapp-devel libasan systemd-devel libnsl
-  INSTALL_DEPENDENCY_FRAMEWORK:  libMESA_handle_logger-devel libcjson-devel libMESA_field_stat2-devel framework_env libMESA_prof_load-devel libbreakpad_mini-devel libMESA_htable-devel
-  INSTALL_PREFIX: "/home/mesasoft/sapp_run/"
+  BUILD_IMAGE_X86_64_ROCKY8: "git.mesalab.cn:7443/mesa_platform/build-env:rocky8-for-sapp"
+  BUILD_IMAGE_AARCH64_ROCKY9: "git.mesalab.cn:7443/mesa_platform/build-env:rocky9-aarch64"
+  INSTALL_DEPENDENCY_PLATFORM:  sapp-devel sapp libasan systemd-devel libnsl
+  INSTALL_DEPENDENCY_FRAMEWORK:  libMESA_handle_logger-devel libcjson-devel libMESA_field_stat2-devel framework_env libMESA_prof_load-devel libbreakpad_mini-devel libMESA_htable-devel libfieldstat3 libuuid libfieldstat4
+  SYMBOL_TARGET: dns
+  INSTALL_PREFIX: "/opt/tsg/sapp/"
 
 stages:
-- analysis
+- cppcheck
 - build
 - test
-- package
+- upload
 
+.everything_before_script: &everything_before_script
+    - mkdir -p $BUILD_PADDING_PREFIX/$CI_PROJECT_NAMESPACE/
+    - ln -s $CI_PROJECT_DIR $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
+    - cd $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
+    - chmod +x ./ci/travis.sh
+
+###############################################################################
+# cppcheck 
+###############################################################################
+.cppcheck_script:
+  variables:    
+    BUILD_TYPE: Debug
+  stage: cppcheck
+  script:
+    - mkdir build; cd build; cmake3 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+    - >
+      cppcheck --project=compile_commands.json 
+      --enable=all 
+      --error-exitcode=1 
+      --suppress=sizeofDivisionMemfunc
+      --suppress=unsignedLessThanZero
+      --suppress=unusedFunction
+      --suppress=missingInclude
+      --suppress=uselessAssignmentPtrArg
+      --suppress=unmatchedSuppression
+      --suppress=variableScope
+      --suppress=unreadVariable
+      --suppress=cstyleCast
+      --suppress=memleakOnRealloc
+      --suppress=constParameter
+      --suppress=uselessAssignmentArg
+      --suppress=uninitvar
+      --suppress=unusedStructMember
+      --suppress=unreachableCode
+      --suppress=internalAstError
+      --suppress=nullPointerRedundantCheck
+      --suppress=ctunullpointer
+      --suppress=redundantAssignment
+      --suppress=duplicateValueTernary
+      --suppress=*:*/deps/*
+
+run_cppcheck_for_x86_64_rocky8:
+  extends: .cppcheck_script
+  image: $BUILD_IMAGE_X86_64_ROCKY8
+  tags:
+    - tsg-os-builder-el8
+
+run_cppcheck_for_aarch64_rocky9:
+  extends: .cppcheck_script
+  image: $BUILD_IMAGE_AARCH64_ROCKY9
+  tags:
+    - tsg-os-builder-aarch64    
+
+###############################################################################
+# build 
+###############################################################################
 .build_before_script:
+  before_script: *everything_before_script
+  script:
+    - ./ci/travis.sh
+  variables:    
+    BUILD_TEST: "ON"
+    BUILD_TYPE: Debug
+    
+.build_by_travis_for_x86_64_rocky8:
+  stage: build
+  image: $BUILD_IMAGE_X86_64_ROCKY8
+  extends: .build_before_script
+  tags:
+    - tsg-os-builder-el8
+
+develop_build_for_x86_64_rocky8:
+  extends: .build_by_travis_for_x86_64_rocky8
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+  artifacts:
+    name: "$SYMBOL_TARGET-$CI_COMMIT_REF_NAME-debug"
+    paths:
+      - build/*
+  except:
+    - tags
+
+release_build_debug_for_x86_64_rocky8:
+  extends: .build_by_travis_for_x86_64_rocky8
+  variables:
+    BUILD_TYPE: Debug
+    PACKAGE: 1
+    ASAN_OPTION: "ADDRESS"
+  artifacts:
+    name: "$SYMBOL_TARGET-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*
+  only:
+    - tags
+
+release_build_for_x86_64_rocky8:
+  extends: .build_by_travis_for_x86_64_rocky8
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+    PACKAGE: 1
+  artifacts:
+    name: "$SYMBOL_TARGET-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*
+  only:
+    - tags   
+
+.build_by_travis_for_aarch64_rocky9:
+  stage: build
+  image: $BUILD_IMAGE_AARCH64_ROCKY9
+  extends: .build_before_script
+  tags:
+    - tsg-os-builder-aarch64
+
+develop_build_for_aarch64_rocky9:
+  extends: .build_by_travis_for_aarch64_rocky9
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+  artifacts:
+    name: "$SYMBOL_TARGET-$CI_COMMIT_REF_NAME-debug"
+    paths:
+      - build/*
+  except:
+    - tags
+
+release_build_debug_for_aarch64_rocky9:
+  extends: .build_by_travis_for_aarch64_rocky9
+  variables:
+    BUILD_TYPE: Debug
+    PACKAGE: 1
+    ASAN_OPTION: "ADDRESS"
+  artifacts:
+    name: "$SYMBOL_TARGET-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*
+  only:
+    - tags
+
+release_build_for_aarch64_rocky9:
+  extends: .build_by_travis_for_aarch64_rocky9
+  variables:
+    BUILD_TYPE: RelWithDebInfo
+    PACKAGE: 1
+  artifacts:
+    name: "$SYMBOL_TARGET-$CI_COMMIT_REF_NAME-release"
+    paths:
+      - build/*
+  only:
+    - tags   
+###############################################################################
+# test 
+###############################################################################
+test_in_x86_64_rocky8:
+  stage: test
+  image: $BUILD_IMAGE_X86_64_ROCKY8
+  allow_failure: false
+  script:
+    - *everything_before_script
+    - yum install -y $INSTALL_DEPENDENCY_PLATFORM $INSTALL_DEPENDENCY_FRAMEWORK
+    - cd build; ctest3 --verbose
+  dependencies:
+    - develop_build_for_x86_64_rocky8
+    - release_build_for_x86_64_rocky8
+  tags:
+    - tsg-os-builder-el8    
+
+test_in_aarch64_rocky9:
+  stage: test
+  image: $BUILD_IMAGE_AARCH64_ROCKY9
+  allow_failure: false
+  script:
+    - *everything_before_script
+    - yum install -y $INSTALL_DEPENDENCY_PLATFORM $INSTALL_DEPENDENCY_FRAMEWORK
+    - cd build; ctest3 --verbose
+  dependencies:
+    - develop_build_for_aarch64_rocky9
+    - release_build_for_aarch64_rocky9
+  tags:
+    - tsg-os-builder-aarch64    
+
+###############################################################################
+# upload 
+###############################################################################
+.define_before_upload_x86_64_rocky8:
+  stage: upload
+  image: $BUILD_IMAGE_X86_64_ROCKY8
   before_script:
-  - mkdir -p $BUILD_PADDING_PREFIX/$CI_PROJECT_NAMESPACE/
-  - ln -s $CI_PROJECT_DIR $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
-  - cd $BUILD_PADDING_PREFIX/$CI_PROJECT_PATH
-  - chmod +x ./ci/travis.sh
-  - yum makecache
-  - yum install -y elfutils-libelf-devel
-
-
-.build_by_travis_for_centos7:
-  stage: build
-  image: $BUILD_IMAGE_CENTOS7
-  extends: .build_before_script
-  script:
-    - yum install -y libmnl-devel
-    - yum install -y libnfnetlink-devel
-    - ./ci/travis.sh
-      - cd build
-  tags:
-  - share
-
-.build_by_travis_for_centos8:
-  stage: build
-  image: $BUILD_IMAGE_CENTOS8
-  extends: .build_before_script
-  script:
-    - dnf --enablerepo=powertools install -y libmnl-devel
-    - dnf --enablerepo=powertools install -y libnfnetlink-devel
-    - ./ci/travis.sh
-  tags:
-    - share
-
-run_cppcheck_for_centos7:
-  stage: analysis
-  image: $BUILD_IMAGE_CENTOS7
-  script:
-    - mkdir build || true
-    - cd build
-    - cmake3 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-    - cppcheck --project=compile_commands.json
-      --enable=all
-      --error-exitcode=1
-      --suppress=unusedFunction
-      --suppress=missingInclude 
-      --suppress=uselessAssignmentPtrArg 
-      --suppress=unreachableCode 
-      --suppress=internalAstError 
-      --suppress=unmatchedSuppression 
-      --suppress=memleakOnRealloc 
-  tags:
-    - share
-
-run_cppcheck_for_centos8:
-  stage: analysis
-  image: $BUILD_IMAGE_CENTOS8
-  script:
-    - mkdir build || true
-    - cd build
-    - cmake3 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-    - cppcheck --project=compile_commands.json
-      --enable=all
-      --error-exitcode=1
-      --suppress=unusedFunction
-      --suppress=missingInclude 
-      --suppress=uselessAssignmentPtrArg 
-      --suppress=unreachableCode 
-      --suppress=internalAstError 
-      --suppress=unmatchedSuppression 
-      --suppress=memleakOnRealloc 
-  tags:
-    - share
-
-run_test_for_centos7:
-  stage: test
-  extends: .build_by_travis_for_centos7
-  script:
-    - yum makecache
-    - ./ci/travis.sh
-    - cd build
-    - ctest --verbose
-
-run_test_for_centos8:
-  stage: test
-  extends: .build_by_travis_for_centos8
-  script:
-    - yum makecache
-    - ./ci/travis.sh
-    - cd build
-    - ctest3 --verbose
-
-branch_build_debug_for_centos7:
-  stage: build
-  extends: .build_by_travis_for_centos7
+    - pwd; ls -l ; cd build ; ls -l
+    - cp /root/rpm_upload_tools.py ./  
   variables:
-    BUILD_TYPE: Debug
-  except:
-    - /^develop.*$/i
-    - /^master.*$/i
-    - tags
-
-branch_build_release_for_centos7:
-  stage: build
-  variables:
-    BUILD_TYPE: RelWithDebInfo
-  extends: .build_by_travis_for_centos7
-  except:
-    - /^develop.*$/i
-    - /^master.*$/i
-    - tags
-
-develop_build_debug_for_centos7:
-  stage: build
-  extends: .build_by_travis_for_centos7
-  variables:
-    BUILD_TYPE: Debug
-    PACKAGE: 1
-    UPLOAD_RPM: 1
-    ASAN_OPTION: ADDRESS
-    TESTING_VERSION_BUILD: 1
-    PULP3_REPO_NAME: protocol-testing-x86_64.el7
-    PULP3_DIST_NAME: protocol-testing-x86_64.el7
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-debug"
-    paths:
-      - build/*.rpm
-  only:
-    - /^develop.*$/i
-    - /^master.*$/i
-
-develop_build_release_for_centos7:
-  stage: build
-  extends: .build_by_travis_for_centos7
-  variables:
-    BUILD_TYPE: RelWithDebInfo
-    PACKAGE: 1
-    UPLOAD_RPM: 1
-    TESTING_VERSION_BUILD: 1
-    PULP3_REPO_NAME: protocol-testing-x86_64.el7
-    PULP3_DIST_NAME: protocol-testing-x86_64.el7
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-release"
-    paths:
-      - build/*.rpm
-  only:
-    - /^develop.*$/i
-    - /^master.*$/i
-
-release_build_debug_for_centos7:
-  stage: package
-  variables:
-    BUILD_TYPE: Debug
-    PACKAGE: 1
-    UPLOAD_RPM: 1
-    PULP3_REPO_NAME: protocol-stable-x86_64.el7
-    PULP3_DIST_NAME: protocol-stable-x86_64.el7
-  extends: .build_by_travis_for_centos7
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-debug"
-    paths:
-      - build/*.rpm
-  only:
-    - tags
-
-release_build_release_for_centos7:
-  stage: package
-  variables:
-    BUILD_TYPE: RelWithDebInfo
-    PACKAGE: 1
-    UPLOAD_RPM: 1
-    UPLOAD_SYMBOL_FILES: 1
-    SYMBOL_TARGET: dns
-    PULP3_REPO_NAME: protocol-stable-x86_64.el7
-    PULP3_DIST_NAME: protocol-stable-x86_64.el7
-  extends: .build_by_travis_for_centos7
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-release"
-    paths:
-      - build/*.rpm
-  only:
-    - tags
-
-branch_build_debug_for_centos8:
-  stage: build
-  extends: .build_by_travis_for_centos8
-  variables:
-    BUILD_TYPE: Debug
-  except:
-    - /^develop.*$/i
-    - /^master.*$/i
-    - tags
-
-branch_build_release_for_centos8:
-  stage: build
-  variables:
-    BUILD_TYPE: RelWithDebInfo
-  extends: .build_by_travis_for_centos8
-  except:
-    - /^develop.*$/i
-    - /^master.*$/i
-    - tags
-
-develop_build_debug_for_centos8:
-  stage: build
-  extends: .build_by_travis_for_centos8
-  variables:
-    BUILD_TYPE: Debug
-    PACKAGE: 1
-    UPLOAD_RPM: 1
-    ASAN_OPTION: ADDRESS
-    TESTING_VERSION_BUILD: 1
-    PULP3_REPO_NAME: protocol-testing-x86_64.el8
-    PULP3_DIST_NAME: protocol-testing-x86_64.el8
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-debug"
-    paths:
-      - build/*.rpm
-  only:
-    - /^develop.*$/i
-    - /^master.*$/i
-
-develop_build_release_for_centos8:
-  stage: build
-  extends: .build_by_travis_for_centos8
-  variables:
-    BUILD_TYPE: RelWithDebInfo
-    PACKAGE: 1
-    UPLOAD_RPM: 1
-    TESTING_VERSION_BUILD: 1
-    PULP3_REPO_NAME: protocol-testing-x86_64.el8
-    PULP3_DIST_NAME: protocol-testing-x86_64.el8
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-release"
-    paths:
-      - build/*.rpm
-  only:
-    - /^develop.*$/i
-    - /^master.*$/i
-
-release_build_debug_for_centos8:
-  stage: package
-  variables:
-    BUILD_TYPE: Debug
-    PACKAGE: 1
-    UPLOAD_RPM: 1
     PULP3_REPO_NAME: protocol-stable-x86_64.el8
     PULP3_DIST_NAME: protocol-stable-x86_64.el8
-  extends: .build_by_travis_for_centos8
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-debug"
-    paths:
-      - build/*.rpm
   only:
     - tags
+  tags:
+    - tsg-os-builder-el8 
 
-release_build_release_for_centos8:
-  stage: package
+rpm_upload_for_x86_64_rocky8:
+  extends: .define_before_upload_x86_64_rocky8
+  dependencies:
+    - release_build_debug_for_x86_64_rocky8
+    - release_build_for_x86_64_rocky8
+  script:
+    - python3 rpm_upload_tools.py $PULP3_REPO_NAME $PULP3_DIST_NAME *.rpm    
+
+.define_before_upload_aarch64_rocky9:
+  stage: upload
+  image: $BUILD_IMAGE_AARCH64_ROCKY9
+  before_script:
+    - pwd; ls -l ; cd build ; ls -l
+    - cp /root/rpm_upload_tools.py ./  
   variables:
-    BUILD_TYPE: RelWithDebInfo
-    PACKAGE: 1
-    UPLOAD_RPM: 1
-    UPLOAD_SYMBOL_FILES: 1
-    SYMBOL_TARGET: dns
-    PULP3_REPO_NAME: protocol-stable-x86_64.el8
-    PULP3_DIST_NAME: protocol-stable-x86_64.el8
-  extends: .build_by_travis_for_centos8
-  artifacts:
-    name: "dns-$CI_COMMIT_REF_NAME-release"
-    paths:
-      - build/*.rpm
+    PULP3_REPO_NAME: protocol-stable-aarch64.el9
+    PULP3_DIST_NAME: protocol-stable-aarch64.el9
   only:
     - tags
+  tags:
+    - tsg-os-builder-aarch64 
+
+rpm_upload_for_aarch64_rocky9:
+  extends: .define_before_upload_aarch64_rocky9
+  dependencies:
+    - release_build_debug_for_aarch64_rocky9
+    - release_build_for_aarch64_rocky9
+  script:
+    - python3 rpm_upload_tools.py $PULP3_REPO_NAME $PULP3_DIST_NAME *.rpm
