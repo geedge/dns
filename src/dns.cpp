@@ -1606,7 +1606,7 @@ int get_one_resource_record(char *msg, char **ptr, dns_rr_t *rr,  const char *en
 					*ptr += rr->rdlength;
 					break;
 				}
-				len = MIN(DNS_MAX_NAME-1, rr->rdlength-2);/*size=1byte*/
+				len = MIN(DNS_MAX_NAME, rr->rdlength-2);/*size=1byte*/
 				memcpy(rr->rdata.mx.exchange, *ptr, len);	/* error labels */
 				rr->rdata.mx.exchange[len]='\0';
 				*ptr += rr->rdlength-2;
@@ -1668,8 +1668,9 @@ int get_one_resource_record(char *msg, char **ptr, dns_rr_t *rr,  const char *en
 			(*ptr)+=1;
 			break;
 		case DNS_TYPE_TXT:
-			len = MIN(DNS_MAX_NAME-1, rr->rdlength-1);/*size=1byte*/
+			len = MIN(DNS_MAX_NAME, rr->rdlength-1);/*size=1byte*/
 			memcpy(rr->rdata.txt.txt, *ptr+1, len);
+			rr->rdata.txt.txt[len]='\0';
 			rr->rdata.txt.size = len;	
 			*ptr += rr->rdlength;
 			break;
@@ -1686,8 +1687,9 @@ int get_one_resource_record(char *msg, char **ptr, dns_rr_t *rr,  const char *en
 			}
 			break;
 		case DNS_TYPE_NULL:
-			len = MIN(DNS_MAX_NAME-1, rr->rdlength-1);	/*size=1byte*/
+			len = MIN(DNS_MAX_NAME, rr->rdlength-1);	/*size=1byte*/
 			memcpy(rr->rdata.null.null, *ptr+1, len);
+			rr->rdata.null.null[len]='\0';
 			rr->rdata.null.size = len;
 			*ptr += rr->rdlength;
 			break;

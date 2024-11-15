@@ -469,7 +469,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	14,
-					"txt":	"MS=ms95960309tion=6000569944866967d163c6c7e4c0c5c63ccfbabf",
+					"txt":	"MS=ms95960309",
 					"size":	13
 				}, {
 					"name":	"paypal.com",
@@ -477,7 +477,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	38,
-					"txt":	"yandex-verification: 73acb90f6a9abd76uapvYDGd2VtPARy1qq9ymN6",
+					"txt":	"yandex-verification: 73acb90f6a9abd76",
 					"size":	37
 				}, {
 					"name":	"paypal.com",
@@ -485,7 +485,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	69,
-					"txt":	"google-site-verification=Mfy_g_Azi4RuSGy1j4xdt9Rd11lTVk7pXIqqFs6OkkQfesYJErtGKylvfcfyfwrPD/wnv",
+					"txt":	"google-site-verification=Mfy_g_Azi4RuSGy1j4xdt9Rd11lTVk7pXIqqFs6OkkQ",
 					"size":	68
 				}, {
 					"name":	"paypal.com",
@@ -533,7 +533,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	46,
-					"txt":	"QuoVadis=e6fee6e2-ca5b-44fe-9e87-002e95088be51._spf.paypal.com include:3ph2._spf.paypal.com include:3ph3._spf.paypal.com include:3ph4._spf.paypal.com include:3ph5._spf.paypal.com include:aspmx.pardot.com ~all",
+					"txt":	"QuoVadis=e6fee6e2-ca5b-44fe-9e87-002e95088be5",
 					"size":	45
 				}, {
 					"name":	"paypal.com",
@@ -541,7 +541,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	61,
-					"txt":	"workplace-domain-verification=F7ezsH9uapvYDGd2VtPARy1qq9ymN62992b4bf61a4fa4837bfd9d600e33687f",
+					"txt":	"workplace-domain-verification=F7ezsH9uapvYDGd2VtPARy1qq9ymN6",
 					"size":	60
 				}, {
 					"name":	"paypal.com",
@@ -3151,7 +3151,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	94,
-					"txt":	"cisco-ci-domain-verification=572203ae596d1b2278c7807a35893712992b4bf61a4fa4837bfd9d600e33687fv",
+					"txt":	"cisco-ci-domain-verification=572203ae596d1b2278c7807a35893712992b4bf61a4fa4837bfd9d600e33687f",
 					"size":	93
 				}, {
 					"name":	"paypal.com",
@@ -3159,7 +3159,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	93,
-					"txt":	"adobe-idp-site-verification=11600efbec96c0e73dd8820cd33ca906ec4302aea4487d208a42a2b01806144cf",
+					"txt":	"adobe-idp-site-verification=11600efbec96c0e73dd8820cd33ca906ec4302aea4487d208a42a2b01806144c",
 					"size":	92
 				}, {
 					"name":	"paypal.com",
@@ -3167,7 +3167,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	14,
-					"txt":	"MS=ms95960309",
+					"txt":	"MS=ms95960309",
 					"size":	13
 				}, {
 					"name":	"paypal.com",
@@ -3199,7 +3199,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	61,
-					"txt":	"workplace-domain-verification=F7ezsH9uapvYDGd2VtPARy1qq9ymN6om include:3ph2._spf.paypal.com include:3ph3._spf.paypal.com include:3ph4._spf.paypal.com include:3ph5._spf.paypal.com include:aspmx.pardot.com ~all",
+					"txt":	"workplace-domain-verification=F7ezsH9uapvYDGd2VtPARy1qq9ymN6",
 					"size":	60
 				}, {
 					"name":	"paypal.com",
@@ -3207,7 +3207,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	38,
-					"txt":	"yandex-verification: 73acb90f6a9abd76uapvYDGd2VtPARy1qq9ymN62992b4bf61a4fa4837bfd9d600e33687f",
+					"txt":	"yandex-verification: 73acb90f6a9abd76",
 					"size":	37
 				}, {
 					"name":	"paypal.com",
@@ -3223,7 +3223,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	43,
-					"txt":	"apple-domain-verification=NwnxXMTYI88HNeXre73dd8820cd33ca906ec4302aea4487d208a42a2b01806144c",
+					"txt":	"apple-domain-verification=NwnxXMTYI88HNeXr",
 					"size":	42
 				}, {
 					"name":	"paypal.com",
@@ -3585,7 +3585,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	59,
-					"txt":	"miro-verification=6000569944866967d163c6c7e4c0c5c63ccfbabfIqqFs6OkkQ",
+					"txt":	"miro-verification=6000569944866967d163c6c7e4c0c5c63ccfbabf",
 					"size":	58
 				}, {
 					"name":	"paypal.com",
@@ -3593,7 +3593,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	69,
-					"txt":	"google-site-verification=Mfy_g_Azi4RuSGy1j4xdt9Rd11lTVk7pXIqqFs6OkkQ61a4fa4837bfd9d600e33687fv",
+					"txt":	"google-site-verification=Mfy_g_Azi4RuSGy1j4xdt9Rd11lTVk7pXIqqFs6OkkQ",
 					"size":	68
 				}, {
 					"name":	"paypal.com",
@@ -3601,7 +3601,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	38,
-					"txt":	"yandex-verification: 73acb90f6a9abd76c96c0e73dd8820cd33ca906ec4302aea4487d208a42a2b01806144cf",
+					"txt":	"yandex-verification: 73acb90f6a9abd76",
 					"size":	37
 				}, {
 					"name":	"paypal.com",
@@ -3609,7 +3609,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	14,
-					"txt":	"MS=ms95960309",
+					"txt":	"MS=ms95960309",
 					"size":	13
 				}, {
 					"name":	"paypal.com",
@@ -3641,7 +3641,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	94,
-					"txt":	"cisco-ci-domain-verification=572203ae596d1b2278c7807a35893712992b4bf61a4fa4837bfd9d600e33687fnclude:3ph3._spf.paypal.com include:3ph4._spf.paypal.com include:3ph5._spf.paypal.com include:aspmx.pardot.com ~all",
+					"txt":	"cisco-ci-domain-verification=572203ae596d1b2278c7807a35893712992b4bf61a4fa4837bfd9d600e33687f",
 					"size":	93
 				}, {
 					"name":	"paypal.com",
@@ -3649,7 +3649,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	46,
-					"txt":	"QuoVadis=e6fee6e2-ca5b-44fe-9e87-002e95088be52VtPARy1qq9ymN62992b4bf61a4fa4837bfd9d600e33687f",
+					"txt":	"QuoVadis=e6fee6e2-ca5b-44fe-9e87-002e95088be5",
 					"size":	45
 				}, {
 					"name":	"paypal.com",
@@ -3665,7 +3665,7 @@
 					"class":	1,
 					"ttl":	99,
 					"rdlength":	43,
-					"txt":	"apple-domain-verification=NwnxXMTYI88HNeXre73dd8820cd33ca906ec4302aea4487d208a42a2b01806144c",
+					"txt":	"apple-domain-verification=NwnxXMTYI88HNeXr",
 					"size":	42
 				}, {
 					"name":	"paypal.com",
