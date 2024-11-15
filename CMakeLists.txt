@@ -54,7 +54,7 @@ file(GLOB SRC
 )
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(CMAKE_INSTALL_PREFIX "/home/mesasoft/sapp_run" CACHE PATH "default install path" FORCE)
+	set(CMAKE_INSTALL_PREFIX "/opt/tsg/sapp/" CACHE PATH "default install path" FORCE)
 endif()
 
 set(DNS_DEPEND_DYN_LIB MESA_handle_logger MESA_field_stat2 MESA_prof_load)
@@ -76,7 +76,6 @@ set(CPACK_RPM_LIBRARIES_USER_FILELIST "%config(noreplace) ${CMAKE_INSTALL_PREFIX
                            	"%config(noreplace) ${CMAKE_INSTALL_PREFIX}/conf/dns/dns.conf"
 			 )
 
-set(CMAKE_INSTALL_PREFIX /home/mesasoft/sapp_run)
 install(TARGETS dns LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT LIBRARIES)
 install(FILES bin/dns.inf DESTINATION ${CMAKE_INSTALL_PREFIX}/plug/protocol/dns COMPONENT  PROFILE)
 install(FILES bin/dns.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/conf/dns COMPONENT  PROFILE)
